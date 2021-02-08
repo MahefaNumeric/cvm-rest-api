@@ -1,0 +1,26 @@
+{
+  "name": "nodejs-rest-api",
+  "version": "1.0.0",
+  "description": "A rest webservice showcase with Node.js",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MahefaAbel/nodejs-rest-api.git"
+  },
+  "keywords": [
+    "rest",
+    "web",
+    "service",
+    "node.js"
+  ],
+  "author": "Mahefa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MahefaAbel/nodejs-rest-api/issues"
+  },
+  "homepage": "https://github.com/MahefaAbel/nodejs-rest-api#readme"
+}
