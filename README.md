@@ -5,6 +5,7 @@ A rest webservice showcase with Node.js
 - Node.js
 - PureORM
 - MySQL
+- REST API
 
 ## Step
 - `npm install express --save`
