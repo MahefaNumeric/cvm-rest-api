@@ -6,7 +6,7 @@ const app = express();
 
 app.use(bodyParser.json());
 
-app.get('/product/all', (req, res) => {
+app.get('/role/all', (req, res) => {
   const body = [];
   body.push({
     "id": 1,
@@ -21,17 +21,17 @@ app.get('/product/all', (req, res) => {
   // res.send(xml(body));
 });
 
-app.post('/product/', (req, res) => {
+app.post('/role/', (req, res) => {
   const body = "Creation finie";
   res.json(body);
 });
 
-app.put('/product/', (req, res) => {
+app.put('/role/', (req, res) => {
   const body = "Modification finie";
   res.json(body);
 });
 
-app.delete('/product/', (req, res) => {
+app.delete('/role/', (req, res) => {
   const body = "Suppression finie";
   res.json(body);
 });
