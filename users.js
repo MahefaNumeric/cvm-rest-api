@@ -53,23 +53,25 @@ app.get("/user/:id", (request, response)=>{
 });
 
 // Mise a jours utilisateur
-app.put("/user/:id", (request, response)=>{
+app.put("/user/:id", (request, response) => {
     response.type("application/json");
     const connMysql = require("./db.config");
+    const checkIdIfExist = require("./Validation/UserValidation").checkIdIfExist;
     const pData = request.body;
     const id = request.params.id;
-    console.log(pData, id);
-    const sql = `UPDATE users 
-    SET firstname='${pData.firstname}', 
-    lastname='${pData.lastname}', 
-    date_birth='${pData.date_birth}', 
-    auto_desc='${pData.auto_desc}'
-    WHERE id=${id}`;
-    connMysql.query(sql, (error, results, fields)=> {
-        if(error) throw error;
-        console.log("Results: ", results);
-        response.json(results);
-    });
+    // const resultCheckIdUser = checkIdIfExist(id, connMysql);
+    console.log(pData, id, resultCheckIdUser);
+    // const sql = `UPDATE users 
+    // SET firstname='${pData.firstname}', 
+    // lastname='${pData.lastname}', 
+    // date_birth='${pData.date_birth}', 
+    // auto_desc='${pData.auto_desc}'
+    // WHERE id=${id}`;
+    // connMysql.query(sql, (error, results, fields)=> {
+    //     if(error) throw error;
+    //     console.log("Results: ", results);
+    //     response.json(results);
+    // });
 });
 
 app.listen(3000);
