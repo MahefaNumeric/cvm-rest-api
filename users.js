@@ -39,7 +39,7 @@ app.get("/user/:id", (request, response)=>{
     const id = request.params.id;
     console.log(id);
     const sql = `SELECT * FROM users WHERE id = ${id}`;
-    connMysql.query(sql, (error, result, fields)=> {
+    connMysql.query(sql, (error, result, fields) => {
         if(error) throw error;
         console.log("Result: ", result.length);
         if(result.length > 0){
