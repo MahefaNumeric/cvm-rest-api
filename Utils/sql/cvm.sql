@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 10 fév. 2021 à 18:51
+-- Généré le : mer. 10 fév. 2021 à 19:31
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -151,26 +151,38 @@ CREATE TABLE IF NOT EXISTS `templates` (
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(20) NOT NULL AUTO_INCREMENT,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `email` varchar(128) NOT NULL,
   `firstname` varchar(64) NOT NULL,
   `lastname` varchar(64) NOT NULL,
   `date_birth` date NOT NULL,
   `auto_desc` text NOT NULL,
-  `template_id` int(11) DEFAULT NULL COMMENT 'User choosed template ',
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `template_current` (`template_id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `firstname`, `lastname`, `date_birth`, `auto_desc`, `template_id`, `date_add`, `date_update`) VALUES
-(1, '', 'Rakoto', 'Rabe', '2020-08-12', 'Lorem lupsum', NULL, '2021-02-10 08:03:24', '2021-02-10 08:03:24'),
-(6, '', 'Mahery', 'Soft', '2003-08-12', 'Lorem lupsum 3', NULL, '2021-02-10 08:08:14', '2021-02-10 08:08:14');
+INSERT INTO `users` (`id`, `email`, `firstname`, `lastname`, `date_birth`, `auto_desc`, `date_add`, `date_update`) VALUES
+(1, '', 'Rakoto', 'Rabe', '2020-08-12', 'Lorem lupsum', '2021-02-10 08:03:24', '2021-02-10 08:03:24'),
+(6, '', 'Mahery', 'Soft', '2003-08-12', 'Lorem lupsum 3', '2021-02-10 08:08:14', '2021-02-10 08:08:14');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `users_preferences`
+--
+
+DROP TABLE IF EXISTS `users_preferences`;
+CREATE TABLE IF NOT EXISTS `users_preferences` (
+  `user_id` int(11) NOT NULL,
+  `template_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`user_id`),
+  KEY `users_preferences_template_id` (`template_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Contraintes pour les tables déchargées
@@ -184,10 +196,11 @@ ALTER TABLE `projects`
   ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION;
 
 --
--- Contraintes pour la table `users`
+-- Contraintes pour la table `users_preferences`
 --
-ALTER TABLE `users`
-  ADD CONSTRAINT `template_current` FOREIGN KEY (`template_id`) REFERENCES `templates` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION;
+ALTER TABLE `users_preferences`
+  ADD CONSTRAINT `users_preferences_template_id` FOREIGN KEY (`template_id`) REFERENCES `templates` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
+  ADD CONSTRAINT `users_preferences_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
