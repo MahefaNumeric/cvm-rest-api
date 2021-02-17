@@ -1,15 +1,16 @@
 const mysql = require("mysql");
-
 const express = require("express");
+const UserService = require("../Services/UserService");
+const UsersService = require("../Services/UserService");
+
 const router = express.Router();
 
 module.exports = router;
 
 // Recupere liste Users
 router.get("/", (request, response) => {
-    const connMysql = require("../Configs/db.config");
-    connMysql.query("SELECT * FROM users", (error, results, fields)=> {
-        if(error) throw error;
+    const userService = new UsersService();
+    userService.getListUser((results) => {
         console.log("Results: ", results);
         response.type("application/json");
         response.json(results);
@@ -19,15 +20,13 @@ router.get("/", (request, response) => {
 // Creation nouvel utilisateur
 router.post("/", (request, response)=>{
     response.type("application/json");
-    const connMysql = require("../Configs/db.config");
+    const userService = new UsersService();
+    
     const pData = request.body;
     console.log(pData);
-    const sql = `INSERT INTO 
-    users (firstname, lastname, date_birth, auto_desc) 
-    VALUE ('${pData.firstname}', '${pData.lastname}', '${pData.date_birth}', '${pData.auto_desc}')`;
-    connMysql.query(sql, (error, results, fields)=> {
-        if(error) throw error;
+    userService.createNewUser(pData, (results) => {
         console.log("Results: ", results);
+        response.type("application/json");
         response.json(results);
     });
 });

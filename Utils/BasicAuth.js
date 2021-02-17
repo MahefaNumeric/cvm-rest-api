@@ -1,8 +1,17 @@
 module.exports = basicAuth;
+const UsersService = require("../Services/UserService");
 
-function basicAuth(request, response, next){
+async function basicAuth(request, response, next){
+    const notAuthUrls = [
+        "/login",
+        "/users/auth"
+    ];
+    if(notAuthUrls.includes(request.path)){
+        return next();
+    }
+
     if(!request.headers.authorization || request.headers.authorization.indexOf("Basic") == -1){
-        response.status(401).json({
+        return response.status(401).json({
             status: 401, 
             message: "Authorization manquante"
         });
@@ -15,4 +24,15 @@ function basicAuth(request, response, next){
     console.log("credentials : ", credentials);
     const [username, password] = credentials.split(":");
     console.log("username, password : ", username, password);
+    const userService = new UsersService();
+    const user = await userService.checkCredentials(username, password)
+    console.log("user : ", user);
+    if(user == null){
+        return response.status(401).json({
+            status: 401, 
+            message: "Authorization fausse"
+        }); 
+    }
+    request.user = user;
+    next();
 }
