@@ -1,5 +1,5 @@
 module.exports = basicAuth;
-const UsersService = require("../Services/UserService");
+const UsersService = require("../../Services/UserService");
 
 async function basicAuth(request, response, next){
     const notAuthUrls = [
@@ -34,5 +34,5 @@ async function basicAuth(request, response, next){
         }); 
     }
     request.user = user;
-    next();
+    return next();
 }

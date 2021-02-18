@@ -2,7 +2,7 @@ class UsersService{
     
     async getListUser(cbFinnished){
         const connMysql = require("../Configs/db.config");
-        connMysql.query("SELECT * FROM users", (error, results, fields)=> {
+        connMysql.query("SELECT * FROM users", (error, results, fields) => {
             if(error) throw error;
             cbFinnished && cbFinnished(results);
         });

@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParse = require("body-parser");
-const basicAuth = require("./Utils/BasicAuth");
+const basicAuth = require("./Utils/Auth/BasicAuth");
 const cors = require("cors");
 
 const userController = require("./Controllers/UsersController");
