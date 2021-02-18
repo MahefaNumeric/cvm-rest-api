@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 18 fév. 2021 à 19:26
+-- Généré le : jeu. 18 fév. 2021 à 19:57
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -147,11 +147,13 @@ CREATE TABLE IF NOT EXISTS `part_educations` (
 DROP TABLE IF EXISTS `part_experiences`;
 CREATE TABLE IF NOT EXISTS `part_experiences` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_company` int(11) DEFAULT NULL,
   `title` varchar(128) NOT NULL,
   `description` text NOT NULL,
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `part_experiences_id_company` (`id_company`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -202,6 +204,25 @@ CREATE TABLE IF NOT EXISTS `preferences_users` (
   `template_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   KEY `users_preferences_template_id` (`template_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `skills_level`
+--
+
+DROP TABLE IF EXISTS `skills_level`;
+CREATE TABLE IF NOT EXISTS `skills_level` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_user` int(11) NOT NULL,
+  `id_skill` int(11) NOT NULL,
+  `level_per_5` tinyint(4) NOT NULL,
+  `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id_user` (`id_user`,`id_skill`),
+  KEY `skills_level_id_skill` (`id_skill`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -264,6 +285,20 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`id`, `email`, `firstname`, `lastname`, `date_birth`, `auto_desc`, `date_add`, `date_update`) VALUES
 (1, '', 'Rakoto', 'Rabe', '2020-08-12', 'Lorem lupsum', '2021-02-10 08:03:24', '2021-02-10 08:03:24'),
 (6, '', 'Mahery', 'Soft', '2003-08-12', 'Lorem lupsum 3', '2021-02-10 08:08:14', '2021-02-10 08:08:14');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `users_companies`
+--
+
+DROP TABLE IF EXISTS `users_companies`;
+CREATE TABLE IF NOT EXISTS `users_companies` (
+  `id_company` int(11) NOT NULL,
+  `id_user` int(11) NOT NULL,
+  `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -376,6 +411,12 @@ ALTER TABLE `cv_skills`
   ADD CONSTRAINT `cv_skills_id_users_skills` FOREIGN KEY (`id_users_skills`) REFERENCES `users_skills` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
+-- Contraintes pour la table `part_experiences`
+--
+ALTER TABLE `part_experiences`
+  ADD CONSTRAINT `part_experiences_id_company` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
 -- Contraintes pour la table `part_projects`
 --
 ALTER TABLE `part_projects`
@@ -388,6 +429,13 @@ ALTER TABLE `part_projects`
 ALTER TABLE `preferences_users`
   ADD CONSTRAINT `users_preferences_template_id` FOREIGN KEY (`template_id`) REFERENCES `templates` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   ADD CONSTRAINT `users_preferences_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `skills_level`
+--
+ALTER TABLE `skills_level`
+  ADD CONSTRAINT `skills_level_id_skill` FOREIGN KEY (`id_skill`) REFERENCES `part_skills` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `skills_level_id_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `socials_link`
