@@ -4,6 +4,7 @@ const basicAuth = require("./Utils/Auth/BasicAuth");
 const cors = require("cors");
 
 const userController = require("./Controllers/UsersController");
+const cvController = require("./Controllers/CvController");
 
 const app = express();
 
@@ -15,6 +16,8 @@ const corsOption = {
 }
 
 app.use(basicAuth);
+
 app.use("/users", cors(corsOption), userController);
+app.use("/cv", cors(corsOption), cvController);
 
 app.listen(3000);

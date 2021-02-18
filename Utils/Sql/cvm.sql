@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 18 fév. 2021 à 19:57
+-- Généré le : jeu. 18 fév. 2021 à 20:28
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -37,7 +37,15 @@ CREATE TABLE IF NOT EXISTS `companies` (
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `companies`
+--
+
+INSERT INTO `companies` (`id`, `name`, `description`, `date_add`, `date_update`) VALUES
+(1, 'eTech Consulting - Groupe ArkeUp', 'eTech Consulting - Groupe ArkeUp', '2021-02-18 20:06:56', '2021-02-18 20:06:56'),
+(2, 'Independant', 'Independant', '2021-02-18 20:07:27', '2021-02-18 20:07:27');
 
 -- --------------------------------------------------------
 
@@ -54,7 +62,20 @@ CREATE TABLE IF NOT EXISTS `cv` (
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `cv_id_template` (`id_template`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `cv`
+--
+
+INSERT INTO `cv` (`id`, `id_template`, `title`, `date_add`, `date_update`) VALUES
+(1, 1, 'CV Lead Technique', '2021-02-18 20:01:36', '2021-02-18 20:01:36'),
+(2, 1, 'CV Prestashop Developer', '2021-02-18 20:08:12', '2021-02-18 20:08:12'),
+(3, 1, 'CV Symfony Developer', '2021-02-18 20:08:37', '2021-02-18 20:08:37'),
+(4, 1, 'CV Laravel Developer', '2021-02-18 20:09:10', '2021-02-18 20:09:10'),
+(5, 1, 'CV eCommerce Developer', '2021-02-18 20:09:22', '2021-02-18 20:09:22'),
+(6, 1, 'CV Backend Developer', '2021-02-18 20:09:41', '2021-02-18 20:09:41'),
+(7, 1, 'CV Fullstack Developer', '2021-02-18 20:09:53', '2021-02-18 20:09:53');
 
 -- --------------------------------------------------------
 
@@ -254,10 +275,18 @@ CREATE TABLE IF NOT EXISTS `templates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   `description` text NOT NULL,
+  `preview_url` varchar(128) DEFAULT NULL,
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `templates`
+--
+
+INSERT INTO `templates` (`id`, `name`, `description`, `preview_url`, `date_add`, `date_update`) VALUES
+(1, 'Simple CV, Black & White', 'Simple CV, Black & White', NULL, '2021-02-18 20:04:19', '2021-02-18 20:04:19');
 
 -- --------------------------------------------------------
 
@@ -283,8 +312,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `firstname`, `lastname`, `date_birth`, `auto_desc`, `date_add`, `date_update`) VALUES
-(1, '', 'Rakoto', 'Rabe', '2020-08-12', 'Lorem lupsum', '2021-02-10 08:03:24', '2021-02-10 08:03:24'),
-(6, '', 'Mahery', 'Soft', '2003-08-12', 'Lorem lupsum 3', '2021-02-10 08:08:14', '2021-02-10 08:08:14');
+(1, 'abelmahefa@gmail.com', 'Razafinirina', 'Mahefa Abel', '1994-07-21', 'Lorem lupsum', '2021-02-10 08:03:24', '2021-02-10 08:03:24');
 
 -- --------------------------------------------------------
 
@@ -297,7 +325,8 @@ CREATE TABLE IF NOT EXISTS `users_companies` (
   `id_company` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY `users_companies_id_company` (`id_company`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -442,6 +471,12 @@ ALTER TABLE `skills_level`
 --
 ALTER TABLE `socials_link`
   ADD CONSTRAINT `socials_link_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `users_companies`
+--
+ALTER TABLE `users_companies`
+  ADD CONSTRAINT `users_companies_id_company` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `users_educations`
