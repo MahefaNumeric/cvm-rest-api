@@ -15,7 +15,7 @@ const corsOption = {
     origin:  "http://localhost"
 }
 
-app.use(basicAuth);
+// app.use(basicAuth);
 
 app.use("/users", cors(corsOption), userController);
 app.use("/cv", cors(corsOption), cvController);

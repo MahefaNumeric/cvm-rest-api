@@ -31,10 +31,12 @@ class CvService{
     }
 
     /**
-     * Done
-     * @param {*} idCv : ID du CV
-     * @param {*} format : PDF, HTML
-     * @param {*} mcbFinnished : Callback
+     * Service for generating CV into a given format
+     * @param {Int32} idCv : ID du CV
+     * @param {String} format : PDF, HTML
+     * @param {Function} mcbFinnished : Callback
+     * @returns {String}
+     * @async
      */
     async generateCv(idCv, format, mcbFinnished){
         const formatLC = String(format).toLowerCase();
@@ -47,7 +49,16 @@ class CvService{
         }
     }
 
+    /**
+     * Service for generating CV into HTML
+     * @param {number} idCv 
+     * @param {Function} mcbFinnished 
+     * @returns {String}
+     * @todo Implement this function.
+     * @async
+     */
     async generateCvHtml(idCv, mcbFinnished){
+        return "CvService::generateCvHtml";
         const connMysql = require("../Configs/db.config");
         const sql = `INSERT INTO 
         users (firstname, lastname, date_birth, auto_desc) 
@@ -58,15 +69,15 @@ class CvService{
         });
     }
 
+    /**
+     * Service for generating CV into PDF
+     * @param {*} idCv 
+     * @param {*} mcbFinnished 
+     * @returns {String}
+     * @todo Implement this function.
+     * @async
+     */
     async generateCvPdf(idCv, mcbFinnished){
-        const connMysql = require("../Configs/db.config");
-        const sql = `INSERT INTO 
-        users (firstname, lastname, date_birth, auto_desc) 
-        VALUE ('${pData.firstname}', '${pData.lastname}', '${pData.date_birth}', '${pData.auto_desc}')`;
-        connMysql.query(sql, (error, results, fields)=> {
-            if(error) throw error;
-            cbFinnished && cbFinnished(results);
-        });
     }
 
 }

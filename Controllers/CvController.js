@@ -1,5 +1,6 @@
 const mysql = require("mysql");
 const express = require("express");
+
 const CvService = require("../Services/CvService");
 
 const router = express.Router();
@@ -72,13 +73,25 @@ router.put("/:id", (request, response) => {
     // });
 });
 
-
-// Generate a given CV
-router.get("/generate/:idCv", (request, response)=>{
+/**
+ * Generate a given CV
+ * @param {Int} idCv
+ * @param {String} format
+ * @returns 
+ */
+router.get("/generate/:idCv/:format", (request, response) => {
     response.type("application/json");
-    const connMysql = require("../Configs/db.config");
+
     const idCv = request.params.idCv;
-    console.log(idCv);
+    const format = request.params.format;
+
+    const cvService = new CvService();
+    const result = cvService.generateCvHtml(idCv, );
+
+    response.json(["CvController::/generate/:idCv/:format", idCv, format]);
+    return;
+
+    const connMysql = require("../Configs/db.config");
     const sql = `SELECT * FROM users WHERE id = ${idCv}`;
     connMysql.query(sql, (error, result, fields) => {
         if(error) throw error;
