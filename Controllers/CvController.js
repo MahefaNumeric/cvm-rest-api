@@ -1,15 +1,15 @@
-const express = require("express");
-const bodyParse = require("body-parser");
 const mysql = require("mysql");
+const express = require("express");
+const CvService = require("../Services/CvService");
 
-const app = express();
-app.use(bodyParse.json());
+const router = express.Router();
 
-// Recupere liste Users
-app.get("/users/", (request, response) => {
-    const connMysql = require("./db.config");
-    connMysql.query("SELECT * FROM users", (error, results, fields)=> {
-        if(error) throw error;
+module.exports = router;
+
+// Recupere liste CV
+router.get("/", (request, response) => {
+    const userService = new CvService();
+    userService.getListUser((results) => {
         console.log("Results: ", results);
         response.type("application/json");
         response.json(results);
@@ -17,25 +17,23 @@ app.get("/users/", (request, response) => {
 });
 
 // Creation nouvel utilisateur
-app.post("/user/", (request, response)=>{
+router.post("/", (request, response)=>{
     response.type("application/json");
-    const connMysql = require("./db.config");
+    const userService = new CvService();
+    
     const pData = request.body;
     console.log(pData);
-    const sql = `INSERT INTO 
-    users (firstname, lastname, date_birth, auto_desc) 
-    VALUE ('${pData.firstname}', '${pData.lastname}', '${pData.date_birth}', '${pData.auto_desc}')`;
-    connMysql.query(sql, (error, results, fields)=> {
-        if(error) throw error;
+    userService.createNewUser(pData, (results) => {
         console.log("Results: ", results);
+        response.type("application/json");
         response.json(results);
     });
 });
 
 // Creation nouvel utilisateur
-app.get("/user/:id", (request, response)=>{
+router.get("/:id", (request, response)=>{
     response.type("application/json");
-    const connMysql = require("./db.config");
+    const connMysql = require("../Configs/db.config");
     const id = request.params.id;
     console.log(id);
     const sql = `SELECT * FROM users WHERE id = ${id}`;
@@ -53,10 +51,10 @@ app.get("/user/:id", (request, response)=>{
 });
 
 // Mise a jours utilisateur
-app.put("/user/:id", (request, response) => {
+router.put("/:id", (request, response) => {
     response.type("application/json");
-    const connMysql = require("./db.config");
-    const checkIdIfExist = require("./Validation/UserValidation").checkIdIfExist;
+    const connMysql = require("../Configs/db.config");
+    const checkIdIfExist = require("../Validation/UserValidation").checkIdIfExist;
     const pData = request.body;
     const id = request.params.id;
     // const resultCheckIdUser = checkIdIfExist(id, connMysql);
@@ -74,4 +72,23 @@ app.put("/user/:id", (request, response) => {
     // });
 });
 
-app.listen(3000);
+
+// Generate a given CV
+router.get("/generate/:idCv", (request, response)=>{
+    response.type("application/json");
+    const connMysql = require("../Configs/db.config");
+    const idCv = request.params.idCv;
+    console.log(idCv);
+    const sql = `SELECT * FROM users WHERE id = ${idCv}`;
+    connMysql.query(sql, (error, result, fields) => {
+        if(error) throw error;
+        console.log("Result: ", result.length);
+        if(result.length > 0){
+            response.json(result);
+        }else{
+            response.json({
+                "message": `Pas d'utilisateur avec l'id ${idCv}`
+            });
+        }
+    });
+});
