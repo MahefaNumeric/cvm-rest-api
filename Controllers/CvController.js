@@ -86,9 +86,12 @@ router.get("/generate/:idCv/:format", (request, response) => {
     const format = request.params.format;
 
     const cvService = new CvService();
-    const result = cvService.generateCvHtml(idCv, );
+    let resultHTML = null;
+    cvService.generateCvHtml(idCv, (result) => {
+        resultHTML = result;
+    });
 
-    response.json(["CvController::/generate/:idCv/:format", idCv, format]);
+    response.json(["CvController::/generate/:idCv/:format", idCv, format, resultHTML]);
     return;
 
     const connMysql = require("../Configs/db.config");

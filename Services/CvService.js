@@ -58,15 +58,29 @@ class CvService{
      * @async
      */
     async generateCvHtml(idCv, mcbFinnished){
-        return "CvService::generateCvHtml";
-        const connMysql = require("../Configs/db.config");
-        const sql = `INSERT INTO 
-        users (firstname, lastname, date_birth, auto_desc) 
-        VALUE ('${pData.firstname}', '${pData.lastname}', '${pData.date_birth}', '${pData.auto_desc}')`;
-        connMysql.query(sql, (error, results, fields)=> {
-            if(error) throw error;
-            cbFinnished && cbFinnished(results);
-        });
+        const path = require("path");
+        const puppeteer = require("puppeteer");
+
+        const htmlFile = path.resolve("./Templates/cv/template-1/index.html");
+        mcbFinnished([
+            "CvService::generateCvHtml",
+            htmlFile
+        ]);
+        // const browser = await puppeteer.launch();
+        // const page = await browser.newPage();
+        // await page.goto("file://" + htmlFile);
+        // await page.pdf({ path: "./sample.pdf", format: "Letter" });
+        // await browser.close();
+
+        return;
+        // const connMysql = require("../Configs/db.config");
+        // const sql = `INSERT INTO 
+        // users (firstname, lastname, date_birth, auto_desc) 
+        // VALUE ('${pData.firstname}', '${pData.lastname}', '${pData.date_birth}', '${pData.auto_desc}')`;
+        // connMysql.query(sql, (error, results, fields)=> {
+        //     if(error) throw error;
+        //     cbFinnished && cbFinnished(results);
+        // });
     }
 
     /**
