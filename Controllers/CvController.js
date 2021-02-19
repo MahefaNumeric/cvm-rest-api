@@ -87,24 +87,27 @@ router.get("/generate/:idCv/:format", (request, response) => {
 
     const cvService = new CvService();
     let resultHTML = null;
-    cvService.generateCvHtml(idCv, (result) => {
+    cvService.generateCv(idCv, format, (result) => {
         resultHTML = result;
+        response.json({"html": resultHTML});
+        response.end();
     });
-
-    response.json(["CvController::/generate/:idCv/:format", idCv, format, resultHTML]);
     return;
+});
 
-    const connMysql = require("../Configs/db.config");
-    const sql = `SELECT * FROM users WHERE id = ${idCv}`;
-    connMysql.query(sql, (error, result, fields) => {
-        if(error) throw error;
-        console.log("Result: ", result.length);
-        if(result.length > 0){
-            response.json(result);
-        }else{
-            response.json({
-                "message": `Pas d'utilisateur avec l'id ${idCv}`
-            });
-        }
+router.get("/generate/:idCv/:format/view", (request, response) => {
+    response.type("application/json");
+
+    const idCv = request.params.idCv;
+    const format = request.params.format;
+
+    const cvService = new CvService();
+    let resultHTML = null;
+    cvService.generateCv(idCv, format, (result) => {
+        resultHTML = result;
+        response.writeHeader(200, {"Content-Type": "text/html"});  
+        response.write(resultHTML);  
+        response.end();
     });
+    return;
 });

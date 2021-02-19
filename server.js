@@ -17,6 +17,8 @@ const corsOption = {
 
 // app.use(basicAuth);
 
+app.use('/templates/1/', express.static(__dirname + '/Templates/cv/template-1/'));
+
 app.use("/users", cors(corsOption), userController);
 app.use("/cv", cors(corsOption), cvController);
 

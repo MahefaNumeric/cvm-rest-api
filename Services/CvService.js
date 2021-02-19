@@ -60,12 +60,20 @@ class CvService{
     async generateCvHtml(idCv, mcbFinnished){
         const path = require("path");
         const puppeteer = require("puppeteer");
+        const fs = require('fs');
 
-        const htmlFile = path.resolve("./Templates/cv/template-1/index.html");
-        mcbFinnished([
-            "CvService::generateCvHtml",
-            htmlFile
-        ]);
+        // let fs = require('fs');
+        // require.extensions['.html'] = function (module, filename) {
+        //     module.exports = fs.readFileSync(filename, 'utf8');
+        // };
+        
+        const filename = "./Templates/cv/template-1/index.html";
+        const htmlFilename = path.resolve(filename);
+        // const htmlFilename = require.resolve(filename);
+        await fs.readFile(htmlFilename, 'utf8', (err, htmlContent) => {
+            mcbFinnished(htmlContent);
+        });
+
         // const browser = await puppeteer.launch();
         // const page = await browser.newPage();
         // await page.goto("file://" + htmlFile);
