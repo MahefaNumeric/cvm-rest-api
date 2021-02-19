@@ -54,7 +54,9 @@ class CvService{
      * @param {number} idCv 
      * @param {Function} mcbFinnished 
      * @returns {String}
-     * @todo Implement this function.
+     * @todo Create a new function : filename->htmlContent
+     * @todo Create another bloc to handle generation html from database
+     * @todo Add function to handle variable remplacement to the cv content (name, etc...)
      * @async
      */
     async generateCvHtml(idCv, mcbFinnished){
@@ -74,15 +76,10 @@ class CvService{
      * @param {*} idCv 
      * @param {*} mcbFinnished 
      * @returns {String}
-     * @todo Implement this function.
      * @async
      */
     async generateCvPdf(idCv, mcbFinnished){
         const puppeteer = require("puppeteer");
-        const path = require("path");
-
-        const filename = "./Templates/cv/template-1/index.html";
-        const htmlFilename = path.resolve(filename);
 
         const dateObj = new Date();
         const month = dateObj.getUTCMonth() + 1; //months from 1-12
@@ -92,13 +89,20 @@ class CvService{
         const minute = dateObj.getMinutes();
         const seconde = dateObj.getSeconds();
 
+        const filenameOutput = `./Public/CvOutput/cv-${idCv}-${year}-${month}-${day}-${hour}-${minute}-${seconde}.pdf`;
+
+        const host = `http://localhost:3000`;
+        const urlCv = `${host}/cv/generate/${idCv}/html/view`;
+
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
-        await page.goto("file://" + htmlFilename);
-        await page.pdf({ path: `./Public/CvOutput/cv-${idCv}-${year}-${month}-${day}-${hour}-${minute}-${seconde}.pdf`, format: "Letter" });
+        await page.goto(urlCv);
+        await page.pdf({ path: filenameOutput, format: "Letter" });
         await browser.close();
 
-        mcbFinnished(null);
+        mcbFinnished({
+            "filenameOutput": filenameOutput
+        });
         return;
     }
 

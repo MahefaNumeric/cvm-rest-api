@@ -93,14 +93,20 @@ router.get("/generate/:idCv/:format", (request, response) => {
             response.json({"html": resultHTML});
             response.end();
         }else if(format == "pdf"){
-            response.json("pdf done");
+            response.json({
+                "message": "PDF generation finnished",
+                "data": result
+            });
         }else{
-            response.json("format none");
+            response.json("Error : Empty format");
         }
     });
     return;
 });
 
+/**
+ * Previsualise the html output (Type: text/html)
+ */
 router.get("/generate/:idCv/html/view", (request, response) => {
     response.type("application/json");
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 18 fév. 2021 à 20:28
+-- Généré le : ven. 19 fév. 2021 à 20:41
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -275,6 +275,8 @@ CREATE TABLE IF NOT EXISTS `templates` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(64) NOT NULL,
   `description` text NOT NULL,
+  `contents` longtext NOT NULL,
+  `type` varchar(12) NOT NULL COMMENT 'Types : url, html',
   `preview_url` varchar(128) DEFAULT NULL,
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -285,8 +287,8 @@ CREATE TABLE IF NOT EXISTS `templates` (
 -- Déchargement des données de la table `templates`
 --
 
-INSERT INTO `templates` (`id`, `name`, `description`, `preview_url`, `date_add`, `date_update`) VALUES
-(1, 'Simple CV, Black & White', 'Simple CV, Black & White', NULL, '2021-02-18 20:04:19', '2021-02-18 20:04:19');
+INSERT INTO `templates` (`id`, `name`, `description`, `contents`, `type`, `preview_url`, `date_add`, `date_update`) VALUES
+(1, 'Simple CV, Black & White', 'Simple CV, Black & White', '', '', NULL, '2021-02-18 20:04:19', '2021-02-18 20:04:19');
 
 -- --------------------------------------------------------
 
@@ -305,7 +307,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `users`
