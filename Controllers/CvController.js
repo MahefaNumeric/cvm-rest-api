@@ -88,18 +88,24 @@ router.get("/generate/:idCv/:format", (request, response) => {
     const cvService = new CvService();
     let resultHTML = null;
     cvService.generateCv(idCv, format, (result) => {
-        resultHTML = result;
-        response.json({"html": resultHTML});
-        response.end();
+        if(format == "html"){
+            resultHTML = result;
+            response.json({"html": resultHTML});
+            response.end();
+        }else if(format == "pdf"){
+            response.json("pdf done");
+        }else{
+            response.json("format none");
+        }
     });
     return;
 });
 
-router.get("/generate/:idCv/:format/view", (request, response) => {
+router.get("/generate/:idCv/html/view", (request, response) => {
     response.type("application/json");
 
     const idCv = request.params.idCv;
-    const format = request.params.format;
+    const format = "html";
 
     const cvService = new CvService();
     let resultHTML = null;

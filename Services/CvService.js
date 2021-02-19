@@ -59,36 +59,14 @@ class CvService{
      */
     async generateCvHtml(idCv, mcbFinnished){
         const path = require("path");
-        const puppeteer = require("puppeteer");
         const fs = require('fs');
-
-        // let fs = require('fs');
-        // require.extensions['.html'] = function (module, filename) {
-        //     module.exports = fs.readFileSync(filename, 'utf8');
-        // };
         
         const filename = "./Templates/cv/template-1/index.html";
         const htmlFilename = path.resolve(filename);
-        // const htmlFilename = require.resolve(filename);
         await fs.readFile(htmlFilename, 'utf8', (err, htmlContent) => {
             mcbFinnished(htmlContent);
         });
-
-        // const browser = await puppeteer.launch();
-        // const page = await browser.newPage();
-        // await page.goto("file://" + htmlFile);
-        // await page.pdf({ path: "./sample.pdf", format: "Letter" });
-        // await browser.close();
-
         return;
-        // const connMysql = require("../Configs/db.config");
-        // const sql = `INSERT INTO 
-        // users (firstname, lastname, date_birth, auto_desc) 
-        // VALUE ('${pData.firstname}', '${pData.lastname}', '${pData.date_birth}', '${pData.auto_desc}')`;
-        // connMysql.query(sql, (error, results, fields)=> {
-        //     if(error) throw error;
-        //     cbFinnished && cbFinnished(results);
-        // });
     }
 
     /**
@@ -100,6 +78,28 @@ class CvService{
      * @async
      */
     async generateCvPdf(idCv, mcbFinnished){
+        const puppeteer = require("puppeteer");
+        const path = require("path");
+
+        const filename = "./Templates/cv/template-1/index.html";
+        const htmlFilename = path.resolve(filename);
+
+        const dateObj = new Date();
+        const month = dateObj.getUTCMonth() + 1; //months from 1-12
+        const day = dateObj.getUTCDate();
+        const year = dateObj.getUTCFullYear();
+        const hour = dateObj.getHours();
+        const minute = dateObj.getMinutes();
+        const seconde = dateObj.getSeconds();
+
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+        await page.goto("file://" + htmlFilename);
+        await page.pdf({ path: `./Public/CvOutput/cv-${idCv}-${year}-${month}-${day}-${hour}-${minute}-${seconde}.pdf`, format: "Letter" });
+        await browser.close();
+
+        mcbFinnished(null);
+        return;
     }
 
 }
