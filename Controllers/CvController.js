@@ -110,15 +110,17 @@ router.get("/generate/:idCv/:format", (request, response) => {
 router.get("/generate/:idCv/html/view", (request, response) => {
     response.type("application/json");
 
+    // Setting web params
     const idCv = request.params.idCv;
     const format = "html";
 
     const cvService = new CvService();
+    
     let resultHTML = null;
     cvService.generateCv(idCv, format, (result) => {
         resultHTML = result;
         response.writeHeader(200, {"Content-Type": "text/html"});  
-        response.write(resultHTML);  
+        response.write(resultHTML);
         response.end();
     });
     return;

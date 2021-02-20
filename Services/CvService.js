@@ -81,17 +81,10 @@ class CvService{
     async generateCvPdf(idCv, mcbFinnished){
         const puppeteer = require("puppeteer");
 
-        const dateObj = new Date();
-        const month = dateObj.getUTCMonth() + 1; //months from 1-12
-        const day = dateObj.getUTCDate();
-        const year = dateObj.getUTCFullYear();
-        const hour = dateObj.getHours();
-        const minute = dateObj.getMinutes();
-        const seconde = dateObj.getSeconds();
+        const pdfFilename = this.makePdfFilename();
+        const filenameOutput = `./Public/CvOutput/${pdfFilename}.pdf`;
 
-        const filenameOutput = `./Public/CvOutput/cv-${idCv}-${year}-${month}-${day}-${hour}-${minute}-${seconde}.pdf`;
-
-        const host = `http://localhost:3000`;
+        const host = this.getHostUrl();
         const urlCv = `${host}/cv/generate/${idCv}/html/view`;
 
         const browser = await puppeteer.launch();
@@ -104,6 +97,28 @@ class CvService{
             "filenameOutput": filenameOutput
         });
         return;
+    }
+
+    /**
+     * @todo Move to a dedicated utils class
+     */
+    makePdfFilename(){
+        const dateObj = new Date();
+        const month = dateObj.getUTCMonth() + 1; //months from 1-12
+        const day = dateObj.getUTCDate();
+        const year = dateObj.getUTCFullYear();
+        const hour = dateObj.getHours();
+        const minute = dateObj.getMinutes();
+        const seconde = dateObj.getSeconds();
+
+        return `cv-${idCv}-${year}-${month}-${day}-${hour}-${minute}-${seconde}`;
+    }
+
+    /**
+     * @todo Move to a dedicated utils class
+     */
+    getHostUrl(){
+        return `http://localhost:3000`;
     }
 
 }
