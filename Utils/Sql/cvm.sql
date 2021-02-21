@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : Dim 21 fév. 2021 à 20:31
+-- Généré le : Dim 21 fév. 2021 à 20:33
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -513,6 +513,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `lastname` varchar(64) NOT NULL,
   `date_birth` date NOT NULL,
   `phone` varchar(19) DEFAULT NULL,
+  `url_profile` varchar(256) DEFAULT NULL,
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -522,8 +523,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `firstname`, `lastname`, `date_birth`, `phone`, `date_add`, `date_update`) VALUES
-(1, 'abelmahefa@gmail.com', 'Razafinirina', 'Mahefa Abel', '1994-07-21', '+261 34 84 586 05', '2021-02-10 08:03:24', '2021-02-10 08:03:24');
+INSERT INTO `users` (`id`, `email`, `firstname`, `lastname`, `date_birth`, `phone`, `url_profile`, `date_add`, `date_update`) VALUES
+(1, 'abelmahefa@gmail.com', 'Razafinirina', 'Mahefa Abel', '1994-07-21', '+261 34 84 586 05', NULL, '2021-02-10 08:03:24', '2021-02-10 08:03:24');
 
 -- --------------------------------------------------------
 
