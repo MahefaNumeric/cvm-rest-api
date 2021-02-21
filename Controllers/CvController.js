@@ -126,7 +126,7 @@ module.exports = (router) => {
                 ]
             }
         }
-        const templateVueFilePath = cvService.getTemplateVueFilePath(idCv);
+        const templateVueFilePath = cvService.getTemplateVueFilePath(idCv, false);
         response.type("text/html");
         response.renderVue(templateVueFilePath, data, request.vueOptions);
         // response.end();

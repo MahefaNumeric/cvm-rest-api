@@ -63,7 +63,7 @@ class CvService{
         const path = require("path");
         const fs = require('fs');
         
-        const filename = this.getTemplateVueFilePath(idCv);
+        const filename = this.getTemplateVueFilePath(idCv, true);
         const htmlFilename = path.resolve(filename);
         await fs.readFile(htmlFilename, 'utf8', (err, htmlContent) => {
             mcbFinnished(htmlContent);
@@ -75,9 +75,13 @@ class CvService{
      * The path begin on root project folder > Templates/*
      * @param {number} idCv 
      */
-    getTemplateVueFilePath(idCv){
-        const filename = "./cv/template-1/index.vue";
-        return filename;
+    getTemplateVueFilePath(idCv, withTemplatesRoot = false){
+        let rootView = '';
+        if(withTemplatesRoot) rootView = "Templates/";
+
+        const filename = "cv/template-1/index.vue";
+
+        return "./" + rootView + filename;
     }
 
     /**
