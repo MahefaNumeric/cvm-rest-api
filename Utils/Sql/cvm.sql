@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : ven. 19 fév. 2021 à 20:41
+-- Généré le : Dim 21 fév. 2021 à 15:11
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -22,6 +22,32 @@ SET time_zone = "+00:00";
 --
 CREATE DATABASE IF NOT EXISTS `cvm` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `cvm`;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `address`
+--
+
+DROP TABLE IF EXISTS `address`;
+CREATE TABLE IF NOT EXISTS `address` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `value` mediumtext NOT NULL,
+  `enable` tinyint(1) NOT NULL DEFAULT '1' COMMENT '0(Disable), 1(Enable)',
+  `id_user` int(11) NOT NULL,
+  `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `address_id_user` (`id_user`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `address`
+--
+
+INSERT INTO `address` (`id`, `value`, `enable`, `id_user`, `date_add`, `date_update`) VALUES
+(1, 'Lot 120M L Antentezanafovoany, Tananarive, Madagascar', 1, 1, '2021-02-21 15:07:55', '2021-02-21 15:07:55'),
+(2, 'Lot 3305C/BA, Beravina Fianarantsoa, Madagascar', 1, 1, '2021-02-21 15:08:22', '2021-02-21 15:08:22');
 
 -- --------------------------------------------------------
 
@@ -58,6 +84,7 @@ CREATE TABLE IF NOT EXISTS `cv` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_template` int(11) DEFAULT NULL,
   `title` varchar(68) NOT NULL,
+  `id_address` int(11) DEFAULT NULL,
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -68,14 +95,14 @@ CREATE TABLE IF NOT EXISTS `cv` (
 -- Déchargement des données de la table `cv`
 --
 
-INSERT INTO `cv` (`id`, `id_template`, `title`, `date_add`, `date_update`) VALUES
-(1, 1, 'CV Lead Technique', '2021-02-18 20:01:36', '2021-02-18 20:01:36'),
-(2, 1, 'CV Prestashop Developer', '2021-02-18 20:08:12', '2021-02-18 20:08:12'),
-(3, 1, 'CV Symfony Developer', '2021-02-18 20:08:37', '2021-02-18 20:08:37'),
-(4, 1, 'CV Laravel Developer', '2021-02-18 20:09:10', '2021-02-18 20:09:10'),
-(5, 1, 'CV eCommerce Developer', '2021-02-18 20:09:22', '2021-02-18 20:09:22'),
-(6, 1, 'CV Backend Developer', '2021-02-18 20:09:41', '2021-02-18 20:09:41'),
-(7, 1, 'CV Fullstack Developer', '2021-02-18 20:09:53', '2021-02-18 20:09:53');
+INSERT INTO `cv` (`id`, `id_template`, `title`, `id_address`, `date_add`, `date_update`) VALUES
+(1, 1, 'CV Lead Technique', NULL, '2021-02-18 20:01:36', '2021-02-18 20:01:36'),
+(2, 1, 'CV Prestashop Developer', NULL, '2021-02-18 20:08:12', '2021-02-18 20:08:12'),
+(3, 1, 'CV Symfony Developer', NULL, '2021-02-18 20:08:37', '2021-02-18 20:08:37'),
+(4, 1, 'CV Laravel Developer', NULL, '2021-02-18 20:09:10', '2021-02-18 20:09:10'),
+(5, 1, 'CV eCommerce Developer', NULL, '2021-02-18 20:09:22', '2021-02-18 20:09:22'),
+(6, 1, 'CV Backend Developer', NULL, '2021-02-18 20:09:41', '2021-02-18 20:09:41'),
+(7, 1, 'CV Fullstack Developer', NULL, '2021-02-18 20:09:53', '2021-02-18 20:09:53');
 
 -- --------------------------------------------------------
 
@@ -264,6 +291,13 @@ CREATE TABLE IF NOT EXISTS `socials_link` (
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Déchargement des données de la table `socials_link`
+--
+
+INSERT INTO `socials_link` (`user_id`, `github_url`, `linkedin_url`, `skype_id`, `website_url`, `zoom_id`) VALUES
+(1, 'https://github.com/MahefaAbel', 'https://www.linkedin.com/in/mahefa-abel/', 'mahefa.ram', 'http://mahefa.pro/', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -304,6 +338,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `lastname` varchar(64) NOT NULL,
   `date_birth` date NOT NULL,
   `auto_desc` text NOT NULL,
+  `phone` varchar(19) DEFAULT NULL,
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
@@ -313,8 +348,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `firstname`, `lastname`, `date_birth`, `auto_desc`, `date_add`, `date_update`) VALUES
-(1, 'abelmahefa@gmail.com', 'Razafinirina', 'Mahefa Abel', '1994-07-21', 'Lorem lupsum', '2021-02-10 08:03:24', '2021-02-10 08:03:24');
+INSERT INTO `users` (`id`, `email`, `firstname`, `lastname`, `date_birth`, `auto_desc`, `phone`, `date_add`, `date_update`) VALUES
+(1, 'abelmahefa@gmail.com', 'Razafinirina', 'Mahefa Abel', '1994-07-21', 'Lorem lupsum', '+261 34 84 586 05', '2021-02-10 08:03:24', '2021-02-10 08:03:24');
 
 -- --------------------------------------------------------
 
@@ -406,6 +441,12 @@ CREATE TABLE IF NOT EXISTS `users_skills` (
 --
 -- Contraintes pour les tables déchargées
 --
+
+--
+-- Contraintes pour la table `address`
+--
+ALTER TABLE `address`
+  ADD CONSTRAINT `address_id_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `cv`
