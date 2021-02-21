@@ -1,29 +1,34 @@
 
-class User{
-
+class Address{
+    /**
+     * 
+     * @param {number} id 
+     * @param {Template} template 
+     * @param {string} slug 
+     * @param {Address} address 
+     * @param {string} title 
+     * @param {string} auto_biography 
+     * @param {Date} date_add 
+     * @param {Date} date_update 
+     */
     constructor(
         id,
-        email,
-        firstname,
-        lastname,
-        date_birth,
-        phone,
+        template,
+        slug,
+        address,
+        title,
+        auto_biography,
         date_add,
-        date_update,
-        auto_description,
-        auto_biography
+        date_update
     ){
         this.id = id;
-        this.email = email;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.date_birth = date_birth;
-        this.phone = phone;
+        this.template = template;
+        this.slug = slug;
+        this.address = address;
+        this.title = title;
+        this.auto_biography = auto_biography;
         this.date_add = date_add;
         this.date_update = date_update;
-
-        this.auto_description = auto_description ?? new Array();
-        this.auto_biography = auto_biography ?? new Array();
     }
 
     /**
@@ -31,7 +36,7 @@ class User{
      * @param {number} idUser 
      * @returns {User}
      */
-    static createFromDbById(idUser, idLang, cbFinnished){
+    static createFromDbById(idCv, cbFinnished){
         const connMysql = require("../Configs/Databases/db.config");
         const sql = `
         SELECT 
@@ -46,7 +51,7 @@ class User{
         LIMIT 1`;
         connMysql.query(sql, (error, usersResult, fields) => {
             if(error) throw error;
-            if(Array.isArray(usersResult) && usersResult.length > 0) {
+            if(Array.isArray(usersResult) && usersResult.length > 0){
                 const user = new User(...Object.values(usersResult[0]));
                 cbFinnished && cbFinnished(user);
             }else{
@@ -65,8 +70,6 @@ class User{
             null
         );
     }
-
-
 }
 
-module.exports = User;
+module.exports = Address;

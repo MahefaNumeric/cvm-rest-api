@@ -113,7 +113,7 @@ module.exports = (router) => {
         const cvService = new CvService();
 
         const User = require("../Models/User");
-        const user = User.createFromDbById(1, (user) => {
+        const user = User.createFromDbById(1, 1, (user) => {
             const data = {
                 ...user
             };

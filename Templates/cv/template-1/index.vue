@@ -43,7 +43,7 @@
               <span>Interactive Designer</span>
             </h1>
             <ul>
-              <li class="ad">111 Lorem Street, 34785, Ipsum City</li>
+              <li class="ad">{{ address }}</li>
               <li class="mail">{{ email }}</li>
               <li class="tel">{{ phone }}</li>
               <li class="web">www.businessweb.com</li>
