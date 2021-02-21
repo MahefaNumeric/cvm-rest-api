@@ -1,5 +1,15 @@
 
 class Address{
+    /**
+     * 
+     * @param {number} id 
+     * @param {number[0|1]} enable 
+     * @param {number} id_user 
+     * @param {string} slug 
+     * @param {Date} date_add 
+     * @param {Date} date_update 
+     * @param {string} value 
+     */
     constructor(
         id,
         enable,

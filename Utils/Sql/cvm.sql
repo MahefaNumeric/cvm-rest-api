@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : Dim 21 fév. 2021 à 18:21
+-- Généré le : Dim 21 fév. 2021 à 20:31
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -138,7 +138,8 @@ CREATE TABLE IF NOT EXISTS `cv` (
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `cv_id_template` (`id_template`)
+  KEY `cv_id_template` (`id_template`),
+  KEY `cv_id_address` (`id_address`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
@@ -146,13 +147,13 @@ CREATE TABLE IF NOT EXISTS `cv` (
 --
 
 INSERT INTO `cv` (`id`, `id_template`, `slug`, `id_address`, `date_add`, `date_update`) VALUES
-(1, 1, 'LEAD_TECHNICAL', NULL, '2021-02-18 20:01:36', '2021-02-18 20:01:36'),
-(2, 1, 'DEV_PRESTASHOP', NULL, '2021-02-18 20:08:12', '2021-02-18 20:08:12'),
-(3, 1, 'DEV_SYMFONY', NULL, '2021-02-18 20:08:37', '2021-02-18 20:08:37'),
-(4, 1, 'DEV_LARAVEL', NULL, '2021-02-18 20:09:10', '2021-02-18 20:09:10'),
-(5, 1, 'DEV_ECOMMERCE', NULL, '2021-02-18 20:09:22', '2021-02-18 20:09:22'),
-(6, 1, 'DEV_BACKEND', NULL, '2021-02-18 20:09:41', '2021-02-18 20:09:41'),
-(7, 1, 'DEV_FULLSTACK', NULL, '2021-02-18 20:09:53', '2021-02-18 20:09:53');
+(1, 1, 'LEAD_TECHNICAL', 1, '2021-02-18 20:01:36', '2021-02-18 20:01:36'),
+(2, 1, 'DEV_PRESTASHOP', 1, '2021-02-18 20:08:12', '2021-02-18 20:08:12'),
+(3, 1, 'DEV_SYMFONY', 1, '2021-02-18 20:08:37', '2021-02-18 20:08:37'),
+(4, 1, 'DEV_LARAVEL', 1, '2021-02-18 20:09:10', '2021-02-18 20:09:10'),
+(5, 1, 'DEV_ECOMMERCE', 1, '2021-02-18 20:09:22', '2021-02-18 20:09:22'),
+(6, 1, 'DEV_BACKEND', 1, '2021-02-18 20:09:41', '2021-02-18 20:09:41'),
+(7, 1, 'DEV_FULLSTACK', 1, '2021-02-18 20:09:53', '2021-02-18 20:09:53');
 
 -- --------------------------------------------------------
 
@@ -209,13 +210,13 @@ CREATE TABLE IF NOT EXISTS `cv_lang` (
 --
 
 INSERT INTO `cv_lang` (`id_cv`, `id_lang`, `title`, `auto_biography`, `date_add`, `date_update`) VALUES
-(1, 1, 'CV Lead Technique', NULL, '2021-02-21 17:09:57', '2021-02-21 17:09:57'),
-(2, 1, 'CV Prestashop Developer', NULL, '2021-02-21 17:45:34', '2021-02-21 17:45:34'),
-(3, 1, 'CV Symfony Developer', NULL, '2021-02-21 17:48:27', '2021-02-21 17:48:27'),
-(4, 1, 'CV Laravel Developer', NULL, '2021-02-21 17:48:42', '2021-02-21 17:48:42'),
-(5, 1, 'CV eCommerce Developer', NULL, '2021-02-21 17:48:54', '2021-02-21 17:48:54'),
-(6, 1, 'CV Backend Developer', NULL, '2021-02-21 17:49:07', '2021-02-21 17:49:07'),
-(7, 1, 'CV Fullstack Developer', NULL, '2021-02-21 17:49:20', '2021-02-21 17:49:20');
+(1, 1, 'CV Lead Technique', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus.', '2021-02-21 17:09:57', '2021-02-21 17:09:57'),
+(2, 1, 'CV Prestashop Developer', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus.', '2021-02-21 17:45:34', '2021-02-21 17:45:34'),
+(3, 1, 'CV Symfony Developer', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus.', '2021-02-21 17:48:27', '2021-02-21 17:48:27'),
+(4, 1, 'CV Laravel Developer', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus.', '2021-02-21 17:48:42', '2021-02-21 17:48:42'),
+(5, 1, 'CV eCommerce Developer', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus.', '2021-02-21 17:48:54', '2021-02-21 17:48:54'),
+(6, 1, 'CV Backend Developer', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus.', '2021-02-21 17:49:07', '2021-02-21 17:49:07'),
+(7, 1, 'CV Fullstack Developer', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus.', '2021-02-21 17:49:20', '2021-02-21 17:49:20');
 
 -- --------------------------------------------------------
 
@@ -354,6 +355,9 @@ CREATE TABLE IF NOT EXISTS `part_projects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `company_id` int(11) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
+  `show_in_portfolio` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0|1',
+  `url_access` varchar(256) DEFAULT NULL,
+  `url_preview` varchar(256) DEFAULT NULL,
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -661,6 +665,7 @@ ALTER TABLE `companies_lang`
 -- Contraintes pour la table `cv`
 --
 ALTER TABLE `cv`
+  ADD CONSTRAINT `cv_id_address` FOREIGN KEY (`id_address`) REFERENCES `address` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `cv_id_template` FOREIGN KEY (`id_template`) REFERENCES `templates` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION;
 
 --
