@@ -1,4 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<template>
+<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> -->
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -10,7 +11,7 @@
 <![endif]-->
 <!--[if IE 6]>
 <link href="/templates/1/css/ie6.css" rel="stylesheet" type="text/css" />
-<![endif]-->
+<![endif]--> 
 <script type="text/javascript" src="/templates/1/js/jquery-1.4.2.min.js"></script>
 <script type="text/javascript" src="/templates/1/js/jquery.tipsy.js"></script>
 <script type="text/javascript" src="/templates/1/js/cufon.yui.js"></script>
@@ -160,3 +161,4 @@
 <!-- End Wrapper -->
 </body>
 </html>
+</template>

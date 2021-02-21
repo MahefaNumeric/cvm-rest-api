@@ -63,12 +63,21 @@ class CvService{
         const path = require("path");
         const fs = require('fs');
         
-        const filename = "./Templates/cv/template-1/index.html";
+        const filename = this.getTemplateVueFilePath(idCv);
         const htmlFilename = path.resolve(filename);
         await fs.readFile(htmlFilename, 'utf8', (err, htmlContent) => {
             mcbFinnished(htmlContent);
         });
         return;
+    }
+
+    /**
+     * The path begin on root project folder > Templates/*
+     * @param {number} idCv 
+     */
+    getTemplateVueFilePath(idCv){
+        const filename = "./cv/template-1/index.vue";
+        return filename;
     }
 
     /**
@@ -79,14 +88,13 @@ class CvService{
      * @async
      */
     async generateCvPdf(idCv, mcbFinnished){
-        const puppeteer = require("puppeteer");
-
-        const pdfFilename = this.makePdfFilename();
+        const pdfFilename = this.makePdfFilename(idCv);
         const filenameOutput = `./Public/CvOutput/${pdfFilename}.pdf`;
 
         const host = this.getHostUrl();
         const urlCv = `${host}/cv/generate/${idCv}/html/view`;
 
+        const puppeteer = require("puppeteer");
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         await page.goto(urlCv);
@@ -102,7 +110,7 @@ class CvService{
     /**
      * @todo Move to a dedicated utils class
      */
-    makePdfFilename(){
+    makePdfFilename(idCv){
         const dateObj = new Date();
         const month = dateObj.getUTCMonth() + 1; //months from 1-12
         const day = dateObj.getUTCDate();
