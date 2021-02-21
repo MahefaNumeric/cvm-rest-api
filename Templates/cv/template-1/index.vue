@@ -38,8 +38,10 @@
           <!-- End Image -->
           <!-- Begin Personal Information -->
           <div class="self">
-            <h1 class="name">John Smith <br />
-              <span>Interactive Designer</span></h1>
+            <h1 class="name">
+              {{ username }} <br />
+              <span>Interactive Designer</span>
+            </h1>
             <ul>
               <li class="ad">111 Lorem Street, 34785, Ipsum City</li>
               <li class="mail">johnsmith@business.com</li>
@@ -162,3 +164,11 @@
 </body>
 </html>
 </template>
+
+
+<script>
+  // It's necessary for vue mecanism
+  module.exports = {
+      data: () => {}
+  }
+</script>

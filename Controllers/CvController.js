@@ -108,14 +108,12 @@ module.exports = (router) => {
      * Previsualise the html output (Type: text/html)
      */
     router.get("/generate/:idCv/html/view", (request, response, next) => {
-        // Setting web params
         const idCv = request.params.idCv;
-        const format = "html";
 
         const cvService = new CvService();
         
         const data = {
-            otherData: 'Something Else'
+            username: 'Something Else'
         };
         request.vueOptions = {
             head: {
@@ -124,7 +122,7 @@ module.exports = (router) => {
                     { property:'og:title', content: 'Page Title'},
                     { name:'twitter:title', content: 'Page Title'},
                 ]
-            }
+            },
         }
         const templateVueFilePath = cvService.getTemplateVueFilePath(idCv, false);
         response.type("text/html");
