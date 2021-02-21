@@ -39,13 +39,13 @@
           <!-- Begin Personal Information -->
           <div class="self">
             <h1 class="name">
-              {{ lastname }} <br />
-              <span>Interactive Designer</span>
+              {{ user.lastname }} <br />
+              <span>{{cv.title}}</span>
             </h1>
             <ul>
-              <li class="ad">{{ address }}</li>
-              <li class="mail">{{ email }}</li>
-              <li class="tel">{{ phone }}</li>
+              <li class="ad">{{ cv.address.value }}</li>
+              <li class="mail">{{ user.email }}</li>
+              <li class="tel">{{ user.phone }}</li>
               <li class="web">www.businessweb.com</li>
             </ul>
           </div>
@@ -65,7 +65,9 @@
         <!-- Begin 1st Row -->
         <div class="entry">
           <h2>OBJECTIVE</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus.</p>
+          <p>
+            {{ cv.auto_biography }}
+          </p>
         </div>
         <!-- End 1st Row -->
         <!-- Begin 2nd Row -->

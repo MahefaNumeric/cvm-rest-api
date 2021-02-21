@@ -1,3 +1,4 @@
+const Address = require("./Address");
 
 class User{
 
@@ -24,6 +25,8 @@ class User{
 
         this.auto_description = auto_description ?? new Array();
         this.auto_biography = auto_biography ?? new Array();
+
+        this.address = null;
     }
 
     /**

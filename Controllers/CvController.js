@@ -113,27 +113,35 @@ module.exports = (router) => {
         const cvService = new CvService();
 
         const User = require("../Models/User");
-        const user = User.createFromDbById(1, 1, (user) => {
-            const data = {
-                ...user
-            };
-            console.log("/generate/:idCv/html/view", data);
-            const htmlPageTitle = `Resume ${data.lastname}`
-            request.vueOptions = {
-                head: {
-                    title: htmlPageTitle,
-                    metas: [
-                        { property:'og:title', content: htmlPageTitle},
-                        { name:'twitter:title', content: htmlPageTitle},
-                    ]
-                },
-            }
-            const templateVueFilePath = cvService.getTemplateVueFilePath(idCv, false);
-            response.type("text/html");
-            response.renderVue(templateVueFilePath, data, request.vueOptions);
-            // response.end();
+        const Cv = require("../Models/Cv");
+
+        User.createFromDbById(1, 1, (user) => {
+            Cv.createFromDbById(1, 1, (cv) => {
+                const data = {
+                    user: user,
+                    cv: cv
+                };
+                console.log("/generate/:idCv/html/view", data);
+                const htmlPageTitle = `Resume ${data.lastname}`;
+                request.vueOptions = vueOptions(htmlPageTitle);
+                
+                const templateVueFilePath = cvService.getTemplateVueFilePath(idCv, false);
+                response.type("text/html");
+                response.renderVue(templateVueFilePath, data, request.vueOptions);
+                // response.end();
+            });
         });
     });
     
     return router;
 }
+
+const vueOptions = (htmlPageTitle) => ({
+    head: {
+        title: htmlPageTitle,
+        metas: [
+            { property:'og:title', content: htmlPageTitle},
+            { name:'twitter:title', content: htmlPageTitle},
+        ]
+    },
+})

@@ -1,34 +1,21 @@
 
 class Address{
-    /**
-     * 
-     * @param {number} id 
-     * @param {Template} template 
-     * @param {string} slug 
-     * @param {Address} address 
-     * @param {string} title 
-     * @param {string} auto_biography 
-     * @param {Date} date_add 
-     * @param {Date} date_update 
-     */
     constructor(
         id,
-        template,
+        enable,
+        id_user,
         slug,
-        address,
-        title,
-        auto_biography,
         date_add,
-        date_update
+        date_update,
+        value
     ){
         this.id = id;
-        this.template = template;
+        this.enable = enable;
+        this.id_user = id_user;
         this.slug = slug;
-        this.address = address;
-        this.title = title;
-        this.auto_biography = auto_biography;
         this.date_add = date_add;
         this.date_update = date_update;
+        this.value = value;
     }
 
     /**
@@ -36,26 +23,25 @@ class Address{
      * @param {number} idUser 
      * @returns {User}
      */
-    static createFromDbById(idCv, cbFinnished){
+    static createFromDbById(idAddress, idLang, cbFinnished){
         const connMysql = require("../Configs/Databases/db.config");
         const sql = `
         SELECT 
-            users.*, 
-            users_lang.auto_description, 
-            users_lang.auto_biography
-        FROM users 
-        JOIN users_lang 
-            ON users.id=users_lang.id_user 
-        WHERE id = ${idUser} 
-            AND users_lang.id_lang = ${idLang}
+            address.*, 
+            address_lang.value
+        FROM address 
+        JOIN address_lang 
+            ON address.id=address_lang.id_address 
+        WHERE id = ${idAddress} 
+            AND address_lang.id_lang = ${idLang}
         LIMIT 1`;
-        connMysql.query(sql, (error, usersResult, fields) => {
+        connMysql.query(sql, (error, result, fields) => {
             if(error) throw error;
-            if(Array.isArray(usersResult) && usersResult.length > 0){
-                const user = new User(...Object.values(usersResult[0]));
-                cbFinnished && cbFinnished(user);
+            if(Array.isArray(result) && result.length > 0){
+                const address = new Address(...Object.values(result[0]));
+                cbFinnished && cbFinnished(address);
             }else{
-                console.log("User::createFromDbById::usersResult", usersResult, error);
+                console.log("Address::createFromDbById::result", result, error);
             }
         });
     }
