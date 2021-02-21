@@ -39,13 +39,13 @@
           <!-- Begin Personal Information -->
           <div class="self">
             <h1 class="name">
-              {{ username }} <br />
+              {{ lastname }} <br />
               <span>Interactive Designer</span>
             </h1>
             <ul>
               <li class="ad">111 Lorem Street, 34785, Ipsum City</li>
-              <li class="mail">johnsmith@business.com</li>
-              <li class="tel">+11 444 555 22 33</li>
+              <li class="mail">{{ email }}</li>
+              <li class="tel">{{ phone }}</li>
               <li class="web">www.businessweb.com</li>
             </ul>
           </div>

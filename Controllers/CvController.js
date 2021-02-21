@@ -111,23 +111,28 @@ module.exports = (router) => {
         const idCv = request.params.idCv;
 
         const cvService = new CvService();
-        
-        const data = {
-            username: 'Something Else'
-        };
-        request.vueOptions = {
-            head: {
-                title: 'Page Title',
-                metas: [
-                    { property:'og:title', content: 'Page Title'},
-                    { name:'twitter:title', content: 'Page Title'},
-                ]
-            },
-        }
-        const templateVueFilePath = cvService.getTemplateVueFilePath(idCv, false);
-        response.type("text/html");
-        response.renderVue(templateVueFilePath, data, request.vueOptions);
-        // response.end();
+
+        const User = require("../Models/User");
+        const user = User.createFromDbById(1, (user) => {
+            const data = {
+                ...user
+            };
+            console.log("/generate/:idCv/html/view", data);
+            const htmlPageTitle = `Resume ${data.lastname}`
+            request.vueOptions = {
+                head: {
+                    title: htmlPageTitle,
+                    metas: [
+                        { property:'og:title', content: htmlPageTitle},
+                        { name:'twitter:title', content: htmlPageTitle},
+                    ]
+                },
+            }
+            const templateVueFilePath = cvService.getTemplateVueFilePath(idCv, false);
+            response.type("text/html");
+            response.renderVue(templateVueFilePath, data, request.vueOptions);
+            // response.end();
+        });
     });
     
     return router;

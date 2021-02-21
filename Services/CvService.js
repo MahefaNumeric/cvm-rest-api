@@ -20,7 +20,7 @@ class CvService{
 
     // @todo
     async createNewCv(pData, mcbFinnished){
-        const connMysql = require("../Configs/db.config");
+        const connMysql = require("../Configs/Databases/db.config");
         const sql = `INSERT INTO 
         users (firstname, lastname, date_birth, auto_desc) 
         VALUE ('${pData.firstname}', '${pData.lastname}', '${pData.date_birth}', '${pData.auto_desc}')`;
