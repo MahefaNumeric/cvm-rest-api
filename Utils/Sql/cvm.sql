@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : Dim 21 fév. 2021 à 20:33
+-- Généré le : lun. 22 fév. 2021 à 14:48
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -290,7 +290,14 @@ CREATE TABLE IF NOT EXISTS `part_educations` (
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `part_educations`
+--
+
+INSERT INTO `part_educations` (`id`, `slug`, `date_begin`, `date_end`, `date_add`, `date_update`) VALUES
+(1, 'ENI_LICENCE', '2012-01-11', '2016-06-22', '2021-02-22 14:37:34', '2021-02-22 14:37:34');
 
 -- --------------------------------------------------------
 
@@ -309,6 +316,13 @@ CREATE TABLE IF NOT EXISTS `part_educations_lang` (
   PRIMARY KEY (`id_part_educations`,`id_lang`),
   KEY `part_educations_lang_id_lang` (`id_lang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `part_educations_lang`
+--
+
+INSERT INTO `part_educations_lang` (`id_part_educations`, `id_lang`, `title`, `description`, `date_add`, `date_update`) VALUES
+(1, 1, 'Licence - ENI, Madagascar', 'Licence en Informatique - Lorem Lispum', '2021-02-22 14:38:19', '2021-02-22 14:38:19');
 
 -- --------------------------------------------------------
 
@@ -471,7 +485,7 @@ CREATE TABLE IF NOT EXISTS `socials_link` (
 --
 
 INSERT INTO `socials_link` (`user_id`, `github_url`, `linkedin_url`, `skype_id`, `website_url`, `zoom_id`) VALUES
-(1, 'https://github.com/MahefaAbel', 'https://www.linkedin.com/in/mahefa-abel/', 'mahefa.ram', 'http://mahefa.pro/', NULL);
+(1, 'https://github.com/MahefaAbel', 'https://www.linkedin.com/in/mahefa-abel/', 'mahefa.ram', 'http://mahefa.pro', NULL);
 
 -- --------------------------------------------------------
 

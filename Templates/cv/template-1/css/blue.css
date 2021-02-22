@@ -434,7 +434,7 @@ img.portrait {
 	background-repeat: no-repeat;
 	padding-left:26px;
 	background-position: 0 .1em;
-	height:25px;
+	line-height: 2;
 	display:block;
 	margin-top:-2px;
 }
