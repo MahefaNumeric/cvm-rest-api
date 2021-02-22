@@ -1,4 +1,5 @@
 const Address = require("./Address");
+const SocialLink = require("./SocialLink");
 
 class User{
 
@@ -27,6 +28,7 @@ class User{
         this.auto_biography = auto_biography ?? new Array();
 
         this.address = null;
+        this.socialLink = null;
     }
 
     /**
@@ -50,8 +52,12 @@ class User{
         connMysql.query(sql, (error, usersResult, fields) => {
             if(error) throw error;
             if(Array.isArray(usersResult) && usersResult.length > 0) {
-                const user = new User(...Object.values(usersResult[0]));
-                cbFinnished && cbFinnished(user);
+                const userResultFirst = usersResult[0];
+                const user = new this(...Object.values(userResultFirst));
+                SocialLink.createFromDbById(userResultFirst.id, (socialLink) => {
+                    user.socialLink = socialLink;
+                    cbFinnished && cbFinnished(user);
+                });
             }else{
                 console.log("User::createFromDbById::usersResult", usersResult, error);
             }
