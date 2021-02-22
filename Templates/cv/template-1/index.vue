@@ -83,10 +83,10 @@
             <p>University of Art &amp; Design, New York <br />
               <em>Bachelor of Science in Graphic Design</em></p>
           </div>
-          <div class="content" v-for="item in items" :key="item.message">
-            <h3>Sep 2001 - Jun 2005</h3>
-            <p>University of Art &amp; Design, New York <br />
-              <em>Bachelor of Science in Graphic Design</em></p>
+          <div class="content" v-for="education in cv.educations" :key="education.id">
+            <h3>{{ education.date_begin }} - {{ education.date_end }}</h3>
+            <p> {{ education.title }} <br />
+              <em>{{ education.description }}</em></p>
           </div>
         </div>
         <!-- End 2nd Row -->

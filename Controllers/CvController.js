@@ -1,9 +1,8 @@
-const mysql = require("mysql");
-const express = require("express");
+// const mysql = require("mysql");
+// const express = require("express");
+const util = require('util');
 
 const CvService = require("../Services/CvService");
-
-// const router = express.Router();
 
 module.exports = (router) => {
     
@@ -121,7 +120,7 @@ module.exports = (router) => {
                     user: user,
                     cv: cv
                 };
-                console.log("/generate/:idCv/html/view", data);
+                console.log("/generate/:idCv/html/view", util.inspect(data, {showHidden: false, depth: null, colors: true}));
                 const htmlPageTitle = `Resume ${data.lastname}`;
                 request.vueOptions = vueOptions(htmlPageTitle);
                 

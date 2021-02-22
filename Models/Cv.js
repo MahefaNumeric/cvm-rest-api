@@ -1,5 +1,6 @@
 const Address = require("./Address");
 const Template = require("./Template");
+const Education = require("./Education");
 
 class Cv{
     /**
@@ -65,8 +66,13 @@ class Cv{
                 const cv = new Cv(...Object.values(cvResult[0]));
                 Address.createFromDbById(cv.id_address, 1, (address) => {
                     cv.address = address;
-                    cbFinnished && cbFinnished(cv);
+                    Education.getListEducationFromDbByIdCv(cv.id, 1, (listEducation) => {
+                        cv.educations = listEducation;
+                        // console.log("listEducation", listEducation);
+                        cbFinnished && cbFinnished(cv);
+                    });
                 });
+
             }else{
                 console.log("Cv::createFromDbById::cvResult", cvResult, error);
             }

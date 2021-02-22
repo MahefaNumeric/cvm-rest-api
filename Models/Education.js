@@ -1,26 +1,33 @@
 
 class Education{
-    static _table = "cv_educations";
+    static _table = "part_educations";
 
     constructor(
-        user_id,
-        github_url,
-        linkedin_url,
-        skype_id,
-        website_url,
-        zoom_id,
+        id,
+        id_user,
+        slug,
+        date_begin,
+        date_end,
+        date_add,
+        date_update,
+        title,
+        description
     ){
-        this.user_id = user_id;
-        this.github_url = github_url;
-        this.linkedin_url = linkedin_url;
-        this.skype_id = skype_id;
-        this.website_url = website_url;
-        this.zoom_id = zoom_id;
+        this.id = id;
+        this.id_user = id_user;
+        this.slug = slug;
+        this.date_begin = date_begin;
+        this.date_end = date_end;
+        this.date_add = date_add;
+        this.date_update = date_update;
+
+        this.title = title;
+        this.description = description;
     }
 
     /**
      * 
-     * @param {number} idEducation 
+     * @param {number} idEducation
      * @returns {Education}
      */
     static createFromDbById(idEducation, cbFinnished){
@@ -29,7 +36,7 @@ class Education{
         SELECT 
             ${this._table}.*
         FROM ${this._table}
-        WHERE user_id = ${idEducation} 
+        WHERE id = ${idEducation}
         LIMIT 1`;
         connMysql.query(sql, (error, educationResult, fields) => {
             if(error) throw error;
@@ -42,26 +49,38 @@ class Education{
         });
     }
     
-/**
+    /**
      * 
      * @param {number} idCv 
+     * @param {number} idLang 
+     * @param {function(listEducation)} cbFinnished
      * @returns {Array<Education>}
      */
-    static getListEducationFromDbByIdCv(idCv, cbFinnished){
+    static getListEducationFromDbByIdCv(idCv, idLang, cbFinnished){
         const connMysql = require("../Configs/Databases/db.config");
         const sql = `
         SELECT 
-            ${this._table}.*
-        FROM ${this._table}
-        WHERE user_id = ${idCv} 
-        LIMIT 1`;
-        connMysql.query(sql, (error, educationResult, fields) => {
+            part_educations.*,
+            part_educations_lang.title,
+            part_educations_lang.description
+        FROM cv_educations
+        JOIN part_educations
+            ON cv_educations.id_education = part_educations.id
+        JOIN part_educations_lang
+            ON part_educations.id = part_educations_lang.id_part_educations 
+        WHERE id_cv = ${idCv}
+            AND part_educations_lang.id_lang = ${idLang}
+        `;
+        connMysql.query(sql, (error, listEducationResult, fields) => {
             if(error) throw error;
-            if(Array.isArray(educationResult) && educationResult.length > 0) {
-                const education = new this(...Object.values(educationResult[0]));
-                cbFinnished && cbFinnished(education);
+            if(Array.isArray(listEducationResult) && listEducationResult.length > 0) {
+                const listEducation = [];
+                listEducationResult.forEach(element => {
+                    listEducation.push(new this(...Object.values(element)));
+                });
+                cbFinnished && cbFinnished(listEducation);
             }else{
-                console.log("Education::createFromDbById::educationResult", educationResult, error);
+                console.log("Education::createFromDbById::listEducationResult", educationResult, error);
             }
         });
     }
