@@ -1,3 +1,4 @@
+const DateUtils = require("../Utils/DateUtils");
 
 class Education{
     static _table = "part_educations";
@@ -63,8 +64,8 @@ class Education{
             part_educations.*,
             part_educations_lang.title,
             part_educations_lang.description,
-            DATE_FORMAT(date_begin, '%Y-%m-%d') as date_begin,
-            DATE_FORMAT(date_end, '%Y-%m-%d') as date_end
+            DATE_FORMAT(date_begin, '%Y-%m') as date_begin,
+            DATE_FORMAT(date_end, '%Y-%m') as date_end
         FROM cv_educations
         JOIN part_educations
             ON cv_educations.id_education = part_educations.id
@@ -99,6 +100,13 @@ class Education{
         );
     }
 
+    getFriendly_dateBegin(){
+        const date_begin_array = this.date_begin.split(" ");
+        const year = date_begin_array[0];
+        const month = date_begin_array[1];
+        const monthName = DateUtils.getMonthName(month, "fr");
+        return `${year} ${monthName}`;
+    }
 
 }
 
