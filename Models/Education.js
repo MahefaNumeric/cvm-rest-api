@@ -62,16 +62,19 @@ class Education{
         SELECT 
             part_educations.*,
             part_educations_lang.title,
-            part_educations_lang.description
+            part_educations_lang.description,
+            DATE_FORMAT(date_begin, '%Y-%m-%d') as date_begin,
+            DATE_FORMAT(date_end, '%Y-%m-%d') as date_end
         FROM cv_educations
         JOIN part_educations
             ON cv_educations.id_education = part_educations.id
         JOIN part_educations_lang
             ON part_educations.id = part_educations_lang.id_part_educations 
-        WHERE id_cv = ${idCv}
-            AND part_educations_lang.id_lang = ${idLang}
+        WHERE id_cv = ?
+            AND part_educations_lang.id_lang = ?
         `;
-        connMysql.query(sql, (error, listEducationResult, fields) => {
+        const sqlParams = [idCv, idLang];
+        connMysql.query(sql, sqlParams, (error, listEducationResult, fields) => {
             if(error) throw error;
             if(Array.isArray(listEducationResult) && listEducationResult.length > 0) {
                 const listEducation = [];
