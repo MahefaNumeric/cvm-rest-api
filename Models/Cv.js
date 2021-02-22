@@ -35,6 +35,9 @@ class Cv{
         // this.template = new Template();
         this.address = null;
         this.educations = null;
+        this.experiences = null;
+        this.projects = null;
+        this.skills = null;
     }
 
     /**
