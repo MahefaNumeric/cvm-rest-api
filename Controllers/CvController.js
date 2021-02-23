@@ -16,7 +16,7 @@ module.exports = (router) => {
         });
     });
 
-    // Creation nouvel utilisateur
+    // Creation nouvel CV
     router.post("/", (request, response)=>{
         response.type("application/json");
         const userService = new CvService();
@@ -30,7 +30,7 @@ module.exports = (router) => {
         });
     });
 
-    // Creation nouvel utilisateur
+    // Creation nouvel CV
     router.get("/:id", (request, response)=>{
         response.type("application/json");
         const connMysql = require("../Configs/db.config");
@@ -50,7 +50,7 @@ module.exports = (router) => {
         });
     });
 
-    // Mise a jours utilisateur
+    // Mise a jours de CV
     router.put("/:id", (request, response) => {
         response.type("application/json");
         const connMysql = require("../Configs/db.config");
@@ -108,6 +108,7 @@ module.exports = (router) => {
      */
     router.get("/generate/:idCv/html/view", (request, response, next) => {
         const idCv = request.params.idCv;
+        const isoLang = request.params.isoLang; // From parent params
 
         const cvService = new CvService();
 
@@ -120,7 +121,7 @@ module.exports = (router) => {
                     user: user,
                     cv: cv
                 };
-                console.log("/generate/:idCv/html/view", util.inspect(data, {showHidden: false, depth: null, colors: true}));
+                console.log("/generate/:idCv/html/view", util.inspect(data, {showHidden: false, depth: null, colors: true}), "isoLang: ", isoLang);
                 const htmlPageTitle = `Resume ${data.lastname}`;
                 request.vueOptions = vueOptions(htmlPageTitle);
                 

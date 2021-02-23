@@ -23,7 +23,7 @@ const corsOption = {
 // Setup static assets
 app.use('/templates/1/', express.static(__dirname + '/Templates/cv/template-1/'));
 
-const router = express.Router();
+const router = express.Router({ mergeParams: true });
 
 // Use ExpressVue Package
 const vueOptions = {
@@ -34,8 +34,8 @@ const expressVueMiddleware = expressVue.init(vueOptions);
 app.use(expressVueMiddleware);
 
 // Setup controllers
-app.use("/users", cors(corsOption), userController);
-app.use("/cv", cors(corsOption), cvController(router));
+app.use("/:isoLang/users", cors(corsOption), userController);
+app.use("/:isoLang/cv", cors(corsOption), cvController(router));
 
 // Start server
 app.listen(3000);

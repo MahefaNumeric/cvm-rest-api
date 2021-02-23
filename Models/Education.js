@@ -1,9 +1,11 @@
 const DateUtils = require("../Utils/DateUtils");
+const Language = require("./Language");
 
 class Education{
     static _table = "part_educations";
 
     constructor(
+        isoLang,
         id,
         id_user,
         slug,
@@ -14,6 +16,7 @@ class Education{
         title,
         description
     ){
+        this.isoLang = isoLang;
         this.id = id;
         this.id_user = id_user;
         this.slug = slug;
@@ -35,7 +38,7 @@ class Education{
      * @param {number} idEducation
      * @returns {Education}
      */
-    static createFromDbById(idEducation, cbFinnished){
+    static createFromDbById(idEducation, idLang, cbFinnished){
         const connMysql = require("../Configs/Databases/db.config");
         const sql = `
         SELECT 
@@ -46,8 +49,10 @@ class Education{
         connMysql.query(sql, (error, educationResult, fields) => {
             if(error) throw error;
             if(Array.isArray(educationResult) && educationResult.length > 0) {
-                const education = new this(...Object.values(educationResult[0]));
-                cbFinnished && cbFinnished(education);
+                Language.createFromDbById(idLang, (language) => {
+                    const education = new Education(language.code_iso, ...Object.values(educationResult[0]));
+                    cbFinnished && cbFinnished(education);
+                });
             }else{
                 console.log("Education::createFromDbById::educationResult", educationResult, error);
             }
@@ -82,11 +87,13 @@ class Education{
         connMysql.query(sql, sqlParams, (error, listEducationResult, fields) => {
             if(error) throw error;
             if(Array.isArray(listEducationResult) && listEducationResult.length > 0) {
-                const listEducation = [];
-                listEducationResult.forEach(element => {
-                    listEducation.push(new this(...Object.values(element)));
+                Language.createFromDbById(idLang, (language) => {
+                    const listEducation = [];
+                    listEducationResult.forEach(element => {
+                        listEducation.push(new Education(language.code_iso, ...Object.values(element)));
+                    });
+                    cbFinnished && cbFinnished(listEducation);
                 });
-                cbFinnished && cbFinnished(listEducation);
             }else{
                 console.log("Education::createFromDbById::listEducationResult", educationResult, error);
             }
