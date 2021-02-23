@@ -106,7 +106,7 @@ class Education{
 
     set date_begin(dateBegin) {
         this.date_begin_value = dateBegin;
-        this.date_begin_friendly = this.formatDateToFriendly(dateBegin);
+        this.date_begin_friendly = this.formatDateToFriendly(dateBegin, "fr", false);
     }
 
     get date_begin() {
@@ -115,19 +115,30 @@ class Education{
 
     set date_end(dateEnd) {
         this.date_end_value = dateEnd;
-        this.date_end_friendly = this.formatDateToFriendly(dateEnd);
+        this.date_end_friendly = this.formatDateToFriendly(dateEnd, "fr", false);
     }
 
     get date_end() {
         return this.date_end_value;
     }
 
-    formatDateToFriendly(date){
+    formatDateToFriendly(date, isoLang, longMonthName){
         const date_array = date.split("-");
         const year = parseInt(date_array[0]);
         const month = parseInt(date_array[1]);
-        const monthName = DateUtils.getMonthName(month, "fr");
-        return `${year} ${monthName}`;
+        const monthName = DateUtils.getMonthName(month, isoLang, longMonthName);
+        
+        let enFriendlyDate = `${year} ${monthName}`; // Default : EN 
+        let result = null;
+        switch(String(isoLang).toLowerCase()){
+            case "fr":
+                result = `${monthName} ${year}`;
+                break;
+            default:
+                result = enFriendlyDate;
+                break;
+        }
+        return result;
     }
 
 }

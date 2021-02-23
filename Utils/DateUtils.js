@@ -12,35 +12,35 @@ class DateUtils{
      * @param {string} isoLang 
      * @returns {string}
      */
-    static getMonthName(monthNumber, isoLang = "fr"){
+    static getMonthName(monthNumber, isoLang = "fr", longMonthName = true){
         const monthName = [];
         monthName["fr"] = [];
-        monthName["fr"][1] = "Janvier";
-        monthName["fr"][2] = "Fevrier";
-        monthName["fr"][3] = "Mars";
-        monthName["fr"][4] = "Avril";
-        monthName["fr"][5] = "Mai";
-        monthName["fr"][6] = "Juin";
-        monthName["fr"][7] = "Juillet";
-        monthName["fr"][8] = "Aout";
-        monthName["fr"][9] = "Septembre";
-        monthName["fr"][10] = "Octobre";
-        monthName["fr"][11] = "Novembre";
-        monthName["fr"][12] = "Decembre";
+        monthName["fr"][1] = longMonthName ? "Janvier" : "Jan";
+        monthName["fr"][2] = longMonthName ? "Fevrier" : "Fev";
+        monthName["fr"][3] = longMonthName ? "Mars" : "Mar";
+        monthName["fr"][4] = longMonthName ? "Avril" : "Avr";
+        monthName["fr"][5] = longMonthName ? "Mai" : "Mai";
+        monthName["fr"][6] = longMonthName ? "Juin" : "Juin";
+        monthName["fr"][7] = longMonthName ? "Juillet" : "Juil";
+        monthName["fr"][8] = longMonthName ? "Aout" : "Aou";
+        monthName["fr"][9] = longMonthName ? "Septembre" : "Sept";
+        monthName["fr"][10] = longMonthName ? "Octobre" : "Oct";
+        monthName["fr"][11] = longMonthName ? "Novembre" : "Nov";
+        monthName["fr"][12] = longMonthName ? "Decembre" : "Dec";
 
         monthName["en"] = [];
-        monthName["en"][1] = "January";
-        monthName["en"][2] = "Febroary";
-        monthName["en"][3] = "March";
-        monthName["en"][4] = "April";
-        monthName["en"][5] = "May";
-        monthName["en"][6] = "June";
-        monthName["en"][7] = "Julle";
-        monthName["en"][8] = "Aougust";
-        monthName["en"][9] = "September";
-        monthName["en"][10] = "October";
-        monthName["en"][11] = "November";
-        monthName["en"][12] = "December";
+        monthName["en"][1] = longMonthName ? "January" : "Jan";
+        monthName["en"][2] = longMonthName ? "Febroary" : "Feb";
+        monthName["en"][3] = longMonthName ? "March" : "Mar";
+        monthName["en"][4] = longMonthName ? "April" : "Apr";
+        monthName["en"][5] = longMonthName ? "May" : "May";
+        monthName["en"][6] = longMonthName ? "June" : "Jun";
+        monthName["en"][7] = longMonthName ? "Julle" : "Jul";
+        monthName["en"][8] = longMonthName ? "Augost" : "Aug";
+        monthName["en"][9] = longMonthName ? "September" : "Sept";
+        monthName["en"][10] = longMonthName ? "October" : "Oct";
+        monthName["en"][11] = longMonthName ? "November" : "Nov";
+        monthName["en"][12] = longMonthName ? "December" : "Dec";
 
         // console.log('DateUtils::getMonthName', [isoLang, monthNumber], monthName[isoLang][monthNumber]);
         return monthName[isoLang][monthNumber];
