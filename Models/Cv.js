@@ -48,38 +48,43 @@ class Cv{
      * @param {number} idUser 
      * @returns {User}
      */
-    static createFromDbById(idCv, idLang, cbFinnished){
-        const connMysql = require("../Configs/Databases/db.config");
-        const Address = require("../Models/Address");
-        const sql = `
-        SELECT 
-            cv.*, 
-            cv_lang.title_backend, 
-            cv_lang.title_frontend, 
-            cv_lang.auto_biography
-        FROM cv 
-        JOIN cv_lang 
-            ON cv.id=cv_lang.id_cv 
-        WHERE id = ${idCv} 
-            AND cv_lang.id_lang = ${idLang}
-        LIMIT 1`;
-        connMysql.query(sql, (error, cvResult, fields) => {
-            if(error) throw error;
-            if(Array.isArray(cvResult) && cvResult.length > 0){
-                const cv = new Cv(...Object.values(cvResult[0]));
-                Address.createFromDbById(cv.id_address, idLang, (address) => {
-                    cv.address = address;
-                    Education.getListEducationFromDbByIdCv(cv.id, idLang).then((listEducation) => {
-                        cv.educations = listEducation;
-                        cbFinnished && cbFinnished(cv);
-                    }).catch((error) => {
-                        console.error("Cv::createFromDbById::catch", error);
+    static createFromDbById(idCv, idLang){
+        return new Promise((resolve, reject) => {
+            const connMysql = require("../Configs/Databases/db.config");
+            const Address = require("../Models/Address");
+            const sql = `
+            SELECT 
+                cv.*, 
+                cv_lang.title_backend, 
+                cv_lang.title_frontend, 
+                cv_lang.auto_biography
+            FROM cv 
+            JOIN cv_lang 
+                ON cv.id=cv_lang.id_cv 
+            WHERE id = ${idCv} 
+                AND cv_lang.id_lang = ${idLang}
+            LIMIT 1`;
+            connMysql.query(sql, (error, cvResult, fields) => {
+                if(error) throw error;
+                if(Array.isArray(cvResult) && cvResult.length > 0){
+                    const cv = new Cv(...Object.values(cvResult[0]));
+                    Address.createFromDbById(cv.id_address, idLang, (address) => {
+                        cv.address = address;
+                        Education.getListEducationFromDbByIdCv(cv.id, idLang).then((listEducation) => {
+                            cv.educations = listEducation;
+                            resolve(cv);
+                        }).catch((error) => {
+                            console.error("Cv::createFromDbById::getListEducationFromDbByIdCv::catch", error);
+                            reject({
+                                message: "Cv::createFromDbById::getListEducationFromDbByIdCv::catch"
+                            });
+                        });
                     });
-                });
 
-            }else{
-                console.error("Cv::createFromDbById::cvResult::error", cvResult, error);
-            }
+                }else{
+                    console.error("Cv::createFromDbById::cvResult::error", cvResult, error);
+                }
+            });
         });
     }
 

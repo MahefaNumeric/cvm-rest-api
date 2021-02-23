@@ -118,8 +118,8 @@ module.exports = (router) => {
 
         Language.createFromDbByIso(isoLang).then((language) => {
             console.log("CvController::Language.createFromDbByIso", language);
-            User.createFromDbById(1, language.id, (user) => {
-                Cv.createFromDbById(1, language.id, (cv) => {
+            User.createFromDbById(1, language.id).then((user) => {
+                Cv.createFromDbById(1, language.id).then((cv) => {
                     const data = {
                         user: user,
                         cv: cv,
@@ -133,7 +133,11 @@ module.exports = (router) => {
                     response.type("text/html");
                     response.renderVue(templateVueFilePath, data, request.vueOptions);
                     // response.end();
+                }).catch((error) => {
+                    console.error("CvController:: /:idCv/generate/html/view Cv.createFromDbById::", error);
                 });
+            }).catch((error) => {
+                console.error("CvController:: /:idCv/generate/html/view User.createFromDbById::", error);
             });
         }).catch((error) => {
             response.type("text/json");

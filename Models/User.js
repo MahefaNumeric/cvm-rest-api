@@ -36,31 +36,36 @@ class User{
      * @param {number} idUser 
      * @returns {User}
      */
-    static createFromDbById(idUser, idLang, cbFinnished){
-        const connMysql = require("../Configs/Databases/db.config");
-        const sql = `
-        SELECT 
-            users.*, 
-            users_lang.auto_description, 
-            users_lang.auto_biography
-        FROM users 
-        JOIN users_lang 
-            ON users.id=users_lang.id_user 
-        WHERE id = ${idUser} 
-            AND users_lang.id_lang = ${idLang}
-        LIMIT 1`;
-        connMysql.query(sql, (error, usersResult, fields) => {
-            if(error) throw error;
-            if(Array.isArray(usersResult) && usersResult.length > 0) {
-                const userResultFirst = usersResult[0];
-                const user = new this(...Object.values(userResultFirst));
-                SocialLink.createFromDbById(userResultFirst.id, (socialLink) => {
-                    user.socialLink = socialLink;
-                    cbFinnished && cbFinnished(user);
-                });
-            }else{
-                console.log("User::createFromDbById::usersResult", usersResult, error);
-            }
+    static createFromDbById(idUser, idLang){
+        return new Promise((resolve, reject) => {
+            const connMysql = require("../Configs/Databases/db.config");
+            const sql = `
+            SELECT 
+                users.*, 
+                users_lang.auto_description, 
+                users_lang.auto_biography
+            FROM users 
+            JOIN users_lang 
+                ON users.id=users_lang.id_user 
+            WHERE id = ${idUser} 
+                AND users_lang.id_lang = ${idLang}
+            LIMIT 1`;
+            connMysql.query(sql, (error, usersResult, fields) => {
+                if(error) throw error;
+                if(Array.isArray(usersResult) && usersResult.length > 0) {
+                    const userResultFirst = usersResult[0];
+                    const user = new User(...Object.values(userResultFirst));
+                    SocialLink.createFromDbById(userResultFirst.id, (socialLink) => {
+                        user.socialLink = socialLink;
+                        resolve(user);
+                    });
+                }else{
+                    console.log("User::createFromDbById::usersResult", usersResult, error);
+                    reject({
+                        message: "User::createFromDbById::usersResult null"
+                    });
+                }
+            });
         });
     }
 
