@@ -35,7 +35,7 @@ class Cv{
         this.date_update = date_update;
         this.auto_biography = auto_biography;
 
-        // this.template = new Template();
+        this.template = null;
         this.address = null;
         this.educations = null;
         this.experiences = null;
@@ -67,17 +67,18 @@ class Cv{
             if(error) throw error;
             if(Array.isArray(cvResult) && cvResult.length > 0){
                 const cv = new Cv(...Object.values(cvResult[0]));
-                Address.createFromDbById(cv.id_address, 1, (address) => {
+                Address.createFromDbById(cv.id_address, idLang, (address) => {
                     cv.address = address;
-                    Education.getListEducationFromDbByIdCv(cv.id, 1, (listEducation) => {
+                    Education.getListEducationFromDbByIdCv(cv.id, idLang).then((listEducation) => {
                         cv.educations = listEducation;
-                        // console.log("listEducation", listEducation);
                         cbFinnished && cbFinnished(cv);
+                    }).catch((error) => {
+                        console.error("Cv::createFromDbById::catch", error);
                     });
                 });
 
             }else{
-                console.log("Cv::createFromDbById::cvResult", cvResult, error);
+                console.error("Cv::createFromDbById::cvResult::error", cvResult, error);
             }
         });
     }

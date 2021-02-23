@@ -42,9 +42,12 @@ class Education{
         const connMysql = require("../Configs/Databases/db.config");
         const sql = `
         SELECT 
-            ${this._table}.*
-        FROM ${this._table}
+            part_educations.*
+        FROM part_educations
+        JOIN part_educations_lang
+            ON part_educations.id = part_educations_lang.id_part_educations
         WHERE id = ${idEducation}
+            AND part_educations_lang.id_lang = ${idLang}
         LIMIT 1`;
         connMysql.query(sql, (error, educationResult, fields) => {
             if(error) throw error;
@@ -63,40 +66,44 @@ class Education{
      * 
      * @param {number} idCv 
      * @param {number} idLang 
-     * @param {function(listEducation)} cbFinnished
      * @returns {Array<Education>}
      */
-    static getListEducationFromDbByIdCv(idCv, idLang, cbFinnished){
-        const connMysql = require("../Configs/Databases/db.config");
-        const sql = `
-        SELECT 
-            part_educations.*,
-            part_educations_lang.title,
-            part_educations_lang.description,
-            DATE_FORMAT(date_begin, '%Y-%m') as date_begin,
-            DATE_FORMAT(date_end, '%Y-%m') as date_end
-        FROM cv_educations
-        JOIN part_educations
-            ON cv_educations.id_education = part_educations.id
-        JOIN part_educations_lang
-            ON part_educations.id = part_educations_lang.id_part_educations 
-        WHERE id_cv = ?
-            AND part_educations_lang.id_lang = ?
-        `;
-        const sqlParams = [idCv, idLang];
-        connMysql.query(sql, sqlParams, (error, listEducationResult, fields) => {
-            if(error) throw error;
-            if(Array.isArray(listEducationResult) && listEducationResult.length > 0) {
-                Language.createFromDbById(idLang, (language) => {
-                    const listEducation = [];
-                    listEducationResult.forEach(element => {
-                        listEducation.push(new Education(language.code_iso, ...Object.values(element)));
+    static getListEducationFromDbByIdCv(idCv, idLang){
+        return new Promise((resolve, reject) => {
+            const connMysql = require("../Configs/Databases/db.config");
+            const sql = `
+            SELECT 
+                part_educations.*,
+                part_educations_lang.title,
+                part_educations_lang.description,
+                DATE_FORMAT(date_begin, '%Y-%m') as date_begin,
+                DATE_FORMAT(date_end, '%Y-%m') as date_end
+            FROM cv_educations
+            JOIN part_educations
+                ON part_educations.id = cv_educations.id_education
+            JOIN part_educations_lang
+                ON part_educations.id = part_educations_lang.id_part_educations 
+            WHERE id_cv = ?
+                AND part_educations_lang.id_lang = ?
+            `;
+            const sqlParams = [idCv, idLang];
+            connMysql.query(sql, sqlParams, (error, listEducationResult, fields) => {
+                if(error) throw error;
+                if(Array.isArray(listEducationResult) && listEducationResult.length > 0) {
+                    Language.createFromDbById(idLang, (language) => {
+                        const listEducation = [];
+                        listEducationResult.forEach(element => {
+                            listEducation.push(new Education(language.code_iso, ...Object.values(element)));
+                        });
+                        resolve(listEducation);
                     });
-                    cbFinnished && cbFinnished(listEducation);
-                });
-            }else{
-                console.log("Education::createFromDbById::listEducationResult", educationResult, error);
-            }
+                }else{
+                    console.log("Education::createFromDbById::listEducationResult", listEducationResult, error);
+                    reject({
+                        message: "listEducationResult empy ou not an array"
+                    });
+                }
+            }); 
         });
     }
 
