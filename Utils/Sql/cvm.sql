@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 23 fév. 2021 à 18:48
+-- Généré le : mar. 23 fév. 2021 à 21:29
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -71,8 +71,10 @@ CREATE TABLE IF NOT EXISTS `address_lang` (
 --
 
 INSERT INTO `address_lang` (`id_address`, `id_lang`, `value`, `date_add`, `date_update`) VALUES
-(1, 1, 'Lot 120M L Antentezanafovoany, Tananarive, Madagascar', '2021-02-21 15:23:29', '2021-02-21 15:23:29'),
-(2, 1, 'Lot 3305C/BA, Beravina Fianarantsoa, Madagascar', '2021-02-21 15:23:52', '2021-02-21 15:23:52');
+(1, 1, 'Lot 120M L Antentezanafovoany, Tananarive, Madagascar FR', '2021-02-21 15:23:29', '2021-02-21 15:23:29'),
+(1, 2, 'Lot 120M L Antentezanafovoany, Tananarive, Madagascar EN', '2021-02-21 15:23:29', '2021-02-21 15:23:29'),
+(2, 1, 'Lot 3305C/BA, Beravina Fianarantsoa, Madagascar FR', '2021-02-21 15:23:52', '2021-02-21 15:23:52'),
+(2, 2, 'Lot 3305C/BA, Beravina Fianarantsoa, Madagascar EN', '2021-02-21 15:23:52', '2021-02-21 15:23:52');
 
 -- --------------------------------------------------------
 
@@ -260,6 +262,13 @@ CREATE TABLE IF NOT EXISTS `cv_skills` (
   KEY `cv_skills.id_skills` (`id_skills`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Déchargement des données de la table `cv_skills`
+--
+
+INSERT INTO `cv_skills` (`id_cv`, `id_skills`, `date_add`, `date_update`) VALUES
+(1, 1, '2021-02-23 21:18:29', '2021-02-23 21:18:29');
+
 -- --------------------------------------------------------
 
 --
@@ -336,8 +345,10 @@ CREATE TABLE IF NOT EXISTS `part_educations_lang` (
 --
 
 INSERT INTO `part_educations_lang` (`id_part_educations`, `id_lang`, `title`, `description`, `date_add`, `date_update`) VALUES
-(1, 1, 'Licence - ENI, Madagascar', 'Licence en Informatique - Lorem Lispum', '2021-02-22 14:38:19', '2021-02-22 14:38:19'),
-(2, 1, 'Master - ENI', 'Master - ENI Lorem', '2021-02-22 17:57:48', '2021-02-22 17:57:48');
+(1, 1, 'Ecole Nationale de l\'Informatique, Madagascar', 'Licence en Science Informatique', '2021-02-22 14:38:19', '2021-02-22 14:38:19'),
+(1, 2, 'National School of Computer Science, Madagascar', 'Bachelor of Computer Science', '2021-02-22 14:38:19', '2021-02-22 14:38:19'),
+(2, 1, 'Ecole Nationale de l\'Informatique, Madagascar', 'Master en Science Informatique', '2021-02-22 17:57:48', '2021-02-22 17:57:48'),
+(2, 2, 'National School of Computer Science, Madagascar', 'Master in Computer Science', '2021-02-22 17:57:48', '2021-02-22 17:57:48');
 
 -- --------------------------------------------------------
 
@@ -424,11 +435,19 @@ DROP TABLE IF EXISTS `part_skills`;
 CREATE TABLE IF NOT EXISTS `part_skills` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_user` int(11) NOT NULL,
+  `slug` varchar(64) NOT NULL,
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `part_skills.id_user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `part_skills`
+--
+
+INSERT INTO `part_skills` (`id`, `id_user`, `slug`, `date_add`, `date_update`) VALUES
+(1, 1, 'PHP', '2021-02-23 21:04:18', '2021-02-23 21:04:18');
 
 -- --------------------------------------------------------
 
@@ -447,6 +466,14 @@ CREATE TABLE IF NOT EXISTS `part_skills_lang` (
   PRIMARY KEY (`id_part_skills`,`id_lang`),
   KEY `part_skills_lang_id_lang` (`id_lang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `part_skills_lang`
+--
+
+INSERT INTO `part_skills_lang` (`id_part_skills`, `id_lang`, `title`, `description`, `date_add`, `date_update`) VALUES
+(1, 1, 'PHP', 'PHP Desc FR', '2021-02-23 21:05:46', '2021-02-23 21:05:46'),
+(1, 2, 'PHP', 'PHP Desc EN', '2021-02-23 21:05:46', '2021-02-23 21:05:46');
 
 -- --------------------------------------------------------
 
