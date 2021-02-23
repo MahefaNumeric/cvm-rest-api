@@ -84,7 +84,7 @@
               <em>Bachelor of Science in Graphic Design</em></p>
           </div>
           <div class="content" v-for="education in cv.educations" :key="education.id">
-            <h3>{{ education.getFriendly_dateBegin() }} - {{ education.date_end }}</h3>
+            <h3>{{ education.date_begin_friendly }} - {{ education.date_end_friendly }}</h3>
             <p> {{ education.title }} <br />
               <em>{{ education.description }}</em></p>
           </div>

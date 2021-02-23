@@ -42,7 +42,7 @@ class DateUtils{
         monthName["en"][11] = "November";
         monthName["en"][12] = "December";
 
-        // console.log('getMonthName', monthName);
+        // console.log('DateUtils::getMonthName', [isoLang, monthNumber], monthName[isoLang][monthNumber]);
         return monthName[isoLang][monthNumber];
     }
 }

@@ -17,8 +17,12 @@ class Education{
         this.id = id;
         this.id_user = id_user;
         this.slug = slug;
+        this.date_begin_friendly = date_begin;
         this.date_begin = date_begin;
+        this.date_begin_value = date_begin; // Private (Don't use from class external)
+        this.date_end_friendly = date_end;
         this.date_end = date_end;
+        this.date_end_value = date_end; // Private (Don't use from class external)
         this.date_add = date_add;
         this.date_update = date_update;
 
@@ -100,10 +104,28 @@ class Education{
         );
     }
 
-    getFriendly_dateBegin(){
-        const date_begin_array = this.date_begin.split(" ");
-        const year = date_begin_array[0];
-        const month = date_begin_array[1];
+    set date_begin(dateBegin) {
+        this.date_begin_value = dateBegin;
+        this.date_begin_friendly = this.formatDateToFriendly(dateBegin);
+    }
+
+    get date_begin() {
+        return this.date_begin_value;
+    }    
+
+    set date_end(dateEnd) {
+        this.date_end_value = dateEnd;
+        this.date_end_friendly = this.formatDateToFriendly(dateEnd);
+    }
+
+    get date_end() {
+        return this.date_end_value;
+    }
+
+    formatDateToFriendly(date){
+        const date_array = date.split("-");
+        const year = parseInt(date_array[0]);
+        const month = parseInt(date_array[1]);
         const monthName = DateUtils.getMonthName(month, "fr");
         return `${year} ${monthName}`;
     }
