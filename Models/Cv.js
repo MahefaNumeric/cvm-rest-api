@@ -1,6 +1,7 @@
 const Address = require("./Address");
 const Template = require("./Template");
 const Education = require("./Education");
+const Skill = require("./Skill");
 
 class Cv{
     /**
@@ -72,7 +73,14 @@ class Cv{
                         cv.address = address;
                         Education.getListEducationFromDbByIdCv(cv.id, idLang).then((listEducation) => {
                             cv.educations = listEducation;
-                            resolve(cv);
+                            Skill.getListSkillsFromDbByCv(cv.id, idLang).then((listSkills) => {
+                                cv.skills = listSkills;
+                                resolve(cv);
+                            }).catch(() => {
+                                reject({
+                                    message: "Cv::createFromDbById::getListSkillsFromDbByCv::catch"
+                                });
+                            });
                         }).catch((error) => {
                             console.error("Cv::createFromDbById::getListEducationFromDbByIdCv::catch", error);
                             reject({

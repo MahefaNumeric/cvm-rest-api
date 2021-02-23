@@ -1,8 +1,5 @@
-// const mysql = require("mysql");
-// const express = require("express");
 const util = require('util');
 const Language = require("../Models/Language");
-
 const CvService = require("../Services/CvService");
 
 module.exports = (router) => {
@@ -58,19 +55,7 @@ module.exports = (router) => {
         const checkIdIfExist = require("../Validation/UserValidation").checkIdIfExist;
         const pData = request.body;
         const id = request.params.id;
-        // const resultCheckIdUser = checkIdIfExist(id, connMysql);
         console.log(pData, id, resultCheckIdUser);
-        // const sql = `UPDATE users 
-        // SET firstname='${pData.firstname}', 
-        // lastname='${pData.lastname}', 
-        // date_birth='${pData.date_birth}', 
-        // auto_desc='${pData.auto_desc}'
-        // WHERE id=${id}`;
-        // connMysql.query(sql, (error, results, fields)=> {
-        //     if(error) throw error;
-        //     console.log("Results: ", results);
-        //     response.json(results);
-        // });
     });
 
     /**
@@ -105,7 +90,7 @@ module.exports = (router) => {
     });
 
     /**
-     * Previsualise the html output (Type: text/html)
+     * Previsualize the html output (Type: text/html)
      */
     router.get("/:idCv/generate/html/view", (request, response, next) => {
         const idCv = request.params.idCv;
@@ -117,7 +102,7 @@ module.exports = (router) => {
         const Cv = require("../Models/Cv");
 
         Language.createFromDbByIso(isoLang).then((language) => {
-            console.log("CvController::Language.createFromDbByIso", language);
+            // console.log("CvController::Language.createFromDbByIso", language);
             User.createFromDbById(1, language.id).then((user) => {
                 Cv.createFromDbById(1, language.id).then((cv) => {
                     const data = {
@@ -125,7 +110,7 @@ module.exports = (router) => {
                         cv: cv,
                         language: language
                     };
-                    // console.log("/:idCv/generate/html/view", util.inspect(data, {showHidden: false, depth: null, colors: true}), "isoLang: ", isoLang);
+                    console.log("/:idCv/generate/html/view", util.inspect(data, {showHidden: false, depth: null, colors: true}));
                     const htmlPageTitle = `Resume ${data.lastname}`;
                     request.vueOptions = vueOptions(htmlPageTitle);
                     
