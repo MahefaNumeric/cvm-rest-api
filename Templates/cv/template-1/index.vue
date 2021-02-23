@@ -73,16 +73,6 @@
         <!-- Begin 2nd Row -->
         <div class="entry">
           <h2>EDUCATION</h2>
-          <div class="content">
-            <h3>Sep 2005 - Feb 2007</h3>
-            <p>Academy of Art University, London <br />
-              <em>Master in Communication Design</em></p>
-          </div>
-          <div class="content">
-            <h3>Sep 2001 - Jun 2005</h3>
-            <p>University of Art &amp; Design, New York <br />
-              <em>Bachelor of Science in Graphic Design</em></p>
-          </div>
           <div class="content" v-for="education in cv.educations" :key="education.id">
             <h3>{{ education.date_begin_friendly }} - {{ education.date_end_friendly }}</h3>
             <p> {{ education.title }} <br />
