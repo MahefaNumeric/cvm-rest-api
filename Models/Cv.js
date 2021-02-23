@@ -21,14 +21,16 @@ class Cv{
         id_address,
         date_add,
         date_update,
-        title,
+        title_backend,
+        title_frontend,
         auto_biography
     ){
         this.id = id;
         this.id_template = id_template;
         this.slug = slug;
         this.id_address = id_address;
-        this.title = title;
+        this.title_backend = title_backend;
+        this.title_frontend = title_frontend;
         this.date_add = date_add;
         this.date_update = date_update;
         this.auto_biography = auto_biography;
@@ -52,7 +54,8 @@ class Cv{
         const sql = `
         SELECT 
             cv.*, 
-            cv_lang.title, 
+            cv_lang.title_backend, 
+            cv_lang.title_frontend, 
             cv_lang.auto_biography
         FROM cv 
         JOIN cv_lang 

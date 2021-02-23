@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : lun. 22 fév. 2021 à 15:11
+-- Généré le : mar. 23 fév. 2021 à 18:48
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -171,6 +171,14 @@ CREATE TABLE IF NOT EXISTS `cv_educations` (
   KEY `cv_educations.id_education` (`id_education`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Déchargement des données de la table `cv_educations`
+--
+
+INSERT INTO `cv_educations` (`id_cv`, `id_education`, `date_add`, `date_update`) VALUES
+(1, 1, '2021-02-22 15:15:35', '2021-02-22 15:15:35'),
+(1, 2, '2021-02-22 17:58:25', '2021-02-22 17:58:25');
+
 -- --------------------------------------------------------
 
 --
@@ -197,7 +205,8 @@ DROP TABLE IF EXISTS `cv_lang`;
 CREATE TABLE IF NOT EXISTS `cv_lang` (
   `id_cv` int(11) NOT NULL,
   `id_lang` int(11) NOT NULL,
-  `title` varchar(256) NOT NULL,
+  `title_backend` varchar(256) NOT NULL,
+  `title_frontend` varchar(256) NOT NULL,
   `auto_biography` varchar(1024) DEFAULT NULL,
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -209,14 +218,15 @@ CREATE TABLE IF NOT EXISTS `cv_lang` (
 -- Déchargement des données de la table `cv_lang`
 --
 
-INSERT INTO `cv_lang` (`id_cv`, `id_lang`, `title`, `auto_biography`, `date_add`, `date_update`) VALUES
-(1, 1, 'CV Lead Technique', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus.', '2021-02-21 17:09:57', '2021-02-21 17:09:57'),
-(2, 1, 'CV Prestashop Developer', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus.', '2021-02-21 17:45:34', '2021-02-21 17:45:34'),
-(3, 1, 'CV Symfony Developer', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus.', '2021-02-21 17:48:27', '2021-02-21 17:48:27'),
-(4, 1, 'CV Laravel Developer', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus.', '2021-02-21 17:48:42', '2021-02-21 17:48:42'),
-(5, 1, 'CV eCommerce Developer', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus.', '2021-02-21 17:48:54', '2021-02-21 17:48:54'),
-(6, 1, 'CV Backend Developer', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus.', '2021-02-21 17:49:07', '2021-02-21 17:49:07'),
-(7, 1, 'CV Fullstack Developer', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus.', '2021-02-21 17:49:20', '2021-02-21 17:49:20');
+INSERT INTO `cv_lang` (`id_cv`, `id_lang`, `title_backend`, `title_frontend`, `auto_biography`, `date_add`, `date_update`) VALUES
+(1, 1, 'CV Lead Technique', 'Lead Technique', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:09:57', '2021-02-21 17:09:57'),
+(1, 2, 'CV Technical Lead', 'Technical Lead', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. EN', '2021-02-21 17:09:57', '2021-02-21 17:09:57'),
+(2, 1, 'CV Prestashop Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:45:34', '2021-02-21 17:45:34'),
+(3, 1, 'CV Symfony Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:48:27', '2021-02-21 17:48:27'),
+(4, 1, 'CV Laravel Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:48:42', '2021-02-21 17:48:42'),
+(5, 1, 'CV eCommerce Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:48:54', '2021-02-21 17:48:54'),
+(6, 1, 'CV Backend Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:49:07', '2021-02-21 17:49:07'),
+(7, 1, 'CV Fullstack Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:49:20', '2021-02-21 17:49:20');
 
 -- --------------------------------------------------------
 
@@ -263,7 +273,8 @@ CREATE TABLE IF NOT EXISTS `languages` (
   `code_iso` varchar(6) NOT NULL,
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code_iso` (`code_iso`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
@@ -292,14 +303,15 @@ CREATE TABLE IF NOT EXISTS `part_educations` (
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `part_educations.id_user` (`id_user`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `part_educations`
 --
 
 INSERT INTO `part_educations` (`id`, `id_user`, `slug`, `date_begin`, `date_end`, `date_add`, `date_update`) VALUES
-(1, 1, 'ENI_LICENCE', '2012-01-11', '2016-06-22', '2021-02-22 14:37:34', '2021-02-22 14:37:34');
+(1, 1, 'ENI_LICENCE', '2012-01-11', '2016-06-22', '2021-02-22 14:37:34', '2021-02-22 14:37:34'),
+(2, 1, 'ENI_MASTER', '2014-09-15', '2016-02-05', '2021-02-22 17:57:22', '2021-02-22 17:57:22');
 
 -- --------------------------------------------------------
 
@@ -324,7 +336,8 @@ CREATE TABLE IF NOT EXISTS `part_educations_lang` (
 --
 
 INSERT INTO `part_educations_lang` (`id_part_educations`, `id_lang`, `title`, `description`, `date_add`, `date_update`) VALUES
-(1, 1, 'Licence - ENI, Madagascar', 'Licence en Informatique - Lorem Lispum', '2021-02-22 14:38:19', '2021-02-22 14:38:19');
+(1, 1, 'Licence - ENI, Madagascar', 'Licence en Informatique - Lorem Lispum', '2021-02-22 14:38:19', '2021-02-22 14:38:19'),
+(2, 1, 'Master - ENI', 'Master - ENI Lorem', '2021-02-22 17:57:48', '2021-02-22 17:57:48');
 
 -- --------------------------------------------------------
 
@@ -584,7 +597,8 @@ CREATE TABLE IF NOT EXISTS `users_lang` (
 --
 
 INSERT INTO `users_lang` (`id_user`, `id_lang`, `auto_description`, `auto_biography`, `date_add`, `date_update`) VALUES
-(1, 1, 'Lorem lupsum Desc', 'Lorem lupsum BIO', '2021-02-21 18:14:21', '2021-02-21 18:14:21');
+(1, 1, 'Lorem lupsum Desc FR', 'Lorem lupsum BIO FR', '2021-02-21 18:14:21', '2021-02-21 18:14:21'),
+(1, 2, 'Lorem lupsum Desc EN', 'Lorem lupsum AutoBio EN', '2021-02-23 18:38:24', '2021-02-23 18:38:24');
 
 --
 -- Contraintes pour les tables déchargées

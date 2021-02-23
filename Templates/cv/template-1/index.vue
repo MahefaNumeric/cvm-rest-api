@@ -40,7 +40,7 @@
           <div class="self">
             <h1 class="name">
               {{ user.lastname }} <br />
-              <span>{{cv.title}}</span>
+              <span>{{cv.title_frontend}}</span>
             </h1>
             <ul>
               <li class="ad">{{ cv.address.value }}</li>
