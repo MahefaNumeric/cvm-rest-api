@@ -116,7 +116,7 @@ module.exports = (router) => {
         const User = require("../Models/User");
         const Cv = require("../Models/Cv");
 
-        Language.createFromDbByIso(isoLang, (language) => {
+        Language.createFromDbByIso(isoLang).then((language) => {
             console.log("CvController::Language.createFromDbByIso", language);
             User.createFromDbById(1, language.id, (user) => {
                 Cv.createFromDbById(1, language.id, (cv) => {
@@ -135,6 +135,10 @@ module.exports = (router) => {
                     // response.end();
                 });
             });
+        }).catch((error) => {
+            response.type("text/json");
+            response.write({message: `Error: Langugage '${isoLang}' not exist`});
+            response.end();
         });
     });
     

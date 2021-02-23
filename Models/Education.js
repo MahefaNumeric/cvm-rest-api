@@ -38,7 +38,7 @@ class Education{
      * @param {number} idEducation
      * @returns {Education}
      */
-    static createFromDbById(idEducation, idLang, cbFinnished){
+    static createFromDbById(idEducation, idLang){
         return new Promise((resolve, reject) => {
             const connMysql = require("../Configs/Databases/db.config");
             const sql = `
