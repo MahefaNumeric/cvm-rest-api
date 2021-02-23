@@ -39,26 +39,32 @@ class Education{
      * @returns {Education}
      */
     static createFromDbById(idEducation, idLang, cbFinnished){
-        const connMysql = require("../Configs/Databases/db.config");
-        const sql = `
-        SELECT 
-            part_educations.*
-        FROM part_educations
-        JOIN part_educations_lang
-            ON part_educations.id = part_educations_lang.id_part_educations
-        WHERE id = ${idEducation}
-            AND part_educations_lang.id_lang = ${idLang}
-        LIMIT 1`;
-        connMysql.query(sql, (error, educationResult, fields) => {
-            if(error) throw error;
-            if(Array.isArray(educationResult) && educationResult.length > 0) {
-                Language.createFromDbById(idLang, (language) => {
-                    const education = new Education(language.code_iso, ...Object.values(educationResult[0]));
-                    cbFinnished && cbFinnished(education);
-                });
-            }else{
-                console.log("Education::createFromDbById::educationResult", educationResult, error);
-            }
+        return new Promise((resolve, reject) => {
+            const connMysql = require("../Configs/Databases/db.config");
+            const sql = `
+            SELECT 
+                part_educations.*
+            FROM part_educations
+            JOIN part_educations_lang
+                ON part_educations.id = part_educations_lang.id_part_educations
+            WHERE id = ${idEducation}
+                AND part_educations_lang.id_lang = ${idLang}
+            LIMIT 1`;
+            connMysql.query(sql, (error, educationResult, fields) => {
+                if(error) throw error;
+                if(Array.isArray(educationResult) && educationResult.length > 0) {
+                    Language.createFromDbById(idLang).then((language) => {
+                        const education = new Education(language.code_iso, ...Object.values(educationResult[0]));
+                        resolve(education);
+                    }).catch((error) => {
+                        console.log("Education::createFromDbById::catch", error);
+                        reject({message: "Education::createFromDbById::catch"});
+                    });
+                }else{
+                    console.log("Education::createFromDbById::educationResult", educationResult, error);
+                    reject({message: "Education::createFromDbById::educationResult null"});
+                }
+            });
         });
     }
     
@@ -90,17 +96,22 @@ class Education{
             connMysql.query(sql, sqlParams, (error, listEducationResult, fields) => {
                 if(error) throw error;
                 if(Array.isArray(listEducationResult) && listEducationResult.length > 0) {
-                    Language.createFromDbById(idLang, (language) => {
+                    Language.createFromDbById(idLang).then((language) => {
                         const listEducation = [];
                         listEducationResult.forEach(element => {
                             listEducation.push(new Education(language.code_iso, ...Object.values(element)));
                         });
                         resolve(listEducation);
+                    }).catch((error) => {
+                        console.log("Education::getListEducationFromDbByIdCv::catch", error);
+                        reject({
+                            message: "Education::getListEducationFromDbByIdCv::language empty"
+                        });
                     });
                 }else{
-                    console.log("Education::createFromDbById::listEducationResult", listEducationResult, error);
+                    console.log("Education::getListEducationFromDbByIdCv::listEducationResult", listEducationResult, error);
                     reject({
-                        message: "listEducationResult empy ou not an array"
+                        message: "Education::getListEducationFromDbByIdCv::listEducationResult empy ou not an array"
                     });
                 }
             }); 

@@ -18,22 +18,27 @@ class Language{
      * @param {CallableFunction} cbFinnished
      * @returns {Language}
      */
-    static createFromDbById(idLang, cbFinnished){
-        const connMysql = require("../Configs/Databases/db.config");
-        const sql = `
-        SELECT 
-            ${this._table}.*
-        FROM ${this._table}
-        WHERE id = ${idLang} 
-        LIMIT 1`;
-        connMysql.query(sql, (error, languageResult, fields) => {
-            if(error) throw error;
-            if(Array.isArray(languageResult) && languageResult.length > 0) {
-                const language = new Language(...Object.values(languageResult[0]));
-                cbFinnished && cbFinnished(language);
-            }else{
-                console.log("Language::createFromDbById::languageResult", languageResult, error);
-            }
+    static createFromDbById(idLang){
+        return new Promise((resolve, reject) => {
+            const connMysql = require("../Configs/Databases/db.config");
+            const sql = `
+            SELECT 
+                ${this._table}.*
+            FROM ${this._table}
+            WHERE id = ${idLang} 
+            LIMIT 1`;
+            connMysql.query(sql, (error, languageResult, fields) => {
+                if(error) throw error;
+                if(Array.isArray(languageResult) && languageResult.length > 0) {
+                    const language = new Language(...Object.values(languageResult[0]));
+                    resolve(language);
+                }else{
+                    console.log("Language::createFromDbById::languageResult", languageResult, error);
+                    reject({
+                        message: "Language::createFromDbById::languageResult empty"
+                    });
+                }
+            });
         });
     }
     
