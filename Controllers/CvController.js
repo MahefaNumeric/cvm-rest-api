@@ -1,6 +1,7 @@
 // const mysql = require("mysql");
 // const express = require("express");
 const util = require('util');
+const Language = require("../Models/Language");
 
 const CvService = require("../Services/CvService");
 
@@ -78,7 +79,7 @@ module.exports = (router) => {
      * @param {String} format
      * @returns 
      */
-    router.get("/generate/:idCv/:format", (request, response) => {
+    router.get("/:idCv/generate/:format", (request, response) => {
         response.type("application/json");
 
         const idCv = request.params.idCv;
@@ -106,7 +107,7 @@ module.exports = (router) => {
     /**
      * Previsualise the html output (Type: text/html)
      */
-    router.get("/generate/:idCv/html/view", (request, response, next) => {
+    router.get("/:idCv/generate/html/view", (request, response, next) => {
         const idCv = request.params.idCv;
         const isoLang = request.params.isoLang; // From parent params
 
@@ -115,20 +116,24 @@ module.exports = (router) => {
         const User = require("../Models/User");
         const Cv = require("../Models/Cv");
 
-        User.createFromDbById(1, 1, (user) => {
-            Cv.createFromDbById(1, 1, (cv) => {
-                const data = {
-                    user: user,
-                    cv: cv
-                };
-                console.log("/generate/:idCv/html/view", util.inspect(data, {showHidden: false, depth: null, colors: true}), "isoLang: ", isoLang);
-                const htmlPageTitle = `Resume ${data.lastname}`;
-                request.vueOptions = vueOptions(htmlPageTitle);
-                
-                const templateVueFilePath = cvService.getTemplateVueFilePath(idCv, false);
-                response.type("text/html");
-                response.renderVue(templateVueFilePath, data, request.vueOptions);
-                // response.end();
+        Language.createFromDbByIso(isoLang, (language) => {
+            console.log("CvController::Language.createFromDbByIso", language);
+            User.createFromDbById(1, language.id, (user) => {
+                Cv.createFromDbById(1, language.id, (cv) => {
+                    const data = {
+                        user: user,
+                        cv: cv,
+                        language: language
+                    };
+                    // console.log("/:idCv/generate/html/view", util.inspect(data, {showHidden: false, depth: null, colors: true}), "isoLang: ", isoLang);
+                    const htmlPageTitle = `Resume ${data.lastname}`;
+                    request.vueOptions = vueOptions(htmlPageTitle);
+                    
+                    const templateVueFilePath = cvService.getTemplateVueFilePath(idCv, false);
+                    response.type("text/html");
+                    response.renderVue(templateVueFilePath, data, request.vueOptions);
+                    // response.end();
+                });
             });
         });
     });
