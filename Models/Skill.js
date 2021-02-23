@@ -6,6 +6,7 @@ class Skill{
     constructor(
         id,
         id_user,
+        id_skills_group,
         slug,
         date_add,
         date_update,
@@ -14,6 +15,7 @@ class Skill{
     ){
         this.id = id;
         this.id_user = id_user;
+        this.id_skills_group = id_skills_group;
         this.slug = slug;
         this.date_add = date_add;
         this.date_update = date_update;
@@ -35,7 +37,7 @@ class Skill{
             const connMysql = require("../Configs/Databases/db.config");
             const sql = `
             SELECT 
-            part_skills.*, 
+                part_skills.*, 
                 part_skills_lang.title, 
                 part_skills_lang.description
             FROM part_skills 
@@ -70,6 +72,7 @@ class Skill{
                 SELECT 
                     part_skills.id,
                     part_skills.id_user,
+                    part_skills.id_skills_group,
                     part_skills.slug,
                     part_skills.date_add,
                     part_skills.date_update,

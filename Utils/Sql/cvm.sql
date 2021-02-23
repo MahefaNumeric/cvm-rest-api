@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 23 fév. 2021 à 21:29
+-- Généré le : mar. 23 fév. 2021 à 21:41
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -435,19 +435,21 @@ DROP TABLE IF EXISTS `part_skills`;
 CREATE TABLE IF NOT EXISTS `part_skills` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_user` int(11) NOT NULL,
+  `id_skills_group` int(11) NOT NULL,
   `slug` varchar(64) NOT NULL,
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `part_skills.id_user` (`id_user`)
+  KEY `part_skills.id_user` (`id_user`),
+  KEY `part_skills.id_skills_group` (`id_skills_group`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `part_skills`
 --
 
-INSERT INTO `part_skills` (`id`, `id_user`, `slug`, `date_add`, `date_update`) VALUES
-(1, 1, 'PHP', '2021-02-23 21:04:18', '2021-02-23 21:04:18');
+INSERT INTO `part_skills` (`id`, `id_user`, `id_skills_group`, `slug`, `date_add`, `date_update`) VALUES
+(1, 1, 1, 'PHP', '2021-02-23 21:04:18', '2021-02-23 21:04:18');
 
 -- --------------------------------------------------------
 
@@ -488,6 +490,52 @@ CREATE TABLE IF NOT EXISTS `preferences_users` (
   PRIMARY KEY (`user_id`),
   KEY `users_preferences_template_id` (`template_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `skills_group`
+--
+
+DROP TABLE IF EXISTS `skills_group`;
+CREATE TABLE IF NOT EXISTS `skills_group` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `slug` varchar(128) NOT NULL,
+  `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `skills_group`
+--
+
+INSERT INTO `skills_group` (`id`, `slug`, `date_add`, `date_update`) VALUES
+(1, 'Software_Knowledge', '2021-02-23 21:35:23', '2021-02-23 21:35:23');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `skills_group_lang`
+--
+
+DROP TABLE IF EXISTS `skills_group_lang`;
+CREATE TABLE IF NOT EXISTS `skills_group_lang` (
+  `id_skills_group` int(11) NOT NULL,
+  `id_lang` int(11) NOT NULL,
+  `title` varchar(256) NOT NULL,
+  `description` varchar(512) NOT NULL,
+  PRIMARY KEY (`id_skills_group`,`id_lang`),
+  KEY `skills_group_lang.id_lang` (`id_lang`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `skills_group_lang`
+--
+
+INSERT INTO `skills_group_lang` (`id_skills_group`, `id_lang`, `title`, `description`) VALUES
+(1, 1, 'Conaissance informatique', 'Software Knowledge Descr FR'),
+(1, 2, 'Software Knowledge', 'Software Knowledge Descr EN');
 
 -- --------------------------------------------------------
 
@@ -738,6 +786,7 @@ ALTER TABLE `part_projects_lang`
 -- Contraintes pour la table `part_skills`
 --
 ALTER TABLE `part_skills`
+  ADD CONSTRAINT `part_skills.id_skills_group` FOREIGN KEY (`id_skills_group`) REFERENCES `skills_group` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `part_skills.id_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
@@ -753,6 +802,13 @@ ALTER TABLE `part_skills_lang`
 ALTER TABLE `preferences_users`
   ADD CONSTRAINT `users_preferences_template_id` FOREIGN KEY (`template_id`) REFERENCES `templates` (`id`) ON DELETE SET NULL ON UPDATE NO ACTION,
   ADD CONSTRAINT `users_preferences_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `skills_group_lang`
+--
+ALTER TABLE `skills_group_lang`
+  ADD CONSTRAINT `skills_group_lang.id_lang` FOREIGN KEY (`id_lang`) REFERENCES `languages` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `skills_group_lang.id_skills_group` FOREIGN KEY (`id_skills_group`) REFERENCES `skills_group` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `skills_level`
