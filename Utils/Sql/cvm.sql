@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 24 fév. 2021 à 15:29
+-- Généré le : mer. 24 fév. 2021 à 18:55
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -128,6 +128,52 @@ INSERT INTO `companies_lang` (`id_company`, `id_lang`, `name`, `description`, `d
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `company_positions`
+--
+
+DROP TABLE IF EXISTS `company_positions`;
+CREATE TABLE IF NOT EXISTS `company_positions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `slug` varchar(64) NOT NULL,
+  `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='Positions for all companies';
+
+--
+-- Déchargement des données de la table `company_positions`
+--
+
+INSERT INTO `company_positions` (`id`, `slug`, `date_add`, `date_update`) VALUES
+(1, 'internship-dev', '2021-02-24 18:49:13', '2021-02-24 18:49:01');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `company_positions_lang`
+--
+
+DROP TABLE IF EXISTS `company_positions_lang`;
+CREATE TABLE IF NOT EXISTS `company_positions_lang` (
+  `id_company_positions` int(11) NOT NULL,
+  `id_lang` int(11) NOT NULL,
+  `title` varchar(256) NOT NULL,
+  `description` varchar(256) DEFAULT NULL,
+  PRIMARY KEY (`id_company_positions`,`id_lang`),
+  KEY `company_positions_lang.id_lang` (`id_lang`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `company_positions_lang`
+--
+
+INSERT INTO `company_positions_lang` (`id_company_positions`, `id_lang`, `title`, `description`) VALUES
+(1, 1, 'Stagiaire Developpeur', 'Stagiaire Developpeur desc'),
+(1, 2, 'Developer Internship', 'Developer Internship desc');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `cv`
 --
 
@@ -196,6 +242,13 @@ CREATE TABLE IF NOT EXISTS `cv_experiences` (
   PRIMARY KEY (`id_cv`,`id_experience`),
   KEY `cv_experiences.id_experience` (`id_experience`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `cv_experiences`
+--
+
+INSERT INTO `cv_experiences` (`id_cv`, `id_experience`, `date_add`, `date_update`) VALUES
+(1, 1, '2021-02-24 18:54:28', '2021-02-24 18:54:28');
 
 -- --------------------------------------------------------
 
@@ -362,31 +415,25 @@ DROP TABLE IF EXISTS `part_experiences`;
 CREATE TABLE IF NOT EXISTS `part_experiences` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_user` int(11) NOT NULL,
-  `id_company` int(11) DEFAULT NULL,
+  `id_company` int(11) NOT NULL,
+  `id_company_position` int(11) NOT NULL,
+  `slug` varchar(64) NOT NULL,
+  `date_begin` date NOT NULL COMMENT 'Date of entry into the company',
+  `date_end` date NOT NULL COMMENT 'Date of leave from the company',
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `id_user-id_company-id_company_position` (`id_user`,`id_company`,`id_company_position`) USING BTREE,
   KEY `part_experiences.id_company` (`id_company`),
-  KEY `part_experiences.id_user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
+  KEY `part_experiences.id_company_position` (`id_company_position`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='User presence in the company';
 
 --
--- Structure de la table `part_experiences_lang`
+-- Déchargement des données de la table `part_experiences`
 --
 
-DROP TABLE IF EXISTS `part_experiences_lang`;
-CREATE TABLE IF NOT EXISTS `part_experiences_lang` (
-  `id_part_experiences` int(11) NOT NULL,
-  `id_lang` int(11) NOT NULL,
-  `title` varchar(128) NOT NULL,
-  `description` varchar(256) NOT NULL,
-  `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_part_experiences`,`id_lang`),
-  KEY `part_experiences_lang_id_lang` (`id_lang`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `part_experiences` (`id`, `id_user`, `id_company`, `id_company_position`, `slug`, `date_begin`, `date_end`, `date_add`, `date_update`) VALUES
+(1, 1, 1, 1, 'intern-dev-etech', '2016-06-08', '2016-12-08', '2021-02-24 18:49:44', '2021-02-24 18:49:44');
 
 -- --------------------------------------------------------
 
@@ -655,10 +702,15 @@ DROP TABLE IF EXISTS `users_companies`;
 CREATE TABLE IF NOT EXISTS `users_companies` (
   `id_company` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
+  `id_company_position` int(11) NOT NULL,
+  `date_begin` date NOT NULL COMMENT 'Date of entry into the company',
+  `date_end` date NOT NULL COMMENT 'Date of leave from the company',
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  KEY `users_companies_id_company` (`id_company`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id_company`,`id_user`,`id_company_position`),
+  KEY `users_companies.id_user` (`id_user`),
+  KEY `users_companies.id_company_position` (`id_company_position`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='To remove';
 
 -- --------------------------------------------------------
 
@@ -709,6 +761,13 @@ ALTER TABLE `address_lang`
 ALTER TABLE `companies_lang`
   ADD CONSTRAINT `companies_lang_id_company` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `companies_lang_id_lang` FOREIGN KEY (`id_lang`) REFERENCES `languages` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `company_positions_lang`
+--
+ALTER TABLE `company_positions_lang`
+  ADD CONSTRAINT `company_positions_lang.id_company_positions` FOREIGN KEY (`id_company_positions`) REFERENCES `company_positions` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `company_positions_lang.id_lang` FOREIGN KEY (`id_lang`) REFERENCES `languages` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `cv`
@@ -770,14 +829,8 @@ ALTER TABLE `part_educations_lang`
 --
 ALTER TABLE `part_experiences`
   ADD CONSTRAINT `part_experiences.id_company` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `part_experiences.id_company_position` FOREIGN KEY (`id_company_position`) REFERENCES `company_positions` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `part_experiences.id_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
-
---
--- Contraintes pour la table `part_experiences_lang`
---
-ALTER TABLE `part_experiences_lang`
-  ADD CONSTRAINT `part_experiences_lang_id_lang` FOREIGN KEY (`id_lang`) REFERENCES `languages` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `part_experiences_lang_id_part_experiences` FOREIGN KEY (`id_part_experiences`) REFERENCES `part_experiences` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `part_projects`
@@ -838,7 +891,9 @@ ALTER TABLE `socials_link`
 -- Contraintes pour la table `users_companies`
 --
 ALTER TABLE `users_companies`
-  ADD CONSTRAINT `users_companies_id_company` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+  ADD CONSTRAINT `users_companies.id_company` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `users_companies.id_company_position` FOREIGN KEY (`id_company_position`) REFERENCES `company_positions` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `users_companies.id_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `users_lang`
