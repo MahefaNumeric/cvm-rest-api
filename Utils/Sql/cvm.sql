@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 23 fév. 2021 à 21:41
+-- Généré le : mer. 24 fév. 2021 à 15:29
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -267,7 +267,9 @@ CREATE TABLE IF NOT EXISTS `cv_skills` (
 --
 
 INSERT INTO `cv_skills` (`id_cv`, `id_skills`, `date_add`, `date_update`) VALUES
-(1, 1, '2021-02-23 21:18:29', '2021-02-23 21:18:29');
+(1, 1, '2021-02-23 21:18:29', '2021-02-23 21:18:29'),
+(1, 2, '2021-02-24 13:46:05', '2021-02-24 13:46:05'),
+(1, 3, '2021-02-24 15:26:16', '2021-02-24 15:26:16');
 
 -- --------------------------------------------------------
 
@@ -442,14 +444,16 @@ CREATE TABLE IF NOT EXISTS `part_skills` (
   PRIMARY KEY (`id`),
   KEY `part_skills.id_user` (`id_user`),
   KEY `part_skills.id_skills_group` (`id_skills_group`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `part_skills`
 --
 
 INSERT INTO `part_skills` (`id`, `id_user`, `id_skills_group`, `slug`, `date_add`, `date_update`) VALUES
-(1, 1, 1, 'PHP', '2021-02-23 21:04:18', '2021-02-23 21:04:18');
+(1, 1, 1, 'PHP', '2021-02-23 21:04:18', '2021-02-23 21:04:18'),
+(2, 1, 1, 'JS', '2021-02-24 13:43:52', '2021-02-24 13:43:52'),
+(3, 1, 2, 'PYTHON', '2021-02-24 15:24:48', '2021-02-24 15:24:48');
 
 -- --------------------------------------------------------
 
@@ -475,7 +479,11 @@ CREATE TABLE IF NOT EXISTS `part_skills_lang` (
 
 INSERT INTO `part_skills_lang` (`id_part_skills`, `id_lang`, `title`, `description`, `date_add`, `date_update`) VALUES
 (1, 1, 'PHP', 'PHP Desc FR', '2021-02-23 21:05:46', '2021-02-23 21:05:46'),
-(1, 2, 'PHP', 'PHP Desc EN', '2021-02-23 21:05:46', '2021-02-23 21:05:46');
+(1, 2, 'PHP', 'PHP Desc EN', '2021-02-23 21:05:46', '2021-02-23 21:05:46'),
+(2, 1, 'Javascript', 'Javascript FR', '2021-02-24 13:44:23', '2021-02-24 13:44:23'),
+(2, 2, 'Javascript', 'Javascript EN', '2021-02-24 13:44:23', '2021-02-24 13:44:23'),
+(3, 1, 'Python', 'Python desc', '2021-02-24 15:25:08', '2021-02-24 15:25:08'),
+(3, 2, 'Python', 'Python desc', '2021-02-24 15:25:21', '2021-02-24 15:25:21');
 
 -- --------------------------------------------------------
 
@@ -504,14 +512,15 @@ CREATE TABLE IF NOT EXISTS `skills_group` (
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `skills_group`
 --
 
 INSERT INTO `skills_group` (`id`, `slug`, `date_add`, `date_update`) VALUES
-(1, 'Software_Knowledge', '2021-02-23 21:35:23', '2021-02-23 21:35:23');
+(1, 'Software_Knowledge', '2021-02-23 21:35:23', '2021-02-23 21:35:23'),
+(2, 'LANGUAGES', '2021-02-24 15:23:26', '2021-02-24 15:23:26');
 
 -- --------------------------------------------------------
 
@@ -535,7 +544,9 @@ CREATE TABLE IF NOT EXISTS `skills_group_lang` (
 
 INSERT INTO `skills_group_lang` (`id_skills_group`, `id_lang`, `title`, `description`) VALUES
 (1, 1, 'Conaissance informatique', 'Software Knowledge Descr FR'),
-(1, 2, 'Software Knowledge', 'Software Knowledge Descr EN');
+(1, 2, 'Software Knowledge', 'Software Knowledge Descr EN'),
+(2, 1, 'Langages', 'Langages Desc'),
+(2, 2, 'Languages', 'Languages desc');
 
 -- --------------------------------------------------------
 

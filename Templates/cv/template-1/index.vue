@@ -132,11 +132,11 @@
               <li>C++</li>
             </ul>
           </div>
+          <hr/>
           <div class="content" v-for="itemSkillGroup in cv.skillsGroup" :key="itemSkillGroup.id">
             <h3>{{ itemSkillGroup.title }}</h3>
             <ul class="skills">
               <template v-for="itemSkill in cv.skills">
-                <!-- :key="itemSkill.id" -->
                 <li v-if="itemSkill.id_skills_group === itemSkillGroup.id" :key="itemSkill.id">
                   {{ itemSkill.title }}
                 </li>
