@@ -1,8 +1,19 @@
+const CompanyPosition = require("./CompanyPosition");
+
 class Company{
-    // static _table = 'part_experiences';
+    static _table = 'companies';
 
     constructor(
+        id,
+        slug,
+        name,
+        description
     ){
+        this.id = id;
+        this.slug = slug;
+        this.name = name;
+        this.description = description;
+
         // // Position on a company
         this.positions = [];
     }
@@ -11,7 +22,7 @@ class Company{
      * Retrive list Companies from table cv_experiences
      * @param {*} idCv 
      * @param {*} idLang 
-     * @returns {Array<Experiences>}
+     * @returns {Array<Company>}
      */
     static getListCompaniesFromDbByCv(idCv, idLang){
         return new Promise((resolve, reject) => {
@@ -37,6 +48,7 @@ class Company{
                     company_positions_lang.description AS descriptionCompanyPosition, */
 
                     companies_lang.id_company AS idCompany,
+                    companies.slug AS slugCompany,
                     companies_lang.name AS nameCompany,
                     companies_lang.description AS descriptionCompany
 
@@ -49,22 +61,30 @@ class Company{
                     ON company_positions_lang.id_company_positions = company_positions.id
                 JOIN companies_lang
                     ON companies_lang.id_company = part_experiences.id_company 
+                JOIN companies
+                    ON companies.id = companies_lang.id_company 
                 WHERE cv_experiences.id_cv = ${idCv} 
                     AND company_positions_lang.id_lang = ${idLang} 
+                    AND company_positions_lang.id_lang = companies_lang.id_lang
             `;
 
-            connMysql.query(sql, (error, listExperiencesResult, fields) => {
+            connMysql.query(sql, (error, listCompaniesResult, fields) => {
                 if(error) throw error;
-                if(Array.isArray(listExperiencesResult) && listExperiencesResult.length > 0) {
+                if(Array.isArray(listCompaniesResult) && listCompaniesResult.length > 0) {
                     const listCompanies = [];
-                    listExperiencesResult.forEach(element => {
-                        listCompanies.push(new Experiences(...Object.values(element)));
+                    listCompaniesResult.forEach(element => {
+                        const company = new Company(...Object.values(element));
+                        // It is a problem, to corrige
+                        CompanyPosition.getListCompanyPositionByCv(idCv, idLang).then((listPositions) => {
+                            company.positions = listPositions;
+                            listCompanies.push(company);
+                        });
                     });
                     resolve(listCompanies);
                 }else{
                     reject({
-                        message: "Experiences::getListExperiencesFromDbByCv::listExperiencesResult null",
-                        error: [listExperiencesResult, error]
+                        message: "Company::getListCompaniesFromDbByCv::listCompaniesResult null",
+                        error: [listCompaniesResult, error]
                     });
                 }
             });

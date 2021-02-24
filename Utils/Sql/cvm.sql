@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 24 fév. 2021 à 18:58
+-- Généré le : mer. 24 fév. 2021 à 21:03
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -656,7 +656,7 @@ CREATE TABLE IF NOT EXISTS `templates` (
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='Not yet done, ';
 
 --
 -- Déchargement des données de la table `templates`
