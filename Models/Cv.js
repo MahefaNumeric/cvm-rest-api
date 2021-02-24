@@ -3,6 +3,7 @@ const Template = require("./Template");
 const Education = require("./Education");
 const Skill = require("./Skill");
 const SkillGroup = require("./SkillGroup");
+const Experience = require("./Experience");
 
 class Cv{
     /**
@@ -43,6 +44,7 @@ class Cv{
         this.experiences = null;
         this.projects = null;
         this.skills = null;
+        this.skillsGroup = null;
     }
 
     /**
@@ -78,6 +80,7 @@ class Cv{
                                 cv.skills = listSkills;
                                 SkillGroup.getListUsedSkillsGroupFromDbByCv(cv.id, idLang).then((listGroupSkills) => {
                                     cv.skillsGroup = listGroupSkills;
+                                    Experience.
                                     resolve(cv);
                                 }).catch((error) => {
                                     reject({

@@ -74,6 +74,7 @@ class CvService{
     /**
      * The path begin on root project folder > Templates/*
      * @param {number} idCv 
+     * @todo cvService.getTemplateVueFilePath : make the logic to manage by Template object
      */
     getTemplateVueFilePath(idCv, withTemplatesRoot = false){
         let rootView = '';

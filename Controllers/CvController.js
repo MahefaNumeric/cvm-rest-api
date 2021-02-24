@@ -91,6 +91,7 @@ module.exports = (router) => {
 
     /**
      * Previsualize the html output (Type: text/html)
+     * @todo cvService.getTemplateVueFilePath : make the logic to manage by Template object
      */
     router.get("/:idCv/generate/html/view", (request, response, next) => {
         const idCv = request.params.idCv;
@@ -116,7 +117,7 @@ module.exports = (router) => {
                     const templateVueFilePath = cvService.getTemplateVueFilePath(idCv, false);
                     response.type("text/html");
                     response.renderVue(templateVueFilePath, data, request.vueOptions);
-                    // response.end();
+                    // response.end();  // Produce an error
                 }).catch((error) => {
                     console.error("CvController:: /:idCv/generate/html/view Cv.createFromDbById::", error);
                 });

@@ -80,6 +80,7 @@
           </div>
         </div>
         <!-- End 2nd Row -->
+
         <!-- Begin 3rd Row -->
         <div class="entry">
           <h2>EXPERIENCE</h2>
@@ -89,7 +90,7 @@
               <em>Senior Web Designer</em></p>
             <ul class="info">
               <li>Vestibulum eu ante massa, sed rhoncus velit.</li>
-              <li>Pellentesque at lectus in <a href="#">libero dapibus</a> cursus. Sed arcu ipsum, varius at ultricies acuro, tincidunt iaculis diam.</li>
+              <li>Pellentesque at lectus in libero dapibus cursus. Sed arcu ipsum, varius at ultricies acuro, tincidunt iaculis diam.</li>
             </ul>
           </div>
           <div class="content">
@@ -102,6 +103,8 @@
             </ul>
           </div>
         </div>
+        <hr/>
+
         <!-- End 3rd Row -->
 
         <!-- Begin 4th Row -->
