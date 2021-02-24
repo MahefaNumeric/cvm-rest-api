@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mer. 24 fév. 2021 à 18:55
+-- Généré le : mer. 24 fév. 2021 à 18:58
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -695,26 +695,6 @@ INSERT INTO `users` (`id`, `email`, `firstname`, `lastname`, `date_birth`, `phon
 -- --------------------------------------------------------
 
 --
--- Structure de la table `users_companies`
---
-
-DROP TABLE IF EXISTS `users_companies`;
-CREATE TABLE IF NOT EXISTS `users_companies` (
-  `id_company` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `id_company_position` int(11) NOT NULL,
-  `date_begin` date NOT NULL COMMENT 'Date of entry into the company',
-  `date_end` date NOT NULL COMMENT 'Date of leave from the company',
-  `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_company`,`id_user`,`id_company_position`),
-  KEY `users_companies.id_user` (`id_user`),
-  KEY `users_companies.id_company_position` (`id_company_position`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='To remove';
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `users_lang`
 --
 
@@ -886,14 +866,6 @@ ALTER TABLE `skills_level`
 --
 ALTER TABLE `socials_link`
   ADD CONSTRAINT `socials_link_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
-
---
--- Contraintes pour la table `users_companies`
---
-ALTER TABLE `users_companies`
-  ADD CONSTRAINT `users_companies.id_company` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `users_companies.id_company_position` FOREIGN KEY (`id_company_position`) REFERENCES `company_positions` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  ADD CONSTRAINT `users_companies.id_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `users_lang`
