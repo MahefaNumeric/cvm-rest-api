@@ -2,6 +2,7 @@ const Address = require("./Address");
 const Template = require("./Template");
 const Education = require("./Education");
 const Skill = require("./Skill");
+const SkillGroup = require("./SkillGroup");
 
 class Cv{
     /**
@@ -75,22 +76,33 @@ class Cv{
                             cv.educations = listEducation;
                             Skill.getListSkillsFromDbByCv(cv.id, idLang).then((listSkills) => {
                                 cv.skills = listSkills;
-                                resolve(cv);
-                            }).catch(() => {
+                                SkillGroup.getListUsedSkillsGroupFromDbByCv(cv.id, idLang).then((listGroupSkills) => {
+                                    cv.skillsGroup = listGroupSkills;
+                                    resolve(cv);
+                                }).catch((error) => {
+                                    reject({
+                                        message: "Cv::createFromDbById::getListUsedSkillsGroupFromDbByCv::catch",
+                                        error: error
+                                    });
+                                });
+                            }).catch((error) => { 
                                 reject({
-                                    message: "Cv::createFromDbById::getListSkillsFromDbByCv::catch"
+                                    message: "Cv::createFromDbById::getListSkillsFromDbByCv::catch",
+                                    error: error
                                 });
                             });
                         }).catch((error) => {
-                            console.error("Cv::createFromDbById::getListEducationFromDbByIdCv::catch", error);
                             reject({
-                                message: "Cv::createFromDbById::getListEducationFromDbByIdCv::catch"
+                                message: "Cv::createFromDbById::getListEducationFromDbByIdCv::catch",
+                                error: error
                             });
                         });
                     });
-
                 }else{
-                    console.error("Cv::createFromDbById::cvResult::error", cvResult, error);
+                    reject({
+                        message: "Cv::createFromDbById::cvResult::error",
+                        error: [cvResult, error]
+                    });
                 }
             });
         });

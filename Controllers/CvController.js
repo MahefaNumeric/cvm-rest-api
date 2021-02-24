@@ -102,7 +102,6 @@ module.exports = (router) => {
         const Cv = require("../Models/Cv");
 
         Language.createFromDbByIso(isoLang).then((language) => {
-            // console.log("CvController::Language.createFromDbByIso", language);
             User.createFromDbById(1, language.id).then((user) => {
                 Cv.createFromDbById(1, language.id).then((cv) => {
                     const data = {
