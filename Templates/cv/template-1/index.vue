@@ -103,6 +103,7 @@
           </div>
         </div>
         <!-- End 3rd Row -->
+
         <!-- Begin 4th Row -->
         <div class="entry">
           <h2>SKILLS</h2>
@@ -131,9 +132,21 @@
               <li>C++</li>
             </ul>
           </div>
+          <div class="content" v-for="itemSkillGroup in cv.skillsGroup" :key="itemSkillGroup.id">
+            <h3>{{ itemSkillGroup.title }}</h3>
+            <ul class="skills">
+              <template v-for="itemSkill in cv.skills">
+                <!-- :key="itemSkill.id" -->
+                <li v-if="itemSkill.id_skills_group === itemSkillGroup.id" :key="itemSkill.id">
+                  {{ itemSkill.title }}
+                </li>
+              </template>
+            </ul>
+          </div>
         </div>
         <!-- End 4th Row -->
-         <!-- Begin 5th Row -->
+
+        <!-- Begin 5th Row -->
         <div class="entry">
         <h2>WORKS</h2>
         	<ul class="works">
