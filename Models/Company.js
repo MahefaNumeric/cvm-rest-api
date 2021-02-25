@@ -67,15 +67,15 @@ class Company{
                     AND company_positions_lang.id_lang = companies_lang.id_lang
             `;
 
-            connMysql.query(sql, (error, listCompaniesResult, fields) => {
+            connMysql.query(sql, async (error, listCompaniesResult, fields) => {
                 if(error) throw error;
                 if(Array.isArray(listCompaniesResult) && listCompaniesResult.length > 0) {
                     const listCompanies = [];
-                    listCompaniesResult.forEach(async element => {
+                    for (let element of listCompaniesResult) {
                         const company = new Company(...Object.values(element));
                         company.positions = await CompanyPosition.getListPositionByCv(idCv, company.id, idLang);
                         listCompanies.push(company);
-                    });
+                    };
                     resolve(listCompanies);
                 }else{
                     reject({

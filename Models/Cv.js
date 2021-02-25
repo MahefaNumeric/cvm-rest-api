@@ -73,30 +73,37 @@ class Cv{
                 if(error) throw error;
                 if(Array.isArray(cvResult) && cvResult.length > 0){
                     const cv = new Cv(...Object.values(cvResult[0]));
-                    console.log(cvResult, cv);
-                    Address.createFromDbById(cv.id_address, idLang, (address) => {
+                    // console.log(cvResult, cv);
+                    Address.createFromDbById(cv.id_address, idLang, address => {
                         cv.address = address;
-                        Education.getListEducationFromDbByIdCv(cv.id, idLang).then((listEducation) => {
+                        Education.getListEducationFromDbByIdCv(cv.id, idLang).then(listEducation => {
                             cv.educations = listEducation;
-                            Skill.getListSkillsFromDbByCv(cv.id, idLang).then((listSkills) => {
+                            Skill.getListSkillsFromDbByCv(cv.id, idLang).then(listSkills => {
                                 cv.skills = listSkills;
-                                SkillGroup.getListUsedSkillsGroupFromDbByCv(cv.id, idLang).then((listGroupSkills) => {
+                                SkillGroup.getListUsedSkillsGroupFromDbByCv(cv.id, idLang).then(listGroupSkills => {
                                     cv.skillsGroup = listGroupSkills;
-                                    // Experience.
-                                    resolve(cv);
-                                }).catch((error) => {
+                                    Experience.buildExperienceByIdCv(cv.id, idLang).then(experience => {
+                                        cv.experiences = experience;
+                                        resolve(cv);
+                                    }).catch(error => {
+                                        reject({
+                                            message: "Cv::createFromDbById::buildExperienceByIdCv::catch",
+                                            error: error
+                                        });
+                                    });
+                                }).catch(error => {
                                     reject({
                                         message: "Cv::createFromDbById::getListUsedSkillsGroupFromDbByCv::catch",
                                         error: error
                                     });
                                 });
-                            }).catch((error) => { 
+                            }).catch(error => {
                                 reject({
                                     message: "Cv::createFromDbById::getListSkillsFromDbByCv::catch",
                                     error: error
                                 });
                             });
-                        }).catch((error) => {
+                        }).catch(error => {
                             reject({
                                 message: "Cv::createFromDbById::getListEducationFromDbByIdCv::catch",
                                 error: error

@@ -59,10 +59,10 @@ class Experiences{
     static buildExperienceByIdCv(idCv, idLang){
         return new Promise((resolve, reject) => {
             const experience = new Experiences();
-            Company.getListCompaniesFromDbByCv(idCv, idLang).then((listCompanies) => {
+            Company.getListCompaniesFromDbByCv(idCv, idLang).then(listCompanies => {
                 experience.companies = listCompanies;
                 resolve(experience);
-            }).catch((error) => {
+            }).catch(error => {
                 reject({
                     message: 'Experience::buildExperienceByIdCv::catch',
                     data: error
