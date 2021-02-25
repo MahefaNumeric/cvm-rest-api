@@ -40,12 +40,11 @@ class Company{
                     part_experiences.date_begin,
                     part_experiences.date_end, */
 
-                    /* company_positions.id AS idCompanyPosition,
-                    company_positions.slug AS slugCompanyPosition, */
-
-                    /* company_positions_lang.id_lang, 
-                    company_positions_lang.title AS titleCompanyPosition,
-                    company_positions_lang.description AS descriptionCompanyPosition, */
+                    /* company_positions.id AS idPosition,
+                    company_positions.slug AS slugPosition,
+                    company_positions_lang.id_lang AS idLangPosition, 
+                    company_positions_lang.title AS titlePosition,
+                    company_positions_lang.description AS descriptionPosition, */
 
                     companies_lang.id_company AS idCompany,
                     companies.slug AS slugCompany,
@@ -68,17 +67,14 @@ class Company{
                     AND company_positions_lang.id_lang = companies_lang.id_lang
             `;
 
-            connMysql.query(sql, (error, listCompaniesResult, fields) => {
+            connMysql.query(sql, async (error, listCompaniesResult, fields) => {
                 if(error) throw error;
                 if(Array.isArray(listCompaniesResult) && listCompaniesResult.length > 0) {
                     const listCompanies = [];
                     listCompaniesResult.forEach(element => {
                         const company = new Company(...Object.values(element));
-                        // It is a problem, to corrige
-                        CompanyPosition.getListCompanyPositionByCv(idCv, idLang).then((listPositions) => {
-                            company.positions = listPositions;
-                            listCompanies.push(company);
-                        });
+                        company.positions = await CompanyPosition.getListPositionByCv(idCv, company.id, idLang);
+                        listCompanies.push(company);
                     });
                     resolve(listCompanies);
                 }else{

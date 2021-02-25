@@ -5,14 +5,16 @@ class CompanyPosition{
         id,
         slug,
         title,
-        description
+        description,
+        experienceDateBegin,
+        experienceDateEnd
     ){
         this.id = id;
         this.slug = slug;
         this.title = title;
         this.description = description;
-
-        this.user = null;
+        this.experienceDateBegin = experienceDateBegin;
+        this.experienceDateEnd = experienceDateEnd;
     }
 
     /**
@@ -50,44 +52,68 @@ class CompanyPosition{
         });
     }
 
-    static getListCompanyPositionByCv(idCv, idLang){
-    //     return new Promise((resolve, reject) => {
-    //         const connMysql = require("../Configs/Databases/db.config");
-    //         const sql = `
-    //             SELECT DISTINCT 
-    //                 skills_group.id,
-    //                 skills_group.slug,
-    //                 skills_group_lang.title,
-    //                 skills_group_lang.description
-    //             FROM cv_skills 
-    //             JOIN part_skills 
-    //                 ON cv_skills.id_skills = part_skills.id 
-    //             JOIN part_skills_lang 
-    //                 ON part_skills.id = part_skills_lang.id_part_skills
-    //             JOIN skills_group
-    //                 ON skills_group.id = part_skills.id_skills_group
-    //             JOIN skills_group_lang 
-    //                 ON skills_group.id = skills_group_lang.id_skills_group 
-    //             WHERE cv_skills.id_cv = ${idCv}
-    //                 AND part_skills_lang.id_lang = ${idLang}
-    //                 AND skills_group_lang.id_lang = part_skills_lang.id_lang
-    //         `;
-    //         connMysql.query(sql, (error, listSkillsResult, fields) => {
-    //             if(error) throw error;
-    //             if(Array.isArray(listSkillsResult) && listSkillsResult.length > 0) {
-    //                 const listSkills = [];
-    //                 listSkillsResult.forEach(element => {
-    //                     listSkills.push(new CompanyPosition(...Object.values(element)));
-    //                 });
-    //                 resolve(listSkills);
-    //             }else{
-    //                 console.log("CompanyPosition::getListSkillsFromDbByCv::listSkillsResult", listSkillsResult, error);
-    //                 reject({
-    //                     message: "CompanyPosition::getListSkillsFromDbByCv::listSkillsResult null"
-    //                 });
-    //             }
-    //         });
-    //     });
+    static getListPositionByCv(idCv, idCompany, idLang){
+        return new Promise((resolve, reject) => {
+            const connMysql = require("../Configs/Databases/db.config");
+            const sql = `
+                SELECT 
+                    /* cv_experiences.id_cv,
+                    cv_experiences.id_experience, */
+
+                    /* part_experiences.id AS idExperience,
+                    part_experiences.id_user ,
+                    part_experiences.id_company,
+                    part_experiences.id_company_position ,
+                    part_experiences.slug AS slugExperience, */
+
+                    company_positions.id AS idPosition,
+                    company_positions.slug AS slugPosition,
+                    company_positions_lang.title AS titlePosition,
+                    company_positions_lang.description AS descriptionPosition, 
+                    DATE_FORMAT(part_experiences.date_begin, '%Y-%m') as date_begin,
+                    DATE_FORMAT(part_experiences.date_end, '%Y-%m') as date_end
+                    /* company_positions_lang.id_lang AS idLangPosition */
+
+                    /* companies_lang.id_company AS idCompany,
+                    companies.slug AS slugCompany,
+                    companies_lang.name AS nameCompany,
+                    companies_lang.description AS descriptionCompany */
+
+                FROM cv_experiences 
+                JOIN part_experiences 
+                    ON part_experiences.id = cv_experiences.id_cv 
+                JOIN company_positions
+                    ON company_positions.id = part_experiences.id_company_position
+                JOIN company_positions_lang
+                    ON company_positions_lang.id_company_positions = company_positions.id
+                JOIN companies_lang
+                    ON companies_lang.id_company = part_experiences.id_company 
+                JOIN companies
+                    ON companies.id = companies_lang.id_company 
+                WHERE cv_experiences.id_cv = ${idCv} 
+                    AND company_positions_lang.id_lang = ${idLang} 
+                    AND company_positions_lang.id_lang = companies_lang.id_lang
+                    AND part_experiences.id_company = ${idCompany}
+            `;
+            connMysql.query(sql, (error, listPositionsResult, fields) => {
+                if(error) reject({
+                    message: "CompanyPosition::getListPositionByCv::error",
+                    data: error
+                });
+                if(Array.isArray(listPositionsResult) && listPositionsResult.length > 0) {
+                    const listPositions = [];
+                    listPositionsResult.forEach(element => {
+                        listPositions.push(new CompanyPosition(...Object.values(element)));
+                    });
+                    resolve(listPositions);
+                }else{
+                    reject({
+                        message: "CompanyPosition::getListPositionByCv::listPositionsResult null",
+                        data: {listPositionsResult, error}
+                    });
+                }
+            });
+        });
     }
 
 }
