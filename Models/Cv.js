@@ -22,8 +22,6 @@ class Cv{
         id_template,
         slug,
         id_address,
-        date_add,
-        date_update,
         title_backend,
         title_frontend,
         auto_biography
@@ -34,8 +32,8 @@ class Cv{
         this.id_address = id_address;
         this.title_backend = title_backend;
         this.title_frontend = title_frontend;
-        this.date_add = date_add;
-        this.date_update = date_update;
+        // this.date_add = date_add;
+        // this.date_update = date_update;
         this.auto_biography = auto_biography;
 
         this.template = null;
@@ -55,12 +53,15 @@ class Cv{
     static createFromDbById(idCv, idLang){
         return new Promise((resolve, reject) => {
             const connMysql = require("../Configs/Databases/db.config");
-            const Address = require("../Models/Address");
             const sql = `
             SELECT 
-                cv.*, 
-                cv_lang.title_backend, 
-                cv_lang.title_frontend, 
+                cv.id, 
+                cv.id_template, 
+                /* cv.id_user, */
+                cv.slug, 
+                cv.id_address,
+                cv_lang.title_backend,
+                cv_lang.title_frontend,
                 cv_lang.auto_biography
             FROM cv 
             JOIN cv_lang 
@@ -72,6 +73,7 @@ class Cv{
                 if(error) throw error;
                 if(Array.isArray(cvResult) && cvResult.length > 0){
                     const cv = new Cv(...Object.values(cvResult[0]));
+                    console.log(cvResult, cv);
                     Address.createFromDbById(cv.id_address, idLang, (address) => {
                         cv.address = address;
                         Education.getListEducationFromDbByIdCv(cv.id, idLang).then((listEducation) => {
@@ -80,7 +82,7 @@ class Cv{
                                 cv.skills = listSkills;
                                 SkillGroup.getListUsedSkillsGroupFromDbByCv(cv.id, idLang).then((listGroupSkills) => {
                                     cv.skillsGroup = listGroupSkills;
-                                    Experience.
+                                    // Experience.
                                     resolve(cv);
                                 }).catch((error) => {
                                     reject({
