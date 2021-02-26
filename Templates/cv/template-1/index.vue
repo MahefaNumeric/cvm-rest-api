@@ -78,6 +78,9 @@
             <p> {{ education.title }} <br />
               <em>{{ education.description }}</em></p>
           </div>
+          <div class="content content-no-item" v-if="Object.keys(cv.educations).length == 0">
+            {No item in educations}
+          </div>
         </div>
         <!-- End 2nd Row -->
 
@@ -117,6 +120,11 @@
               </div>
             </div>
           </template>
+          
+          <div class="content content-no-item" v-if="Object.keys(cv.experiences.companies).length == 0">
+            {No item in companies}
+          </div>
+
         </div>
         <!-- End 3rd Row -->
 
@@ -159,6 +167,11 @@
               </template>
             </ul>
           </div>
+
+          <div class="content content-no-item" v-if="Object.keys(cv.skillsGroup).length == 0">
+            {No item in skills}
+          </div>
+
         </div>
         <!-- End 4th Row -->
 

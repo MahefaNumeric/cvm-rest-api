@@ -111,7 +111,7 @@ module.exports = (router) => {
                         cv: cv,
                         language: language
                     };
-                    // console.log("/:idCv/generate/html/view", util.inspect(data, {showHidden: false, depth: null, colors: true}));
+                    console.log("/:idCv/generate/html/view", util.inspect(data, {showHidden: false, depth: null, colors: true}));
                     const htmlPageTitle = `Resume ${data.lastname}`;
                     request.vueOptions = vueOptions(htmlPageTitle);
                     
