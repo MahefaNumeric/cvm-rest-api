@@ -102,9 +102,17 @@
               <li>Pellentesque at lectus in libero dapibus cursus. Sed arcu ipsum, varius at ultricies acuro, tincidunt iaculis diam.</li>
             </ul>
           </div>
+          <hr/>
+          <div class="content" v-for="itemCompany in cv.experiences.companies" :key="itemCompany.id">
+            <h3>{{ itemCompany.positions[0].experienceDateBegin}} - {{itemCompany.positions[0].experienceDateEnd }}</h3>
+            <p>{{ itemCompany.name }} <br />
+              <em>{{ itemCompany.positions[0].title }}</em></p>
+            <ul class="info">
+              <li>{{ itemCompany.positions[0].description }}</li>
+              <li>{{ itemCompany.positions[0].description }}</li>
+            </ul>
+          </div>
         </div>
-        <hr/>
-
         <!-- End 3rd Row -->
 
         <!-- Begin 4th Row -->
