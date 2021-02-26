@@ -1,4 +1,4 @@
-const DateUtils = require("../Utils/DateUtils");
+const DateUtils = require("../../Utils/DateUtils");
 const Language = require("./Language");
 
 class Education{
@@ -40,7 +40,7 @@ class Education{
      */
     static createFromDbById(idEducation, idLang){
         return new Promise((resolve, reject) => {
-            const connMysql = require("../Configs/Databases/db.config");
+            const connMysql = require("../../Configs/Databases/db.config");
             const sql = `
             SELECT 
                 part_educations.*
@@ -76,7 +76,7 @@ class Education{
      */
     static getListEducationFromDbByIdCv(idCv, idLang){
         return new Promise((resolve, reject) => {
-            const connMysql = require("../Configs/Databases/db.config");
+            const connMysql = require("../../Configs/Databases/db.config");
             const sql = `
                 SELECT 
                     part_educations.*,

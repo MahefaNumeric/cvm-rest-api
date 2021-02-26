@@ -24,7 +24,7 @@ class SocialLink{
      * @returns {SocialLink}
      */
     static createFromDbById(idUser, cbFinnished){
-        const connMysql = require("../Configs/Databases/db.config");
+        const connMysql = require("../../Configs/Databases/db.config");
         const sql = `
         SELECT 
             ${this._table}.*

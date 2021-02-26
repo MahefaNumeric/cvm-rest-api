@@ -34,7 +34,7 @@ class Skill{
      */
     static createFromDbById(idSkill, idLang){
         return new Promise((resolve, reject) => {
-            const connMysql = require("../Configs/Databases/db.config");
+            const connMysql = require("../../Configs/Databases/db.config");
             const sql = `
             SELECT 
                 part_skills.*, 
@@ -67,7 +67,7 @@ class Skill{
 
     static getListSkillsFromDbByCv(idCv, idLang){
         return new Promise((resolve, reject) => {
-            const connMysql = require("../Configs/Databases/db.config");
+            const connMysql = require("../../Configs/Databases/db.config");
             const sql = `
                 SELECT 
                     part_skills.id,

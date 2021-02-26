@@ -1,5 +1,5 @@
 const util = require('util');
-const Language = require("../Models/Language");
+const Language = require("../Data/Models/Language");
 const CvService = require("../Services/CvService");
 
 module.exports = (router) => {
@@ -100,8 +100,8 @@ module.exports = (router) => {
 
         const cvService = new CvService();
 
-        const User = require("../Models/User");
-        const Cv = require("../Models/Cv");
+        const User = require("../Data/Models/User");
+        const Cv = require("../Data/Models/Cv");
 
         Language.createFromDbByIso(isoLang).then((language) => {
             User.createFromDbById(idUser, language.id).then((user) => {

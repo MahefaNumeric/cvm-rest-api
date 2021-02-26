@@ -27,7 +27,7 @@ class Template{
      * @returns {User}
      */
     static createFromDbById(idUser, cbFinnished){
-        const connMysql = require("../Configs/Databases/db.config");
+        const connMysql = require("../../Configs/Databases/db.config");
         const sql = `SELECT * FROM users WHERE id = ${idUser}`;
         connMysql.query(sql, (error, usersResult, fields) => {
             if(error) throw error;

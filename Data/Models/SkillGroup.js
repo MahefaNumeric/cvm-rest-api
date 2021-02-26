@@ -23,7 +23,7 @@ class SkillGroup{
      */
     static createFromDbById(idGroupSkill, idLang){
         return new Promise((resolve, reject) => {
-            const connMysql = require("../Configs/Databases/db.config");
+            const connMysql = require("../../Configs/Databases/db.config");
             const sql = `
             SELECT 
                 skills_group.id, 
@@ -52,7 +52,7 @@ class SkillGroup{
 
     static getListUsedSkillsGroupFromDbByCv(idCv, idLang){
         return new Promise((resolve, reject) => {
-            const connMysql = require("../Configs/Databases/db.config");
+            const connMysql = require("../../Configs/Databases/db.config");
             const sql = `
                 SELECT DISTINCT 
                     skills_group.id,

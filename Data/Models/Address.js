@@ -34,7 +34,7 @@ class Address{
      * @returns {User}
      */
     static createFromDbById(idAddress, idLang, cbFinnished){
-        const connMysql = require("../Configs/Databases/db.config");
+        const connMysql = require("../../Configs/Databases/db.config");
         const sql = `
         SELECT 
             address.*, 
