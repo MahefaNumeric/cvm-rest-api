@@ -38,12 +38,12 @@ class CvService{
      * @returns {String}
      * @async
      */
-    async generateCv(idCv, format, mcbFinnished){
+    async generateCv(isoLang, idCv, format, mcbFinnished){
         const formatLC = String(format).toLowerCase();
         if(formatLC == "html"){
-            return this.generateCvHtml(idCv, mcbFinnished);
+            return this.generateCvHtml(isoLang, idCv, mcbFinnished);
         }else if(formatLC == "pdf"){
-            return this.generateCvPdf(idCv, mcbFinnished);
+            return this.generateCvPdf(isoLang, idCv, mcbFinnished);
         }else{
             return null;
         }
@@ -59,7 +59,7 @@ class CvService{
      * @todo Add function to handle variable remplacement to the cv content (name, etc...)
      * @async
      */
-    async generateCvHtml(idCv, mcbFinnished){
+    async generateCvHtml(isoLang, idCv, mcbFinnished){
         const path = require("path");
         const fs = require('fs');
         
@@ -67,6 +67,33 @@ class CvService{
         const htmlFilename = path.resolve(filename);
         await fs.readFile(htmlFilename, 'utf8', (err, htmlContent) => {
             mcbFinnished(htmlContent);
+        });
+        return;
+    }
+
+    /**
+     * Service for generating CV into PDF
+     * @param {*} idCv 
+     * @param {*} mcbFinnished 
+     * @returns {String}
+     * @async
+     */
+    async generateCvPdf(isoLang, idCv, mcbFinnished){
+        const pdfFilename = this.makePdfFilename(idCv);
+        const filenameOutput = `./Public/CvOutput/${pdfFilename}.pdf`;
+
+        const host = this.getHostUrl();
+        const urlCv = `${host}/${isoLang}/cv/${idCv}/generate/html/view`;
+
+        const puppeteer = require("puppeteer");
+        const browser = await puppeteer.launch();
+        const page = await browser.newPage();
+        await page.goto(urlCv);
+        await page.pdf({ path: filenameOutput, format: "Letter" });
+        await browser.close();
+
+        mcbFinnished({
+            "filenameOutput": filenameOutput
         });
         return;
     }
@@ -83,33 +110,6 @@ class CvService{
         const filename = "cv/template-1/index.vue";
 
         return "./" + rootView + filename;
-    }
-
-    /**
-     * Service for generating CV into PDF
-     * @param {*} idCv 
-     * @param {*} mcbFinnished 
-     * @returns {String}
-     * @async
-     */
-    async generateCvPdf(idCv, mcbFinnished){
-        const pdfFilename = this.makePdfFilename(idCv);
-        const filenameOutput = `./Public/CvOutput/${pdfFilename}.pdf`;
-
-        const host = this.getHostUrl();
-        const urlCv = `${host}/cv/generate/${idCv}/html/view`;
-
-        const puppeteer = require("puppeteer");
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        await page.goto(urlCv);
-        await page.pdf({ path: filenameOutput, format: "Letter" });
-        await browser.close();
-
-        mcbFinnished({
-            "filenameOutput": filenameOutput
-        });
-        return;
     }
 
     /**

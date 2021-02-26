@@ -67,12 +67,13 @@ module.exports = (router) => {
      * @returns 
      */
     router.get("/:idCv/generate/:format", (request, response) => {
+        const isoLang = request.params.isoLang; // From parent params
         const idCv = request.params.idCv;
         const format = request.params.format;
 
         const cvService = new CvService();
         let resultHTML = null;
-        cvService.generateCv(idCv, format, (result) => {
+        cvService.generateCv(isoLang, idCv, format, (result) => {
             if(format == "html"){
                 resultHTML = result;
                 response.type("application/json");
@@ -90,7 +91,7 @@ module.exports = (router) => {
             }else{
                 response.type("application/json");
                 response.status(400);
-                response.json("Error : Empty format");
+                response.json(`Error : Format error : ${format}`);
                 response.end();
             }
         });
@@ -130,8 +131,8 @@ module.exports = (router) => {
             });
         }).catch((error) => {
             response.type("text/json");
-            response.status(400);
-            response.write({message: `Error: Language '${isoLang}' not exist`});
+            response.status(404);
+            response.write(JSON.stringify({message: `Error: Language '${isoLang}' not exist`}));
             response.end();
         });
     });
@@ -159,6 +160,11 @@ function cvErrorHandling(error, idCv, response){
     response.end();
 }
 
+/**
+ * 
+ * @param {*} htmlPageTitle 
+ * @todo Twitter ????
+ */
 const vueOptions = (htmlPageTitle) => ({
     head: {
         title: htmlPageTitle,
