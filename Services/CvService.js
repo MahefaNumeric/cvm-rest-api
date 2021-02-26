@@ -77,6 +77,7 @@ class CvService{
      * @param {*} mcbFinnished 
      * @returns {String}
      * @async
+     * @todo Check if urlCv exist
      */
     async generateCvPdf(isoLang, idCv, mcbFinnished){
         const pdfFilename = this.makePdfFilename(idCv);
