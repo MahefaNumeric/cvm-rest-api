@@ -103,18 +103,20 @@
             </ul>
           </div>
           <hr/>
-          <div class="content" v-for="itemCompany in cv.experiences.companies" :key="itemCompany.id">
-            <h3>{{ itemCompany.positions[0].experienceDateBegin}} - {{itemCompany.positions[0].experienceDateEnd }}</h3>
-            <p>{{ itemCompany.name }} <br />
-              <em>{{ itemCompany.positions[0].title }}</em></p>
-            <div class="description-content">
-              <p>{{ itemCompany.positions[0].description }}</p>
-              <ul class="info">
-                <li>{{ itemCompany.positions[0].description }}</li>
-                <li>{{ itemCompany.positions[0].description }}</li>
-              </ul>
+          <template v-for="itemCompany in cv.experiences.companies">
+            <div class="content" v-for="itemPosition in itemCompany.positions" :key="itemPosition.id">
+              <h3>{{ itemPosition.experienceDateBegin}} - {{itemPosition.experienceDateEnd }}</h3>
+              <p>{{ itemCompany.name }} <br />
+                <em>{{ itemPosition.title }}</em></p>
+              <div class="description-content">
+                <p>{{ itemPosition.description }}</p>
+                <ul class="info">
+                  <li>{{ itemPosition.description }}</li>
+                  <li>{{ itemPosition.description }}</li>
+                </ul>
+              </div>
             </div>
-          </div>
+          </template>
         </div>
         <!-- End 3rd Row -->
 
