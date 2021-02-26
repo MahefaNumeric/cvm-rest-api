@@ -1,6 +1,8 @@
 const util = require('util');
 const Language = require("../Data/Models/Language");
 const CvService = require("../Services/CvService");
+const User = require("../Data/Models/User");
+const Cv = require("../Data/Models/Cv");
 
 module.exports = (router) => {
     
@@ -65,8 +67,6 @@ module.exports = (router) => {
      * @returns 
      */
     router.get("/:idCv/generate/:format", (request, response) => {
-        response.type("application/json");
-
         const idCv = request.params.idCv;
         const format = request.params.format;
 
@@ -75,15 +75,23 @@ module.exports = (router) => {
         cvService.generateCv(idCv, format, (result) => {
             if(format == "html"){
                 resultHTML = result;
+                response.type("application/json");
+                response.status(200);
                 response.json({"html": resultHTML});
                 response.end();
             }else if(format == "pdf"){
+                response.type("application/json");
+                response.status(200);
                 response.json({
                     "message": "PDF generation finnished",
                     "data": result
                 });
+                response.end();
             }else{
+                response.type("application/json");
+                response.status(400);
                 response.json("Error : Empty format");
+                response.end();
             }
         });
         return;
@@ -100,9 +108,6 @@ module.exports = (router) => {
 
         const cvService = new CvService();
 
-        const User = require("../Data/Models/User");
-        const Cv = require("../Data/Models/Cv");
-
         Language.createFromDbByIso(isoLang).then((language) => {
             User.createFromDbById(idUser, language.id).then((user) => {
                 Cv.createFromDbById(idCv, language.id).then((cv) => {
@@ -117,22 +122,41 @@ module.exports = (router) => {
                     
                     const templateVueFilePath = cvService.getTemplateVueFilePath(idCv, false);
                     response.type("text/html");
+                    response.status(200);
                     response.renderVue(templateVueFilePath, data, request.vueOptions);
-                    // response.end();  // Produce an error
-                }).catch((error) => {
-                    console.error("CvController:: /:idCv/generate/html/view Cv.createFromDbById::", error);
-                });
+                }).catch(error => cvErrorHandling(error, idCv, response));
             }).catch((error) => {
                 console.error("CvController:: /:idCv/generate/html/view User.createFromDbById::", error);
             });
         }).catch((error) => {
             response.type("text/json");
-            response.write({message: `Error: Langugage '${isoLang}' not exist`});
+            response.status(400);
+            response.write({message: `Error: Language '${isoLang}' not exist`});
             response.end();
         });
     });
     
     return router;
+}
+
+function cvErrorHandling(error, idCv, response){
+    let dataRender = {};
+    if(error.code == Cv.MSG_NO_CV_GIVEN_ID){
+        dataRender = {
+            message: `Error: CV id #${idCv} does not exist`,
+            code: error.code
+        }
+    }else{
+        dataRender = {
+            message: `Error: Unknow`,
+            code: "UNKNOW_ERROR"
+        }
+    }
+
+    response.type("text/json");
+    response.status(404);
+    response.write(JSON.stringify(dataRender));
+    response.end();
 }
 
 const vueOptions = (htmlPageTitle) => ({
