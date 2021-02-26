@@ -92,6 +92,7 @@ class Education{
                 WHERE id_cv = ?
                     AND part_educations_lang.id_lang = ?
             `;
+            // console.log("Education::getListEducationFromDbByIdCv:sql", sql, idCv, idLang);
             const sqlParams = [idCv, idLang];
             connMysql.query(sql, sqlParams, (error, listEducationResult, fields) => {
                 if(error) throw error;
@@ -105,12 +106,14 @@ class Education{
                     }).catch((error) => {
                         reject({
                             message: "Education::getListEducationFromDbByIdCv::catch language empty",
+                            code: "NO_LANGUAGE",
                             data: [error]
                         });
                     });
                 }else{
                     reject({
-                        message: "Education::getListEducationFromDbByIdCv::listEducationResult empy ou not an array",
+                        message: "Education::getListEducationFromDbByIdCv::listEducationResult empty ou not an array",
+                        code: "NO_EDUCATION",
                         data: [listEducationResult, error]
                     });
                 }
