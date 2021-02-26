@@ -35,15 +35,13 @@ class Cv{
         this.id_address = id_address;
         this.title_backend = title_backend;
         this.title_frontend = title_frontend;
-        // this.date_add = date_add;
-        // this.date_update = date_update;
         this.auto_biography = auto_biography;
 
         this.template = null;
         this.address = null;
         this.educations = null;
         this.experiences = null;
-        this.projects = null;
+        this.projects = [];   // Works  
         this.skills = null;
         this.skillsGroup = null;
     }

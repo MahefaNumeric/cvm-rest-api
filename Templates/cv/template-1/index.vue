@@ -79,7 +79,7 @@
             <p> {{ education.title }} <br />
               <em>{{ education.description }}</em></p>
           </div>
-          <div class="content content-no-item" v-if="Object.keys(cv.educations).length == 0">
+          <div class="content content-no-item cvm-error" v-if="Object.keys(cv.educations).length == 0">
             {No item in educations}
           </div>
         </div>
@@ -122,7 +122,7 @@
             </div>
           </template>
           
-          <div class="content content-no-item" v-if="Object.keys(cv.experiences.companies).length == 0">
+          <div class="content content-no-item cvm-error" v-if="Object.keys(cv.experiences.companies).length == 0">
             {No item in companies}
           </div>
 
@@ -169,7 +169,7 @@
             </ul>
           </div>
 
-          <div class="content content-no-item" v-if="Object.keys(cv.skillsGroup).length == 0">
+          <div class="content content-no-item cvm-error" v-if="Object.keys(cv.skillsGroup).length == 0">
             {No item in skills}
           </div>
 
@@ -188,7 +188,13 @@
         		<li><a href="/templates/1/images/3.jpg" rel="gallery" title="Lorem ipsum dolor sit amet."><img src="/templates/1/images/image.jpg" alt="" /></a></li>
         		<li><a href="/templates/1/images/1.jpg" rel="gallery" title="Lorem ipsum dolor sit amet."><img src="/templates/1/images/image.jpg" alt="" /></a></li>
         		<li><a href="/templates/1/images/1.jpg" rel="gallery" title="Lorem ipsum dolor sit amet."><img src="/templates/1/images/image.jpg" alt="" /></a></li>
+            <hr/>
         	</ul>
+
+          <div class="content content-no-item cvm-error" v-if="Object.keys(cv.projects).length == 0">
+            {No item in projects/works}
+          </div>
+
         </div>
         <!-- Begin 5th Row -->
       </div>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : jeu. 25 fév. 2021 à 13:06
+-- Généré le : ven. 26 fév. 2021 à 18:56
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -138,14 +138,15 @@ CREATE TABLE IF NOT EXISTS `company_positions` (
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='Positions for all companies';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COMMENT='Positions for all companies';
 
 --
 -- Déchargement des données de la table `company_positions`
 --
 
 INSERT INTO `company_positions` (`id`, `slug`, `date_add`, `date_update`) VALUES
-(1, 'internship-dev', '2021-02-24 18:49:13', '2021-02-24 18:49:01');
+(1, 'internship-dev', '2021-02-24 18:49:13', '2021-02-24 18:49:01'),
+(2, 'junior-dev', '2021-02-26 16:47:35', '2021-02-26 16:47:35');
 
 -- --------------------------------------------------------
 
@@ -169,7 +170,9 @@ CREATE TABLE IF NOT EXISTS `company_positions_lang` (
 
 INSERT INTO `company_positions_lang` (`id_company_positions`, `id_lang`, `title`, `description`) VALUES
 (1, 1, 'Stagiaire Developpeur', 'Stagiaire Developpeur desc'),
-(1, 2, 'Developer Internship', 'Developer Internship desc');
+(1, 2, 'Developer Internship', 'Developer Internship desc'),
+(2, 1, 'Développeur Junior', 'Développeur Junior Descr'),
+(2, 2, 'Junior Developer', 'Junior Developer');
 
 -- --------------------------------------------------------
 
@@ -250,7 +253,8 @@ CREATE TABLE IF NOT EXISTS `cv_experiences` (
 --
 
 INSERT INTO `cv_experiences` (`id_cv`, `id_experience`, `date_add`, `date_update`) VALUES
-(1, 1, '2021-02-24 18:54:28', '2021-02-24 18:54:28');
+(1, 1, '2021-02-24 18:54:28', '2021-02-24 18:54:28'),
+(1, 2, '2021-02-26 16:53:35', '2021-02-26 16:53:35');
 
 -- --------------------------------------------------------
 
@@ -428,14 +432,15 @@ CREATE TABLE IF NOT EXISTS `part_experiences` (
   UNIQUE KEY `id_user-id_company-id_company_position` (`id_user`,`id_company`,`id_company_position`) USING BTREE,
   KEY `part_experiences.id_company` (`id_company`),
   KEY `part_experiences.id_company_position` (`id_company_position`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1 COMMENT='User presence in the company';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1 COMMENT='User presence in the company';
 
 --
 -- Déchargement des données de la table `part_experiences`
 --
 
 INSERT INTO `part_experiences` (`id`, `id_user`, `id_company`, `id_company_position`, `slug`, `date_begin`, `date_end`, `date_add`, `date_update`) VALUES
-(1, 1, 1, 1, 'intern-dev-etech', '2016-06-08', '2016-12-08', '2021-02-24 18:49:44', '2021-02-24 18:49:44');
+(1, 1, 1, 1, 'etech-intern-dev', '2016-06-08', '2016-12-08', '2021-02-24 18:49:44', '2021-02-24 18:49:44'),
+(2, 1, 1, 2, 'etech-junior-dev', '2016-12-09', '2018-04-24', '2021-02-26 16:50:57', '2021-02-26 16:50:57');
 
 -- --------------------------------------------------------
 
