@@ -51,22 +51,23 @@ class Company{
                     companies_lang.name AS nameCompany,
                     companies_lang.description AS descriptionCompany
 
-                FROM cv_experiences 
+                FROM companies
+                JOIN cv_experiences 
+                    ON cv_experiences.id_cv = ${idCv} 
                 JOIN part_experiences 
-                    ON part_experiences.id = cv_experiences.id_cv 
+                    ON part_experiences.id = cv_experiences.id_experience 
                 JOIN company_positions
                     ON company_positions.id = part_experiences.id_company_position
                 JOIN company_positions_lang
                     ON company_positions_lang.id_company_positions = company_positions.id
                 JOIN companies_lang
-                    ON companies_lang.id_company = part_experiences.id_company 
-                JOIN companies
-                    ON companies.id = companies_lang.id_company 
-                WHERE cv_experiences.id_cv = ${idCv} 
-                    AND company_positions_lang.id_lang = ${idLang} 
+                    ON companies_lang.id_company = part_experiences.id_company
+                WHERE company_positions_lang.id_lang = ${idLang} 
                     AND company_positions_lang.id_lang = companies_lang.id_lang
+                    AND companies.id = companies_lang.id_company
+                GROUP BY part_experiences.id_company
             `;
-
+            // console.log("CompanyPosition::getListCompaniesFromDbByCv::sql", sql);
             connMysql.query(sql, async (error, listCompaniesResult, fields) => {
                 if(error) throw error;
                 if(Array.isArray(listCompaniesResult) && listCompaniesResult.length > 0) {

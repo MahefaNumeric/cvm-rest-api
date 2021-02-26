@@ -81,7 +81,7 @@ class CompanyPosition{
 
                 FROM cv_experiences 
                 JOIN part_experiences 
-                    ON part_experiences.id = cv_experiences.id_cv 
+                    ON part_experiences.id = cv_experiences.id_experience
                 JOIN company_positions
                     ON company_positions.id = part_experiences.id_company_position
                 JOIN company_positions_lang
@@ -95,6 +95,7 @@ class CompanyPosition{
                     AND company_positions_lang.id_lang = companies_lang.id_lang
                     AND part_experiences.id_company = ${idCompany}
             `;
+            // console.log("CompanyPosition::getListPositionByCv::sql", sql);
             connMysql.query(sql, (error, listPositionsResult, fields) => {
                 if(error) reject({
                     message: "CompanyPosition::getListPositionByCv::error",

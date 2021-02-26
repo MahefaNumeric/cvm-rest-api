@@ -107,10 +107,13 @@
             <h3>{{ itemCompany.positions[0].experienceDateBegin}} - {{itemCompany.positions[0].experienceDateEnd }}</h3>
             <p>{{ itemCompany.name }} <br />
               <em>{{ itemCompany.positions[0].title }}</em></p>
-            <ul class="info">
-              <li>{{ itemCompany.positions[0].description }}</li>
-              <li>{{ itemCompany.positions[0].description }}</li>
-            </ul>
+            <div class="description-content">
+              <p>{{ itemCompany.positions[0].description }}</p>
+              <ul class="info">
+                <li>{{ itemCompany.positions[0].description }}</li>
+                <li>{{ itemCompany.positions[0].description }}</li>
+              </ul>
+            </div>
           </div>
         </div>
         <!-- End 3rd Row -->
