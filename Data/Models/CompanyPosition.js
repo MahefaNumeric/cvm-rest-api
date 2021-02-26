@@ -55,7 +55,7 @@ class CompanyPosition{
     static getListPositionByCv(idCv, idCompany, idLang){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
-            const sql = `
+            const sql = /* sql */`
                 SELECT 
                     /* cv_experiences.id_cv,
                     cv_experiences.id_experience, */

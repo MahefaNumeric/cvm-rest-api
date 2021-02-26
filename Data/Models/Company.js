@@ -3,6 +3,8 @@ const CompanyPosition = require("./CompanyPosition");
 class Company{
     static _table = 'companies';
 
+    static MSG_NO_COMPANY = "NO_COMPANY";
+
     constructor(
         id,
         slug,
@@ -27,7 +29,7 @@ class Company{
     static getListCompaniesFromDbByCv(idCv, idLang){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
-            const sql = `
+            const sql = /* sql */`
                 SELECT 
                     /* cv_experiences.id_cv,
                     cv_experiences.id_experience, */
@@ -81,7 +83,8 @@ class Company{
                 }else{
                     reject({
                         message: "Company::getListCompaniesFromDbByCv::listCompaniesResult null",
-                        error: [listCompaniesResult, error]
+                        code: this.MSG_NO_COMPANY,
+                        data: [listCompaniesResult, error]
                     });
                 }
             });

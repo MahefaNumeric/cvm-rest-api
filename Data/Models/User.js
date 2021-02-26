@@ -39,7 +39,7 @@ class User{
     static createFromDbById(idUser, idLang){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
-            const sql = `
+            const sql = /* sql */`
                 SELECT 
                     users.*, 
                     users_lang.auto_description, 

@@ -2,6 +2,7 @@ const Address = require("./Address");
 const SocialLink = require("./SocialLink");
 
 class Skill{
+    static MSG_NO_SKILL = "NO_SKILL";
 
     constructor(
         id,
@@ -35,17 +36,18 @@ class Skill{
     static createFromDbById(idSkill, idLang){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
-            const sql = `
-            SELECT 
-                part_skills.*, 
-                part_skills_lang.title, 
-                part_skills_lang.description
-            FROM part_skills 
-            JOIN part_skills_lang 
-                ON part_skills.id = part_skills_lang.id_part_skills 
-            WHERE id = ${idSkill} 
-                AND part_skills_lang.id_lang = ${idLang}
-            LIMIT 1`;
+            const sql = /* sql */`
+                SELECT 
+                    part_skills.*, 
+                    part_skills_lang.title, 
+                    part_skills_lang.description
+                FROM part_skills 
+                JOIN part_skills_lang 
+                    ON part_skills.id = part_skills_lang.id_part_skills 
+                WHERE id = ${idSkill} 
+                    AND part_skills_lang.id_lang = ${idLang}
+                LIMIT 1
+            `;
             connMysql.query(sql, (error, skillsResult, fields) => {
                 if(error) throw error;
                 if(Array.isArray(skillsResult) && skillsResult.length > 0) {
@@ -68,7 +70,7 @@ class Skill{
     static getListSkillsFromDbByCv(idCv, idLang){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
-            const sql = `
+            const sql = /* sql */`
                 SELECT 
                     part_skills.id,
                     part_skills.id_user,
@@ -95,9 +97,10 @@ class Skill{
                     });
                     resolve(listSkills);
                 }else{
-                    console.log("Skill::getListSkillsFromDbByCv::listSkillsResult", listSkillsResult, error);
                     reject({
-                        message: "Skill::getListSkillsFromDbByCv::listSkillsResult null"
+                        message: "Skill::getListSkillsFromDbByCv::listSkillsResult null",
+                        code: this.MSG_NO_SKILL,
+                        data: [listSkillsResult, error]
                     });
                 }
             });

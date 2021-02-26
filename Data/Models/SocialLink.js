@@ -25,12 +25,13 @@ class SocialLink{
      */
     static createFromDbById(idUser, cbFinnished){
         const connMysql = require("../../Configs/Databases/db.config");
-        const sql = `
-        SELECT 
-            ${this._table}.*
-        FROM ${this._table}
-        WHERE user_id = ${idUser} 
-        LIMIT 1`;
+        const sql = /* sql */`
+            SELECT 
+                ${this._table}.*
+            FROM ${this._table}
+            WHERE user_id = ${idUser} 
+            LIMIT 1
+        `;
         connMysql.query(sql, (error, socialLinkResult, fields) => {
             if(error) throw error;
             if(Array.isArray(socialLinkResult) && socialLinkResult.length > 0) {
@@ -41,18 +42,6 @@ class SocialLink{
             }
         });
     }
-
-    /**
-     * 
-     * @param {FormData} form 
-     * @returns {SocialLink}
-     */
-    static createFromForm(form){
-        const user = new SocialLink(
-            null
-        );
-    }
-
 
 }
 

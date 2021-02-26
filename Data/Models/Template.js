@@ -39,17 +39,6 @@ class Template{
             }
         });
     }
-
-    /**
-     * 
-     * @param {FormData} form 
-     * @returns {User}
-     */
-    static createFromForm(form){
-        const user = new User(
-            null
-        );
-    }
 }
 
 module.exports = Template;

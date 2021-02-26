@@ -4,6 +4,8 @@ const Language = require("./Language");
 class Education{
     static _table = "part_educations";
 
+    static MSG_NO_EDUCATION = "NO_EDUCATION";
+
     constructor(
         isoLang,
         id,
@@ -41,15 +43,16 @@ class Education{
     static createFromDbById(idEducation, idLang){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
-            const sql = `
-            SELECT 
-                part_educations.*
-            FROM part_educations
-            JOIN part_educations_lang
-                ON part_educations.id = part_educations_lang.id_part_educations
-            WHERE id = ${idEducation}
-                AND part_educations_lang.id_lang = ${idLang}
-            LIMIT 1`;
+            const sql = /* sql */`
+                SELECT 
+                    part_educations.*
+                FROM part_educations
+                JOIN part_educations_lang
+                    ON part_educations.id = part_educations_lang.id_part_educations
+                WHERE id = ${idEducation}
+                    AND part_educations_lang.id_lang = ${idLang}
+                LIMIT 1
+            `;
             connMysql.query(sql, (error, educationResult, fields) => {
                 if(error) throw error;
                 if(Array.isArray(educationResult) && educationResult.length > 0) {
@@ -77,7 +80,7 @@ class Education{
     static getListEducationFromDbByIdCv(idCv, idLang){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
-            const sql = `
+            const sql = /* sql */`
                 SELECT 
                     part_educations.*,
                     part_educations_lang.title,
@@ -106,14 +109,14 @@ class Education{
                     }).catch((error) => {
                         reject({
                             message: "Education::getListEducationFromDbByIdCv::catch language empty",
-                            code: "NO_LANGUAGE",
+                            code: Language.MSG_NO_LANGUAGE,
                             data: [error]
                         });
                     });
                 }else{
                     reject({
                         message: "Education::getListEducationFromDbByIdCv::listEducationResult empty ou not an array",
-                        code: "NO_EDUCATION",
+                        code: this.MSG_NO_EDUCATION,
                         data: [listEducationResult, error]
                     });
                 }

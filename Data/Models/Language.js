@@ -2,6 +2,8 @@
 class Language{
     static _table = "languages";
 
+    static MSG_NO_LANGUAGE = "NO_LANGUAGE";
+
     constructor(
         id,
         name,
@@ -21,12 +23,13 @@ class Language{
     static createFromDbById(idLang){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
-            const sql = `
-            SELECT 
-                ${this._table}.*
-            FROM ${this._table}
-            WHERE id = ${idLang} 
-            LIMIT 1`;
+            const sql = /* sql */`
+                SELECT 
+                    ${this._table}.*
+                FROM ${this._table}
+                WHERE id = ${idLang} 
+                LIMIT 1
+            `;
             connMysql.query(sql, (error, languageResult, fields) => {
                 if(error) throw error;
                 if(Array.isArray(languageResult) && languageResult.length > 0) {
@@ -51,12 +54,13 @@ class Language{
     static createFromDbByIso(isoLang){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
-            const sql = `
-            SELECT 
-                ${this._table}.*
-            FROM ${this._table}
-            WHERE code_iso = ? 
-            LIMIT 1`;
+            const sql = /* sql */`
+                SELECT 
+                    ${this._table}.*
+                FROM ${this._table}
+                WHERE code_iso = ? 
+                LIMIT 1
+            `;
             const sqlParams = [isoLang];
             connMysql.query(sql, sqlParams, (error, languageResult, fields) => {
                 if(error) throw error;

@@ -1,5 +1,6 @@
 
 class SkillGroup{
+    static MSG_NO_SKILL_GROUP = "NO_SKILL_GROUP";
 
     constructor(
         id,
@@ -24,18 +25,19 @@ class SkillGroup{
     static createFromDbById(idGroupSkill, idLang){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
-            const sql = `
-            SELECT 
-                skills_group.id, 
-                skills_group.slug, 
-                skills_group_lang.title, 
-                skills_group_lang.description
-            FROM skills_group 
-            JOIN skills_group_lang 
-                ON skills_group.id = skills_group_lang.id_skills_group  
-            WHERE id = ${idGroupSkill} 
-                AND skills_group_lang.id_lang = ${idLang}
-            LIMIT 1`;
+            const sql = /* sql */`
+                SELECT 
+                    skills_group.id, 
+                    skills_group.slug, 
+                    skills_group_lang.title, 
+                    skills_group_lang.description
+                FROM skills_group 
+                JOIN skills_group_lang 
+                    ON skills_group.id = skills_group_lang.id_skills_group  
+                WHERE id = ${idGroupSkill} 
+                    AND skills_group_lang.id_lang = ${idLang}
+                LIMIT 1
+            `;
             connMysql.query(sql, (error, skillsGroupResult, fields) => {
                 if(error) throw error;
                 if(Array.isArray(skillsGroupResult) && skillsGroupResult.length > 0) {
@@ -53,7 +55,7 @@ class SkillGroup{
     static getListUsedSkillsGroupFromDbByCv(idCv, idLang){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
-            const sql = `
+            const sql = /* sql */`
                 SELECT DISTINCT 
                     skills_group.id,
                     skills_group.slug,
@@ -83,7 +85,9 @@ class SkillGroup{
                 }else{
                     console.log("SkillGroup::getListSkillsFromDbByCv::listSkillsResult", listSkillsResult, error);
                     reject({
-                        message: "SkillGroup::getListSkillsFromDbByCv::listSkillsResult null"
+                        message: "SkillGroup::getListSkillsFromDbByCv::listSkillsResult null",
+                        code: this.MSG_NO_SKILL_GROUP,
+                        data: []
                     });
                 }
             });

@@ -3,6 +3,8 @@ const Company = require("./Company");
 class Experiences{
     // static _table = 'part_experiences';
 
+    static MSG_NO_EXPERIENCE = "NO_EXPERIENCE";
+
     constructor(
         // id,
         // id_user,
@@ -24,50 +26,13 @@ class Experiences{
         this.companies = [];
     }
 
-    /**
-     * 
-     * @param {number} idExperience 
-     * @returns {Experiences}
-     * @todo Filter User
-     */
-    // static createFromDbById(idExperience, idLang){
-    //     return new Promise((resolve, reject) => {
-    //         const connMysql = require("../Configs/Databases/db.config");
-    //         const sql = `
-    //             SELECT 
-    //                 part_experiences.*
-    //             FROM part_experiences 
-    //             WHERE part_experiences.id = ${idExperience} 
-    //                 AND company_positions_lang.id_lang = ${idLang} 
-    //             LIMIT 1
-    //         `;
-    //         connMysql.query(sql, (error, experiencesResult, fields) => {
-    //             if(error) throw error;
-    //             if(Array.isArray(experiencesResult) && experiencesResult.length > 0) {
-    //                 const experience = new Experiences(...Object.values(experiencesResult[0]));
-    //                 resolve(experience);
-    //             }else{
-    //                 console.log("Experiences::createFromDbById::experiencesResult", experiencesResult, error);
-    //                 reject({
-    //                     message: "Experiences::createFromDbById::experiencesResult null"
-    //                 });
-    //             }
-    //         });
-    //     });
-    // }
-
     static buildExperienceByIdCv(idCv, idLang){
         return new Promise((resolve, reject) => {
             const experience = new Experiences();
             Company.getListCompaniesFromDbByCv(idCv, idLang).then(listCompanies => {
                 experience.companies = listCompanies;
                 resolve(experience);
-            }).catch(error => {
-                reject({
-                    message: 'Experience::buildExperienceByIdCv::catch',
-                    data: error
-                });
-            });
+            }).catch(error => reject(error));
         });
     }
 

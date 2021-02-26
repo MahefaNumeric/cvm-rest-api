@@ -53,7 +53,7 @@ class Cv{
     static createFromDbById(idCv, idLang){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
-            const sql = `
+            const sql = /* sql */`
                 SELECT 
                     cv.id, 
                     cv.id_template, 
@@ -85,30 +85,10 @@ class Cv{
                                     Experience.buildExperienceByIdCv(cv.id, idLang).then(experience => {
                                         cv.experiences = experience;
                                         resolve(cv);
-                                    }).catch(error => {
-                                        reject({
-                                            message: "Cv::createFromDbById::buildExperienceByIdCv::catch",
-                                            error: error
-                                        });
-                                    });
-                                }).catch(error => {
-                                    reject({
-                                        message: "Cv::createFromDbById::getListUsedSkillsGroupFromDbByCv::catch",
-                                        error: error
-                                    });
-                                });
-                            }).catch(error => {
-                                reject({
-                                    message: "Cv::createFromDbById::getListSkillsFromDbByCv::catch",
-                                    error: error
-                                });
-                            });
-                        }).catch(error => {
-                            reject({
-                                message: "Cv::createFromDbById::getListEducationFromDbByIdCv::catch",
-                                error: error
-                            });
-                        });
+                                    }).catch(error => reject(error));
+                                }).catch(error => reject(error));
+                            }).catch(error => reject(error));
+                        }).catch(error => reject(error));
                     });
                 }else{
                     reject({
