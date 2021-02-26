@@ -78,19 +78,19 @@ class Education{
         return new Promise((resolve, reject) => {
             const connMysql = require("../Configs/Databases/db.config");
             const sql = `
-            SELECT 
-                part_educations.*,
-                part_educations_lang.title,
-                part_educations_lang.description,
-                DATE_FORMAT(date_begin, '%Y-%m') as date_begin,
-                DATE_FORMAT(date_end, '%Y-%m') as date_end
-            FROM cv_educations
-            JOIN part_educations
-                ON part_educations.id = cv_educations.id_education
-            JOIN part_educations_lang
-                ON part_educations.id = part_educations_lang.id_part_educations 
-            WHERE id_cv = ?
-                AND part_educations_lang.id_lang = ?
+                SELECT 
+                    part_educations.*,
+                    part_educations_lang.title,
+                    part_educations_lang.description,
+                    DATE_FORMAT(date_begin, '%Y-%m') as date_begin,
+                    DATE_FORMAT(date_end, '%Y-%m') as date_end
+                FROM cv_educations
+                JOIN part_educations
+                    ON part_educations.id = cv_educations.id_education
+                JOIN part_educations_lang
+                    ON part_educations.id = part_educations_lang.id_part_educations 
+                WHERE id_cv = ?
+                    AND part_educations_lang.id_lang = ?
             `;
             const sqlParams = [idCv, idLang];
             connMysql.query(sql, sqlParams, (error, listEducationResult, fields) => {
@@ -103,15 +103,15 @@ class Education{
                         });
                         resolve(listEducation);
                     }).catch((error) => {
-                        console.log("Education::getListEducationFromDbByIdCv::catch", error);
                         reject({
-                            message: "Education::getListEducationFromDbByIdCv::language empty"
+                            message: "Education::getListEducationFromDbByIdCv::catch language empty",
+                            data: [error]
                         });
                     });
                 }else{
-                    console.log("Education::getListEducationFromDbByIdCv::listEducationResult", listEducationResult, error);
                     reject({
-                        message: "Education::getListEducationFromDbByIdCv::listEducationResult empy ou not an array"
+                        message: "Education::getListEducationFromDbByIdCv::listEducationResult empy ou not an array",
+                        data: [listEducationResult, error]
                     });
                 }
             }); 

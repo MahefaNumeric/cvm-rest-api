@@ -96,6 +96,7 @@ module.exports = (router) => {
     router.get("/:idCv/generate/html/view", (request, response, next) => {
         const idCv = request.params.idCv;
         const isoLang = request.params.isoLang; // From parent params
+        const idUser = 1; // Mahefa
 
         const cvService = new CvService();
 
@@ -103,8 +104,8 @@ module.exports = (router) => {
         const Cv = require("../Models/Cv");
 
         Language.createFromDbByIso(isoLang).then((language) => {
-            User.createFromDbById(1, language.id).then((user) => {
-                Cv.createFromDbById(1, language.id).then((cv) => {
+            User.createFromDbById(idUser, language.id).then((user) => {
+                Cv.createFromDbById(idCv, language.id).then((cv) => {
                     const data = {
                         user: user,
                         cv: cv,
