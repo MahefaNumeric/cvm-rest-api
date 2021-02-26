@@ -3,6 +3,7 @@ const SocialLink = require("./SocialLink");
 
 class Skill{
     static MSG_NO_SKILL = "NO_SKILL";
+    static MSG_ERROR_RETRIVE_SKILL = "ERROR_RETRIVE_SKILL";
 
     constructor(
         id,
@@ -90,16 +91,20 @@ class Skill{
             `;
             connMysql.query(sql, (error, listSkillsResult, fields) => {
                 if(error) throw error;
-                if(Array.isArray(listSkillsResult) && listSkillsResult.length > 0) {
-                    const listSkills = [];
-                    listSkillsResult.forEach(element => {
-                        listSkills.push(new Skill(...Object.values(element)));
-                    });
-                    resolve(listSkills);
+                if(Array.isArray(listSkillsResult)) {
+                    if(listSkillsResult.length > 0){
+                        const listSkills = [];
+                        listSkillsResult.forEach(element => {
+                            listSkills.push(new Skill(...Object.values(element)));
+                        });
+                        resolve(listSkills);
+                    }else{
+                        resolve([]);
+                    }
                 }else{
                     reject({
-                        message: "Skill::getListSkillsFromDbByCv::listSkillsResult null",
-                        code: this.MSG_NO_SKILL,
+                        message: "Skill::getListSkillsFromDbByCv::listSkillsResult not array",
+                        code: this.MSG_ERROR_RETRIVE_SKILL,
                         data: [listSkillsResult, error]
                     });
                 }

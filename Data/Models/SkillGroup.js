@@ -1,6 +1,7 @@
 
 class SkillGroup{
     static MSG_NO_SKILL_GROUP = "NO_SKILL_GROUP";
+    static MSG_ERROR_RETRIVE_SKILLGROUP = "ERROR_RETRIVE_SKILLGROUP";
 
     constructor(
         id,
@@ -76,18 +77,21 @@ class SkillGroup{
             `;
             connMysql.query(sql, (error, listSkillsResult, fields) => {
                 if(error) throw error;
-                if(Array.isArray(listSkillsResult) && listSkillsResult.length > 0) {
-                    const listSkills = [];
-                    listSkillsResult.forEach(element => {
-                        listSkills.push(new SkillGroup(...Object.values(element)));
-                    });
-                    resolve(listSkills);
+                if(Array.isArray(listSkillsResult)) {
+                    if(listSkillsResult.length > 0){
+                        const listSkills = [];
+                        listSkillsResult.forEach(element => {
+                            listSkills.push(new SkillGroup(...Object.values(element)));
+                        });
+                        resolve(listSkills);
+                    }else{
+                        resolve([]);
+                    }
                 }else{
-                    console.log("SkillGroup::getListSkillsFromDbByCv::listSkillsResult", listSkillsResult, error);
                     reject({
-                        message: "SkillGroup::getListSkillsFromDbByCv::listSkillsResult null",
-                        code: this.MSG_NO_SKILL_GROUP,
-                        data: []
+                        message: "SkillGroup::getListSkillsFromDbByCv::listSkillsResult not array [must be an array]",
+                        code: this.MSG_ERROR_RETRIVE_SKILLGROUP,
+                        data: [listSkillsResult, error]
                     });
                 }
             });

@@ -4,7 +4,7 @@ const Language = require("./Language");
 class Education{
     static _table = "part_educations";
 
-    static MSG_NO_EDUCATION = "NO_EDUCATION";
+    static ERROR_RETRIVE_EDUCATION = "ERROR_RETRIVE_EDUCATION";
 
     constructor(
         isoLang,
@@ -99,24 +99,28 @@ class Education{
             const sqlParams = [idCv, idLang];
             connMysql.query(sql, sqlParams, (error, listEducationResult, fields) => {
                 if(error) throw error;
-                if(Array.isArray(listEducationResult) && listEducationResult.length > 0) {
-                    Language.createFromDbById(idLang).then((language) => {
-                        const listEducation = [];
-                        listEducationResult.forEach(element => {
-                            listEducation.push(new Education(language.code_iso, ...Object.values(element)));
+                if(Array.isArray(listEducationResult)) {
+                    if(listEducationResult.length > 0){
+                        Language.createFromDbById(idLang).then((language) => {
+                            const listEducation = [];
+                            listEducationResult.forEach(element => {
+                                listEducation.push(new Education(language.code_iso, ...Object.values(element)));
+                            });
+                            resolve(listEducation);
+                        }).catch((error) => {
+                            reject({
+                                message: "Education::getListEducationFromDbByIdCv::catch language empty",
+                                code: Language.MSG_NO_LANGUAGE,
+                                data: [error]
+                            });
                         });
-                        resolve(listEducation);
-                    }).catch((error) => {
-                        reject({
-                            message: "Education::getListEducationFromDbByIdCv::catch language empty",
-                            code: Language.MSG_NO_LANGUAGE,
-                            data: [error]
-                        });
-                    });
+                    }else{
+                        resolve([]);
+                    }
                 }else{
                     reject({
-                        message: "Education::getListEducationFromDbByIdCv::listEducationResult empty ou not an array",
-                        code: this.MSG_NO_EDUCATION,
+                        message: "Education::getListEducationFromDbByIdCv::listEducationResult not an array",
+                        code: this.ERROR_RETRIVE_EDUCATION,
                         data: [listEducationResult, error]
                     });
                 }

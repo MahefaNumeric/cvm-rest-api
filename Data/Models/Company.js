@@ -4,6 +4,7 @@ class Company{
     static _table = 'companies';
 
     static MSG_NO_COMPANY = "NO_COMPANY";
+    static MSG_ERROR_RETRIVE_COMPANY = "ERROR_RETRIVE_COMPANY";
 
     constructor(
         id,
@@ -72,18 +73,22 @@ class Company{
             // console.log("CompanyPosition::getListCompaniesFromDbByCv::sql", sql);
             connMysql.query(sql, async (error, listCompaniesResult, fields) => {
                 if(error) throw error;
-                if(Array.isArray(listCompaniesResult) && listCompaniesResult.length > 0) {
-                    const listCompanies = [];
-                    for (let element of listCompaniesResult) {
-                        const company = new Company(...Object.values(element));
-                        company.positions = await CompanyPosition.getListPositionByCv(idCv, company.id, idLang);
-                        listCompanies.push(company);
-                    };
-                    resolve(listCompanies);
+                if(Array.isArray(listCompaniesResult)) {
+                    if(listCompaniesResult.length > 0){
+                        const listCompanies = [];
+                        for (let element of listCompaniesResult) {
+                            const company = new Company(...Object.values(element));
+                            company.positions = await CompanyPosition.getListPositionByCv(idCv, company.id, idLang);
+                            listCompanies.push(company);
+                        };
+                        resolve(listCompanies);
+                    }else{
+                        resolve([]);
+                    }
                 }else{
                     reject({
                         message: "Company::getListCompaniesFromDbByCv::listCompaniesResult null",
-                        code: this.MSG_NO_COMPANY,
+                        code: this.MSG_ERROR_RETRIVE_COMPANY,
                         data: [listCompaniesResult, error]
                     });
                 }

@@ -6,6 +6,9 @@ const SkillGroup = require("./SkillGroup");
 const Experience = require("./Experience");
 
 class Cv{
+
+    static MSG_NO_CV_GIVEN_ID = "NO_CV_GIVEN_ID";
+
     /**
      * 
      * @param {number} id 
@@ -71,6 +74,7 @@ class Cv{
                 LIMIT 1
             `;
             connMysql.query(sql, (error, cvResult, fields) => {
+                // console.log("Cv::createFromDbById, cvResult:", cvResult);
                 if(error) throw error;
                 if(Array.isArray(cvResult) && cvResult.length > 0){
                     const cv = new Cv(...Object.values(cvResult[0]));
@@ -92,8 +96,9 @@ class Cv{
                     });
                 }else{
                     reject({
-                        message: "Cv::createFromDbById::cvResult::error",
-                        error: [cvResult, error]
+                        message: `Cv::createFromDbById::cvResult::error, idCv:${idCv} does not exist`,
+                        code: this.MSG_NO_CV_GIVEN_ID,
+                        data: [cvResult, error]
                     });
                 }
             });
