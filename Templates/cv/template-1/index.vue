@@ -107,20 +107,24 @@
             </ul>
           </div>
           <hr/>
-          <template v-for="itemCompany in cv.experiences.companies">
-            <div class="content" v-for="itemPosition in itemCompany.positionsValue" :key="itemPosition.id">
-              <h3>{{ itemPosition.experienceDateBegin}} - {{itemPosition.experienceDateEnd }}</h3>
-              <p>{{ itemCompany.name }} <br />
-                <em>{{ itemPosition.title }}</em></p>
-              <div class="description-content">
+        <div class="content" v-for="itemCompany in cv.experiences.companies" :key="itemCompany.id">
+            <h3>{{ itemCompany.dateStart}} - {{itemCompany.dateEnd }}</h3>
+            <div>{{ itemCompany.name }} </div>
+            <div v-for="itemPosition in itemCompany.positionsValue" :key="itemPosition.id">
+            <p>
+                <em>{{ itemPosition.title }}</em>
+                <span>{{ itemPosition.experienceDateBegin}} - {{itemPosition.experienceDateEnd }}</span>
+                <span> - 2 ans</span>
+            </p>
+            <div class="description-content">
                 <p>{{ itemPosition.description }}</p>
                 <ul class="info">
-                  <li>{{ itemPosition.description }}</li>
-                  <li>{{ itemPosition.description }}</li>
+                <li>{{ itemPosition.description }}</li>
+                <li>{{ itemPosition.description }}</li>
                 </ul>
-              </div>
             </div>
-          </template>
+            </div>
+        </div>
           
           <div class="content content-no-item cvm-error" v-if="Object.keys(cv.experiences.companies).length == 0">
             {No item in companies}
