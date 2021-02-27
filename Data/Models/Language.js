@@ -49,8 +49,7 @@ class Language{
     /**
      * 
      * @param {string} isoLang 
-     * @param {CallableFunction} cbFinnished 
-     * @returns {Language}
+     * @returns {Promise<Language>} Promise of Language requested
      */
     static createFromDbByIso(isoLang){
         return new Promise((resolve, reject) => {

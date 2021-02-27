@@ -34,7 +34,8 @@ class User{
     /**
      * 
      * @param {number} idUser 
-     * @returns {User}
+     * @param {number} idLang 
+     * @returns {Promise<User>} Promise of User requested
      */
     static createFromDbById(idUser, idLang){
         return new Promise((resolve, reject) => {

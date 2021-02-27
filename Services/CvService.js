@@ -35,9 +35,11 @@ class CvService{
 
     /**
      * Service for generating CV into a given format
-     * @param {Int32} idCv : ID du CV
-     * @param {String} format : PDF, HTML
-     * @param {Function} mcbFinnished : Callback
+     * @param {string} isoLang 
+     * @param {number} idCv : ID du CV
+     * @param {string} format : PDF, HTML
+     * @param {User} user 
+     * @param {CallableFunction} mcbFinnished : Callback
      * @returns {String}
      * @async
      */

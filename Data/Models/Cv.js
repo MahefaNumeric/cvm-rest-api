@@ -48,8 +48,9 @@ class Cv{
 
     /**
      * 
-     * @param {number} idUser 
-     * @returns {User}
+     * @param {number} idCv 
+     * @param {number} idLang 
+     * @returns {Promise<Cv>} The Promise of Cv requested
      */
     static createFromDbById(idCv, idLang){
         return new Promise((resolve, reject) => {
