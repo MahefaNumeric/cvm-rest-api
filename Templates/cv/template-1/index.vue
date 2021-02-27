@@ -135,18 +135,29 @@
 
 								<hr/>
 
-								<div class="content experience-content" v-for="itemCompany in cv.experiences.companies" :key="itemCompany.id">
+								<div 
+                                    class="content experience-content" 
+                                    v-for="itemCompany in cv.experiences.companies" 
+                                    :key="itemCompany.id"
+                                >
+                                    <!-- :class="itemCompany.hasManyPosition ? 'many-position-on-company' : 'single-position-on-company' " -->
                                     <div class="column-company-timeline">
                                         <h3>{{ itemCompany.dateStart}} - {{itemCompany.dateEnd }}</h3>
                                         <div class="company-duration">7 ans et 3 mois</div>
                                     </div>
                                     <div class="column-detail">
                                         <div class="company-name">{{ itemCompany.name }}</div>
-                                        <div class="position-content" v-for="itemPosition in itemCompany.positionsValue" :key="itemPosition.id">
+                                        <div 
+                                            class="position-content" 
+                                            v-for="itemPosition in itemCompany.positionsValue" 
+                                            :key="itemPosition.id"
+                                        >
                                             <div class="position-header">
                                                 <em>{{ itemPosition.title }}</em>
-                                                <span>{{ itemPosition.experienceDateBegin}} - {{itemPosition.experienceDateEnd }}</span>
-                                                <span class="positionDuration"> - 2 ans</span>
+                                                <div v-if="itemCompany.hasManyPosition == true">
+                                                    <span>{{ itemPosition.experienceDateBegin}} - {{itemPosition.experienceDateEnd }}</span>
+                                                    <span class="positionDuration"> - 2 ans</span>
+                                                </div>
                                             </div>
                                             <div class="position-body">
                                                 <p>{{ itemPosition.description }}</p>

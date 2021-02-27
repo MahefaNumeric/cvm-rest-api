@@ -23,11 +23,15 @@ class Company{
 
         this.dateStart = null;  // Calculate from this.positions
         this.dateEnd = null;  // Calculate from this.positions
+
+        /** Need for the template, to differentiate visual rendering for one or many position on signle company */
+        this.hasManyPosition = false;
     }
     
     set positions(value) {
         this.positionsValue = value;
         this.setupPositionsBeganEnd();
+        this.setupProperty_hasManyPosition();
     }
 
     get positions() {
@@ -123,6 +127,13 @@ class Company{
         });
         this.dateStart = dateMin;
         this.dateEnd = dateMax;
+    }
+
+    setupProperty_hasManyPosition(){
+        if(Array.isArray(this.positions) == false) return false;
+        if(this.positions.length == 0) return false;
+
+        this.hasManyPosition = this.positions.length > 1;
     }
 
 }
