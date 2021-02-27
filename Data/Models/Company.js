@@ -1,4 +1,5 @@
 const CompanyPosition = require("./CompanyPosition");
+const DateUtils = require("../../Utils/DateUtils");
 
 class Company{
     static _table = 'companies';
@@ -19,6 +20,11 @@ class Company{
 
         // // Position on a company
         this.positions = [];
+        this.positionsValue = [];
+        this.positions = [];
+
+        this.dateStart = null;  // Calculate from this.positions
+        this.dateEnd = null;  // Calculate from this.positions
     }
 
     /**
@@ -94,6 +100,22 @@ class Company{
                 }
             });
         });
+    }
+
+    setupPositionsBeganEnd(){
+        if(Array.isArray(this.positions) == false) return false;
+        if(this.positions.length == 0) return false;
+
+        let dateMin = this.positions[0].experienceDateBegin,
+            dateMax = this.positions[0].experienceDateEnd;
+        this.positions.forEach(element => {
+            if(DateUtils.compareDateAB(element.experienceDateBegin, dateMin) == -1)
+                dateMin = element.experienceDateBegin;
+            if(DateUtils.compareDateAB(element.experienceDateEnd, dateMax) == 1)
+                dateMax = element.experienceDateEnd;
+        });
+        this.dateStart = dateMin;
+        this.dateEnd = dateMax;
     }
 
 }

@@ -45,6 +45,52 @@ class DateUtils{
         // console.log('DateUtils::getMonthName', [isoLang, monthNumber], monthName[isoLang][monthNumber]);
         return monthName[isoLang][monthNumber];
     }
+
+    /**
+     * Compare two formated string date
+     * @param {String} dateA Ex : 2016-06
+     * @param {String} dateB Ex : 2016-08
+     * @param {String} format Ex : YYYY-MM
+     * 
+     * @returns {-1} When dateA < dateB
+     * @returns { 0} When dateA = dateB
+     * @returns {+1} When dateA > dateB
+     * @returns {null} When format is unkown
+     */
+    static compareDateAB(dateA, dateB, format = "YYYY-MM"){
+        switch(format){
+            case "YYYY-MM":
+                return this.compareDateAB_YYYYMM(dateA, dateB);
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * Compare two formated string date (For format : YYYY-MM only)
+     * @param {String} dateA Ex : 2016-06
+     * @param {String} dateB Ex : 2016-08
+     * 
+     * @returns {-1} When dateA < dateB
+     * @returns { 0} When dateA = dateB
+     * @returns {+1} When dateA > dateB
+     */
+    static compareDateAB_YYYYMM(dateA, dateB){
+        let result;
+        
+        const [dateA_year, dateA_month] = String(dateA).split("-");
+        const [dateB_year, dateB_month] = String(dateB).split("-");
+
+        if(dateA_year < dateB_year) result = -1;
+        if(dateA_year > dateB_year) result = 1;
+        if(dateA_year == dateB_year){
+            if(dateA_month < dateB_month) result = -1;
+            if(dateA_month == dateB_month) result = 0;
+            if(dateA_month > dateB_month) result = 1;
+        }
+
+        return result;
+    }
 }
 
 module.exports = DateUtils;

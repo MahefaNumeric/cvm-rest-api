@@ -1,6 +1,9 @@
 const Address = require("./Address");
 const SocialLink = require("./SocialLink");
 
+/**
+ * @todo Redo structuration SkillGroup and Skill (actually not good)
+ */
 class Skill{
     static MSG_NO_SKILL = "NO_SKILL";
     static MSG_ERROR_RETRIVE_SKILL = "ERROR_RETRIVE_SKILL";

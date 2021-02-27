@@ -1,4 +1,7 @@
 
+/**
+ * @todo Redo structuration SkillGroup and Skill (actually not good)
+ */
 class SkillGroup{
     static MSG_NO_SKILL_GROUP = "NO_SKILL_GROUP";
     static MSG_ERROR_RETRIVE_SKILLGROUP = "ERROR_RETRIVE_SKILLGROUP";
