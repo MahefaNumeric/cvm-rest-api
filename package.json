@@ -6,7 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "startold": "node server.js",
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "build:scss": "node-sass -w -r assets/src/scss/ -o assets/dist/css/"
+  },
+  "watches": {
+    "sass": "sass/**"
   },
   "repository": {
     "type": "git",
@@ -36,6 +40,7 @@
     "xml": "^1.0.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "node-sass": "^5.0.0"
   }
 }
