@@ -6,6 +6,7 @@ class CompanyPosition{
         slug,
         title,
         description,
+        descriptionExperiencePosition,
         experienceDateBegin,
         experienceDateEnd
     ){
@@ -13,6 +14,7 @@ class CompanyPosition{
         this.slug = slug;
         this.title = title;
         this.description = description;
+        this.descriptionExperiencePosition = descriptionExperiencePosition;
         this.experienceDateBegin = experienceDateBegin;
         this.experienceDateEnd = experienceDateEnd;
     }
@@ -35,9 +37,9 @@ class CompanyPosition{
                     company_positions.slug AS slugPosition,
                     company_positions_lang.title AS titlePosition,
                     company_positions_lang.description AS descriptionPosition, 
+                    part_experiences_lang.description as descriptionExperiencePosition,
                     DATE_FORMAT(part_experiences.date_begin, '%Y-%m') as date_begin,
                     DATE_FORMAT(part_experiences.date_end, '%Y-%m') as date_end
-                    /* company_positions_lang.id_lang AS idLangPosition */
 
                     /* companies_lang.id_company AS idCompany,
                     companies.slug AS slugCompany,
@@ -55,9 +57,12 @@ class CompanyPosition{
                     ON companies_lang.id_company = part_experiences.id_company 
                 JOIN companies
                     ON companies.id = companies_lang.id_company 
+                JOIN part_experiences_lang
+                    ON part_experiences_lang.id_part_experiences = part_experiences.id
                 WHERE cv_experiences.id_cv = ${idCv} 
                     AND company_positions_lang.id_lang = ${idLang} 
                     AND company_positions_lang.id_lang = companies_lang.id_lang
+                    AND part_experiences_lang.id_lang = companies_lang.id_lang
                     AND part_experiences.id_company = ${idCompany}
             `;
             // console.log("CompanyPosition::getListPositionByCv::sql", sql);
