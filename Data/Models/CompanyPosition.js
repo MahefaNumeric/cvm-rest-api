@@ -17,41 +17,6 @@ class CompanyPosition{
         this.experienceDateEnd = experienceDateEnd;
     }
 
-    /**
-     * 
-     * @param {number} idSkill 
-     * @returns {CompanyPosition}
-     * @todo Filter User
-     */
-    static createFromDbById(idGroupSkill, idLang){
-        return new Promise((resolve, reject) => {
-            // const connMysql = require("../Configs/Databases/db.config");
-            // const sql = `
-            // SELECT 
-            //     skills_group.id, 
-            //     skills_group.slug, 
-            //     skills_group_lang.title, 
-            //     skills_group_lang.description
-            // FROM skills_group 
-            // JOIN skills_group_lang 
-            //     ON skills_group.id = skills_group_lang.id_skills_group  
-            // WHERE id = ${idGroupSkill} 
-            //     AND skills_group_lang.id_lang = ${idLang}
-            // LIMIT 1`;
-            // connMysql.query(sql, (error, skillsGroupResult, fields) => {
-            //     if(error) throw error;
-            //     if(Array.isArray(skillsGroupResult) && skillsGroupResult.length > 0) {
-            //         const skillGroup = new CompanyPosition(...Object.values(skillsGroupResult[0]));
-            //         resolve(skillGroup);
-            //     }else{
-            //         reject({
-            //             message: "CompanyPosition::createFromDbById::skillsGroupResult null"
-            //         });
-            //     }
-            // });
-        });
-    }
-
     static getListPositionByCv(idCv, idCompany, idLang){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
