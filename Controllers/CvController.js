@@ -103,6 +103,7 @@ module.exports = (router) => {
      * @since v1
      * @tutorial If you change the url structure, don't forget to update too the url in "Services/CvService.js/generateCvPdf()"" function
      * @todo cvService.getTemplateVueFilePath : make the logic to manage by Template object
+     * @todo Add template to url
      */
     router.get("/:idCv/generate/html/view", (request, response, next) => {
         const isoLang = request.params.isoLang; // From parent params
