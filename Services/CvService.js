@@ -80,7 +80,7 @@ class CvService{
      * @todo Check if urlCv exist
      */
     async generateCvPdf(isoLang, idCv, mcbFinnished){
-        const pdfFilename = this.makePdfFilename(idCv);
+        const pdfFilename = this.makePdfFilename(idCv, isoLang);
         const filenameOutput = `./Public/CvOutput/${pdfFilename}.pdf`;
 
         const host = this.getHostUrl();
@@ -115,8 +115,9 @@ class CvService{
 
     /**
      * @todo Move to a dedicated utils class
+     * @todo Should contain too the name of the User
      */
-    makePdfFilename(idCv){
+    makePdfFilename(idCv, isoLang){
         const dateObj = new Date();
         const month = dateObj.getUTCMonth() + 1; //months from 1-12
         const day = dateObj.getUTCDate();
@@ -125,7 +126,7 @@ class CvService{
         const minute = dateObj.getMinutes();
         const seconde = dateObj.getSeconds();
 
-        return `cv-${idCv}-${year}-${month}-${day}-${hour}-${minute}-${seconde}`;
+        return `cv-${idCv}-${isoLang}-${year}-${month}-${day}-${hour}h${minute}m${seconde}s`;
     }
 
     /**
