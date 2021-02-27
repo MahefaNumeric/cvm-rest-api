@@ -42,5 +42,8 @@
   "devDependencies": {
     "nodemon": "^2.0.7",
     "node-sass": "^5.0.0"
+  },
+  "tips-by-mahefa-(memo)": {
+    "scss": "npm run scss"
   }
 }
