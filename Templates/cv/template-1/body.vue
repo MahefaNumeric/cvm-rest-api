@@ -161,16 +161,22 @@
                 </ul>
             </div>
             <hr/>
-            <div class="content" v-for="itemSkillGroup in cv.skillsGroup" :key="itemSkillGroup.id">
-                <h3>{{ itemSkillGroup.title }}</h3>
-                <ul class="skills">
-                    <template v-for="itemSkill in cv.skills">
-                        <li v-if="itemSkill.id_skills_group === itemSkillGroup.id" :key="itemSkill.id">
-                            {{ itemSkill.title }}
-                        </li>
-                    </template>
-                </ul>
+
+            <div class="content skills-content" v-for="itemSkillGroup in cv.skillsGroup" :key="itemSkillGroup.id">
+                <div class="column-skill-group">
+                    <h3>{{ itemSkillGroup.title }}</h3>
+                </div>
+                <div class="column-detail">
+                    <ul class="skills">
+                        <template v-for="itemSkill in cv.skills">
+                            <li v-if="itemSkill.id_skills_group === itemSkillGroup.id" :key="itemSkill.id">
+                                {{ itemSkill.title }}
+                            </li>
+                        </template>
+                    </ul>
+                </div>
             </div>
+
             <div class="content content-no-item cvm-error" v-if="Object.keys(cv.skillsGroup).length == 0">
                 {No item in skills}
             </div>
