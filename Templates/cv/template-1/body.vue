@@ -135,32 +135,6 @@
         <!-- Begin 4th Row -->
         <div class="entry">
             <h2>SKILLS</h2>
-            <div class="content">
-                <h3>Software Knowledge</h3>
-                <ul class="skills">
-                    <li>Photoshop</li>
-                    <li>Illustrator</li>
-                    <li>InDesign</li>
-                    <li>Flash</li>
-                    <li>Fireworks</li>
-                    <li>Dreamweaver</li>
-                    <li>After Effects</li>
-                    <li>Cinema 4D</li>
-                    <li>Maya</li>
-                </ul>
-            </div>
-            <div class="content">
-                <h3>Languages</h3>
-                <ul class="skills">
-                    <li>CSS/XHTML</li>
-                    <li>PHP</li>
-                    <li>JavaScript</li>
-                    <li>Ruby on Rails</li>
-                    <li>ActionScript</li>
-                    <li>C++</li>
-                </ul>
-            </div>
-            <hr/>
 
             <div class="content skills-content" v-for="itemSkillGroup in cv.skillsGroup" :key="itemSkillGroup.id">
                 <div class="column-skill-group">
@@ -173,6 +147,15 @@
                                 {{ itemSkill.title }}
                             </li>
                         </template>
+                        <li>Photoshop</li>
+                        <li>Illustrator</li>
+                        <li>InDesign</li>
+                        <li>Flash</li>
+                        <li>Fireworks</li>
+                        <li>Dreamweaver</li>
+                        <li>After Effects</li>
+                        <li>Cinema 4D</li>
+                        <li>Maya</li>
                     </ul>
                 </div>
             </div>
