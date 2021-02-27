@@ -4,17 +4,59 @@ const CvService = require("../Services/CvService");
 const User = require("../Data/Models/User");
 const Cv = require("../Data/Models/Cv");
 
-module.exports = (router) => {
-    
-    // Recupere liste CV
-    router.get("/", (request, response) => {
+class CvController{
+
+    static getCvList = (request, response) => {
         const userService = new CvService();
         userService.getListUser((results) => {
             console.log("Results: ", results);
             response.type("application/json");
             response.json(results);
         });
-    });
+    }
+
+    static generateGivenCv = (request, response) => {
+        const isoLang = request.params.isoLang; // From parent params
+        const idCv = request.params.idCv;
+        const format = request.params.format;
+        const idUser = 1; // Mahefa
+
+        const cvService = new CvService();
+        let resultHTML = null;
+        Language.createFromDbByIso(isoLang).then((language) => {
+            User.createFromDbById(idUser, language.id).then((user) => {
+                cvService.generateCv(isoLang, idCv, format, user, (result) => {
+                    if(format == "html"){
+                        resultHTML = result;
+                        response.type("application/json");
+                        response.status(200);
+                        response.json({"html": resultHTML});
+                        response.end();
+                    }else if(format == "pdf"){
+                        response.type("application/json");
+                        response.status(200);
+                        response.json({
+                            "message": "PDF generation finnished",
+                            "data": result
+                        });
+                        response.end();
+                    }else{
+                        response.type("application/json");
+                        response.status(400);
+                        response.json(`Error : Format error : ${format}`);
+                        response.end();
+                    }
+                });
+            });
+        });
+        return;
+    }
+}
+
+module.exports = (router) => {
+    
+    // Recupere liste CV
+    router.get("/", CvController.getCvList);
 
     // Creation nouvel CV
     router.post("/", (request, response)=>{
@@ -66,42 +108,7 @@ module.exports = (router) => {
      * @param {String} format
      * @returns 
      */
-    router.get("/:idCv/generate/:format", (request, response) => {
-        const isoLang = request.params.isoLang; // From parent params
-        const idCv = request.params.idCv;
-        const format = request.params.format;
-        const idUser = 1; // Mahefa
-
-        const cvService = new CvService();
-        let resultHTML = null;
-        Language.createFromDbByIso(isoLang).then((language) => {
-            User.createFromDbById(idUser, language.id).then((user) => {
-                cvService.generateCv(isoLang, idCv, format, user, (result) => {
-                    if(format == "html"){
-                        resultHTML = result;
-                        response.type("application/json");
-                        response.status(200);
-                        response.json({"html": resultHTML});
-                        response.end();
-                    }else if(format == "pdf"){
-                        response.type("application/json");
-                        response.status(200);
-                        response.json({
-                            "message": "PDF generation finnished",
-                            "data": result
-                        });
-                        response.end();
-                    }else{
-                        response.type("application/json");
-                        response.status(400);
-                        response.json(`Error : Format error : ${format}`);
-                        response.end();
-                    }
-                });
-            });
-        });
-        return;
-    });
+    router.get("/:idCv/generate/:format", CvController.generateGivenCv);
 
     /**
      * Previsualize the html output (Type: text/html)
