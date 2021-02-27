@@ -2,7 +2,7 @@
     <div>
         <div class="entry">
             <!-- Begin Image -->
-            <img class="portrait" src="/templates/1/images/image.jpg" alt="John Smith" />
+            <img class="portrait" src="/public/Images/Users/1-mahefa-abel.jpeg" alt="John Smith" />
             <!-- End Image -->
             <!-- Begin Personal Information -->
             <div class="self">

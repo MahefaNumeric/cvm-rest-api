@@ -22,6 +22,7 @@ const corsOption = {
 
 // Setup static assets
 app.use('/templates/1/', express.static(__dirname + '/Templates/cv/template-1/'));
+app.use('/public/', express.static(__dirname + '/Public/'));
 
 const router = express.Router({ mergeParams: true });
 
