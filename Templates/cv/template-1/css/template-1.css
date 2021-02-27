@@ -20,7 +20,7 @@ div.experience-content{
 }
 div.column-company-timeline{
     flex: 1;
-    background-color: #f2f2fe;
+    /* background-color: #f2f2fe; */
 }
 div.column-company-timeline h3{
     margin-bottom: 5px;
@@ -30,7 +30,7 @@ div.column-company-timeline .company-duration{
 }
 div.column-detail{
     flex: 1;
-    background-color: #f2f2fe;
+    /* background-color: #f2f2fe; */
     margin-left: 40px;
 }
 div.column-detail .company-name{
@@ -49,6 +49,7 @@ div.position-content .position-title{
 }
 div.position-content .position-duration{
     color: #666;
+    font-style: italic;
 }
 /**
  * Experiences - End

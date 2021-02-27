@@ -77,30 +77,6 @@
         <!-- Begin 3rd Row -->
         <div class="entry">
             <h2>EXPERIENCE</h2>
-            <div class="content">
-                <h3>May 2009 - Feb 2010</h3>
-                <p>Agency Creative, London 
-                    <br />
-                    <em>Senior Web Designer</em>
-                </p>
-                <ul class="info">
-                    <li>Vestibulum eu ante massa, sed rhoncus velit.</li>
-                    <li>Pellentesque at lectus in libero dapibus cursus. Sed arcu ipsum, varius at ultricies acuro, tincidunt iaculis diam.</li>
-                </ul>
-            </div>
-            <div class="content">
-                <h3>Jun 2007 - May 2009</h3>
-                <p>Junior Web Designer 
-                    <br />
-                    <em>Bachelor of Science in Graphic Design</em>
-                </p>
-                <ul class="info">
-                    <li>Sed fermentum sollicitudin interdum. Etiam imperdiet sapien in dolor rhoncus a semper tortor posuere. </li>
-                    <li>Pellentesque at lectus in libero dapibus cursus. Sed arcu ipsum, varius at ultricies acuro, tincidunt iaculis diam.</li>
-                </ul>
-            </div>
-
-            <hr/>
             
             <div 
                 class="content experience-content" 
