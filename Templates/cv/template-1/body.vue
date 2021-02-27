@@ -15,7 +15,8 @@
                     <li class="ad">{{ cv.address.value }}</li>
                     <li class="mail">{{ user.email }}</li>
                     <li class="tel">{{ user.phone }}</li>
-                    <li class="web">{{ user.socialLink.website_url }}</li>
+                    <li class="web">Web : <a target="_blank" :href="user.socialLink.website_url">{{ user.socialLink.website_url }}</a></li>
+                    <li class="web">Github : <a target="_blank" :href="user.socialLink.github_url">{{ user.socialLink.github_url }}</a></li>
                 </ul>
             </div>
             <!-- End Personal Information -->

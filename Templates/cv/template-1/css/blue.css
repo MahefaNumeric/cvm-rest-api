@@ -66,7 +66,7 @@ body {
 }
 
 a, a:visited, a:active {
-	color:#7b90b5;
+	color:blue;
 	text-decoration: none;
 }
 
@@ -396,7 +396,7 @@ img.portrait {
 /* ----------------------------------------- */
 
 .self {
-	width:250px;
+	width: 300px;
 	float:left;
 	padding-top:11px;
 	margin-left:38px;
