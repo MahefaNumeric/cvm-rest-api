@@ -70,30 +70,35 @@ module.exports = (router) => {
         const isoLang = request.params.isoLang; // From parent params
         const idCv = request.params.idCv;
         const format = request.params.format;
+        const idUser = 1; // Mahefa
 
         const cvService = new CvService();
         let resultHTML = null;
-        cvService.generateCv(isoLang, idCv, format, (result) => {
-            if(format == "html"){
-                resultHTML = result;
-                response.type("application/json");
-                response.status(200);
-                response.json({"html": resultHTML});
-                response.end();
-            }else if(format == "pdf"){
-                response.type("application/json");
-                response.status(200);
-                response.json({
-                    "message": "PDF generation finnished",
-                    "data": result
+        Language.createFromDbByIso(isoLang).then((language) => {
+            User.createFromDbById(idUser, language.id).then((user) => {
+                cvService.generateCv(isoLang, idCv, format, user, (result) => {
+                    if(format == "html"){
+                        resultHTML = result;
+                        response.type("application/json");
+                        response.status(200);
+                        response.json({"html": resultHTML});
+                        response.end();
+                    }else if(format == "pdf"){
+                        response.type("application/json");
+                        response.status(200);
+                        response.json({
+                            "message": "PDF generation finnished",
+                            "data": result
+                        });
+                        response.end();
+                    }else{
+                        response.type("application/json");
+                        response.status(400);
+                        response.json(`Error : Format error : ${format}`);
+                        response.end();
+                    }
                 });
-                response.end();
-            }else{
-                response.type("application/json");
-                response.status(400);
-                response.json(`Error : Format error : ${format}`);
-                response.end();
-            }
+            });
         });
         return;
     });

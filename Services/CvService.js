@@ -1,3 +1,6 @@
+const User = require("../Data/Models/User");
+const NumberTools = require("../Utils/NumbersTools");
+
 class CvService{
     
     // @todo
@@ -38,12 +41,12 @@ class CvService{
      * @returns {String}
      * @async
      */
-    async generateCv(isoLang, idCv, format, mcbFinnished){
+    generateCv(isoLang, idCv, format, user, mcbFinnished){
         const formatLC = String(format).toLowerCase();
         if(formatLC == "html"){
-            return this.generateCvHtml(isoLang, idCv, mcbFinnished);
+            return this.generateCvHtml(isoLang, idCv, user, mcbFinnished);
         }else if(formatLC == "pdf"){
-            return this.generateCvPdf(isoLang, idCv, mcbFinnished);
+            return this.generateCvPdf(isoLang, idCv, user, mcbFinnished);
         }else{
             return null;
         }
@@ -51,7 +54,9 @@ class CvService{
 
     /**
      * Service for generating CV into HTML
+     * @param {string} isoLang 
      * @param {number} idCv 
+     * @param {User} user 
      * @param {Function} mcbFinnished 
      * @returns {String}
      * @todo Create a new function : filename->htmlContent
@@ -59,7 +64,7 @@ class CvService{
      * @todo Add function to handle variable remplacement to the cv content (name, etc...)
      * @async
      */
-    async generateCvHtml(isoLang, idCv, mcbFinnished){
+    async generateCvHtml(isoLang, idCv, user, mcbFinnished){
         const path = require("path");
         const fs = require('fs');
         
@@ -68,19 +73,20 @@ class CvService{
         await fs.readFile(htmlFilename, 'utf8', (err, htmlContent) => {
             mcbFinnished(htmlContent);
         });
-        return;
     }
 
     /**
      * Service for generating CV into PDF
-     * @param {*} idCv 
-     * @param {*} mcbFinnished 
+     * @param {string} isoLang 
+     * @param {number} idCv 
+     * @param {User} user 
+     * @param {CallableFunction} mcbFinnished 
      * @returns {String}
      * @async
      * @todo Check if urlCv exist
      */
-    async generateCvPdf(isoLang, idCv, mcbFinnished){
-        const pdfFilename = this.makePdfFilename(idCv, isoLang);
+    async generateCvPdf(isoLang, idCv, user, mcbFinnished){
+        const pdfFilename = this.makePdfFilename(idCv, isoLang, user);
         const filenameOutput = `./Public/CvOutput/${pdfFilename}.pdf`;
 
         const host = this.getHostUrl();
@@ -102,6 +108,7 @@ class CvService{
     /**
      * The path begin on root project folder > Templates/*
      * @param {number} idCv 
+     * @param {boolean} withTemplatesRoot 
      * @todo cvService.getTemplateVueFilePath : make the logic to manage by Template object
      */
     getTemplateVueFilePath(idCv, withTemplatesRoot = false){
@@ -117,19 +124,19 @@ class CvService{
      * @todo Move to a dedicated utils class
      * @todo Should contain too the name of the User
      */
-    makePdfFilename(idCv, isoLang){
-        const dateObj = new Date();
-        const month = dateObj.getUTCMonth() + 1; //months from 1-12
-        const day = dateObj.getUTCDate();
-        const year = dateObj.getUTCFullYear();
-        const hour = dateObj.getHours();
-        const minute = dateObj.getMinutes();
-        const seconde = dateObj.getSeconds();
+    makePdfFilename(idCv, isoLang, user){
+        const dateObj   = new Date();
+        const month     = NumberTools.zeroLead(dateObj.getUTCMonth() + 1, 2); //months from 1-12
+        const day       = NumberTools.zeroLead(dateObj.getUTCDate(), 2);
+        const year      = NumberTools.zeroLead(dateObj.getUTCFullYear(), 4);
+        const hour      = NumberTools.zeroLead(dateObj.getHours(), 2);
+        const minute    = NumberTools.zeroLead(dateObj.getMinutes(), 2);
+        const seconde   = NumberTools.zeroLead(dateObj.getSeconds(), 2);
 
-        let username = "Mahefa Abel";
+        let lastname = user.lastname;
         const isoLangMaj = String(isoLang).toUpperCase();
 
-        return `CV-${username}-${idCv}-${isoLangMaj} ${year}-${month}-${day} ${hour}h${minute}m${seconde}s`;
+        return `CV-${idCv}-${lastname}-${isoLangMaj} ${year}-${month}-${day} ${hour}h${minute}m${seconde}s`;
     }
 
     /**
