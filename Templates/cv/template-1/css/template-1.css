@@ -2,3 +2,39 @@ div.content-no-item{
     text-align: center;
 }
 .cvm-error{ color: red; }
+
+/**
+ * Educations - Begin
+ */
+
+/**
+ * Educations - End
+ */
+
+/**
+ * Experiences - Begin
+ */
+div.experience-content{
+    display: flex;
+    flex-direction: row;
+}
+div.column-company-timeline{
+    flex: 1;
+    background-color: #f2f2fe;
+}
+div.column-detail{
+    flex: 1;
+    background-color: #f2f2fe;
+    margin-left: 40px;
+}
+div.column-detail .company-name{
+    font-weight: 700;
+    font-size: 15px;
+}
+div.position-content{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+/**
+ * Experiences - End
+ */

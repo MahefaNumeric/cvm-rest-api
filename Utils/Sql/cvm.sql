@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : sam. 27 fév. 2021 à 10:38
+-- Généré le : sam. 27 fév. 2021 à 16:31
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -453,6 +453,33 @@ INSERT INTO `part_experiences` (`id`, `id_user`, `id_company`, `id_company_posit
 -- --------------------------------------------------------
 
 --
+-- Structure de la table `part_experiences_lang`
+--
+
+DROP TABLE IF EXISTS `part_experiences_lang`;
+CREATE TABLE IF NOT EXISTS `part_experiences_lang` (
+  `id_part_experiences` int(11) NOT NULL,
+  `id_lang` int(11) NOT NULL,
+  `description` longtext NOT NULL,
+  PRIMARY KEY (`id_part_experiences`,`id_lang`),
+  KEY `part_experiences_lang.id_lang` (`id_lang`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `part_experiences_lang`
+--
+
+INSERT INTO `part_experiences_lang` (`id_part_experiences`, `id_lang`, `description`) VALUES
+(1, 1, 'Sed fermentum sollicitudin interdum. Etiam imperdiet sapien in dolor rhoncus a semper tortor posuere FR'),
+(1, 2, 'Sed fermentum sollicitudin interdum. Etiam imperdiet sapien in dolor rhoncus a semper tortor posuere EN'),
+(2, 1, 'Sed fermentum sollicitudin interdum. Etiam imperdiet sapien in dolor rhoncus a semper tortor posuere FR'),
+(2, 2, 'Sed fermentum sollicitudin interdum. Etiam imperdiet sapien in dolor rhoncus a semper tortor posuere EN'),
+(3, 1, 'Sed fermentum sollicitudin interdum. Etiam imperdiet sapien in dolor rhoncus a semper tortor posuere FR'),
+(3, 2, 'Sed fermentum sollicitudin interdum. Etiam imperdiet sapien in dolor rhoncus a semper tortor posuere EN');
+
+-- --------------------------------------------------------
+
+--
 -- Structure de la table `part_projects`
 --
 
@@ -827,6 +854,13 @@ ALTER TABLE `part_experiences`
   ADD CONSTRAINT `part_experiences.id_company` FOREIGN KEY (`id_company`) REFERENCES `companies` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `part_experiences.id_company_position` FOREIGN KEY (`id_company_position`) REFERENCES `company_positions` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `part_experiences.id_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `part_experiences_lang`
+--
+ALTER TABLE `part_experiences_lang`
+  ADD CONSTRAINT `part_experiences_lang.id_lang` FOREIGN KEY (`id_lang`) REFERENCES `languages` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `part_experiences_lang.id_part_experiences` FOREIGN KEY (`id_part_experiences`) REFERENCES `part_experiences` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `part_projects`

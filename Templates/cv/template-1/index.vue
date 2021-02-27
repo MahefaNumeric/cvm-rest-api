@@ -1,14 +1,12 @@
 <template>
-	<!-- 
-	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> -->
-	<html
-		xmlns="http://www.w3.org/1999/xhtml">
+	<!-- <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> -->
+	<html xmlns="http://www.w3.org/1999/xhtml">
 		<head>
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 			<title>Resume</title>
 			<link type="text/css" rel="stylesheet" href="/templates/1/css/blue.css" />
-			<link type="text/css" rel="stylesheet" href="/templates/1/css/template-1.css" />
 			<link type="text/css" rel="stylesheet" href="/templates/1/css/print.css" media="print"/>
+            <link type="text/css" rel="stylesheet" href="/templates/1/css/template-1.css" />
 			<!--[if IE 7]>
 			<link href="/templates/1/css/ie7.css" rel="stylesheet" type="text/css" />
 			<![endif]-->
@@ -135,23 +133,27 @@
 									</ul>
 								</div>
 								<hr/>
-								<div class="content" v-for="itemCompany in cv.experiences.companies" :key="itemCompany.id">
-									<h3>{{ itemCompany.dateStart}} - {{itemCompany.dateEnd }}</h3>
-									<div>{{ itemCompany.name }} </div>
-									<div v-for="itemPosition in itemCompany.positionsValue" :key="itemPosition.id">
-										<p>
-											<em>{{ itemPosition.title }}</em>
-											<span>{{ itemPosition.experienceDateBegin}} - {{itemPosition.experienceDateEnd }}</span>
-											<span> - 2 ans</span>
-										</p>
-										<div class="description-content">
-											<p>{{ itemPosition.description }}</p>
-											<ul class="info">
-												<li>{{ itemPosition.description }}</li>
-												<li>{{ itemPosition.description }}</li>
-											</ul>
-										</div>
-									</div>
+								<div class="content experience-content" v-for="itemCompany in cv.experiences.companies" :key="itemCompany.id">
+                                    <div class="column-company-timeline">
+                                        <h3>{{ itemCompany.dateStart}} - {{itemCompany.dateEnd }}</h3>
+                                    </div>
+                                    <div class="column-detail">
+                                        <div class="company-name">{{ itemCompany.name }}</div>
+                                        <div class="position-content" v-for="itemPosition in itemCompany.positionsValue" :key="itemPosition.id">
+                                            <div class="position-header">
+                                                <em>{{ itemPosition.title }}</em>
+                                                <span>{{ itemPosition.experienceDateBegin}} - {{itemPosition.experienceDateEnd }}</span>
+                                                <span> - 2 ans</span>
+                                            </div>
+                                            <div class="position-body">
+                                                <p>{{ itemPosition.description }}</p>
+                                                <ul class="info">
+                                                    <li>{{ itemPosition.description }}</li>
+                                                    <li>{{ itemPosition.description }}</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
 								</div>
 								<div class="content content-no-item cvm-error" v-if="Object.keys(cv.experiences.companies).length == 0">
                                     {No item in companies}
@@ -270,8 +272,8 @@
 </template>
 
 <script>
-  // It's necessary for vue mecanism
-  module.exports = {
-      data: () => {}
-  }
+    // It's necessary for vue mecanism
+    module.exports = {
+        data: () => {}
+    }
 </script>
