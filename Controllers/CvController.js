@@ -81,8 +81,8 @@ class CvController {
                         response.end();
                     }
                 });
-            });
-        });
+            }).catch(error => userGetById_ErrorHandling(error, response));
+        }).catch(error => languageGetByIso_ErrorHandling(error, isoLang, response));
         return;
     }
 
@@ -149,37 +149,41 @@ class CvController {
                     response.type("text/html");
                     response.status(200);
                     response.renderVue(templateVueFilePath, data, request.vueOptions);
-                }).catch(error => cvErrorHandling(error, idCv, response));
-            }).catch((error) => {
-                console.error("CvController:: /:idCv/generate/html/view User.createFromDbById::", error);
-            });
-        }).catch((error) => {
-            switch(error.code){
-                case Language.MSG_NO_LANGUAGE:
-                    response.type("text/json");
-                    response.status(404);
-                    response.write(JSON.stringify({message: `Error: Language '${isoLang}' does not exist`}));
-                    response.end();
-                    break;
-                case Language.MSG_RESULT_NOT_KNOW:
-                    response.type("text/json");
-                    response.status(500);
-                    response.write(JSON.stringify({message: `MSG_RESULT_NOT_KNOW`}));
-                    response.end();
-                    break;
-                case "ECONNREFUSED":
-                    response.type("text/json");
-                    response.status(500);
-                    response.write(JSON.stringify({message: `Database not reachable`}));
-                    response.end();
-                    break;
-                default:
-            }
-        });
+                }).catch(error => cvGetById_ErrorHandling(error, idCv, response));
+            }).catch(error => userGetById_ErrorHandling(error, response));
+        }).catch(error => languageGetByIso_ErrorHandling(error, isoLang, response));
     }
 }
 
-function cvErrorHandling(error, idCv, response){
+function userGetById_ErrorHandling(error, response){
+    console.error("CvController:: /:idCv/generate/html/view User.createFromDbById::", error);
+}
+
+function languageGetByIso_ErrorHandling(error, isoLang, response){
+    switch(error.code){
+        case Language.MSG_NO_LANGUAGE:
+            response.type("text/json");
+            response.status(404);
+            response.write(JSON.stringify({message: `Error: Language '${isoLang}' does not exist`}));
+            response.end();
+            break;
+        case Language.MSG_RESULT_NOT_KNOW:
+            response.type("text/json");
+            response.status(500);
+            response.write(JSON.stringify({message: `MSG_RESULT_NOT_KNOW`}));
+            response.end();
+            break;
+        case "ECONNREFUSED":
+            response.type("text/json");
+            response.status(500);
+            response.write(JSON.stringify({message: `Database not reachable`}));
+            response.end();
+            break;
+        default:
+    }
+}
+
+function cvGetById_ErrorHandling(error, idCv, response){
     let dataRender = {};
     if(error.code == Cv.MSG_NO_CV_GIVEN_ID){
         dataRender = {
