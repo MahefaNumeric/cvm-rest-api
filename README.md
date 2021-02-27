@@ -30,3 +30,7 @@ Becoming CV Manager REST API
 - `npm install express --save`
 - `npm install body-parser --save`
 - `npm install xml --save`
+
+## Examples Contents
+- https://www.velvetjobs.com/resume/senior-technical-lead-resume-sample
+- https://www.qwikresume.com/resume-samples/tech-lead/

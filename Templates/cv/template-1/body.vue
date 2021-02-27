@@ -110,7 +110,10 @@
                         </div>
                         <div class="position-body">
                             <p>{{ itemPosition.description }}</p>
-                            <div>{{ itemPosition.descriptionExperiencePosition }}</div>
+                            <div 
+                                class="description-experience-position" 
+                                v-html="itemPosition.descriptionExperiencePosition">
+                            </div>
                         </div>
                     </div>
 

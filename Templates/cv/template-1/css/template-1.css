@@ -60,6 +60,9 @@ div.position-content .position-duration{
     color: #666;
     font-style: italic;
 }
+.description-experience-position{
+    margin-left: 20px;
+}
 /**
  * Experiences - End
  */

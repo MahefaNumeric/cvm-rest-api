@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : sam. 27 fév. 2021 à 16:31
+-- Généré le : sam. 27 fév. 2021 à 21:02
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -287,8 +287,8 @@ CREATE TABLE IF NOT EXISTS `cv_lang` (
 --
 
 INSERT INTO `cv_lang` (`id_cv`, `id_lang`, `title_backend`, `title_frontend`, `auto_biography`, `date_add`, `date_update`) VALUES
-(1, 1, 'CV Lead Technique', 'Lead Technique', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:09:57', '2021-02-21 17:09:57'),
-(1, 2, 'CV Technical Lead', 'Technical Lead', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. EN', '2021-02-21 17:09:57', '2021-02-21 17:09:57'),
+(1, 1, 'CV Lead Technique', 'Lead Technique', 'Ayant 4 ans d\'expérience en développement de logiciels professionnels dans les domaines des applications multiniveaux utilisant les technologies Java, J2EE comme les servlets, JSP, Struts, JDBC, Hibernate, XML et Oracle PL / SQL.', '2021-02-21 17:09:57', '2021-02-21 17:09:57'),
+(1, 2, 'CV Technical Lead', 'Technical Lead', 'Having 4 years of strong professional software development experience in the areas of Multi-tier applications using Java, J2EE technologies like Servlets, JSP, Struts, JDBC, Hibernate, XML and Oracle PL/SQL.', '2021-02-21 17:09:57', '2021-02-21 17:09:57'),
 (2, 1, 'CV Prestashop Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:45:34', '2021-02-21 17:45:34'),
 (3, 1, 'CV Symfony Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:48:27', '2021-02-21 17:48:27'),
 (4, 1, 'CV Laravel Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:48:42', '2021-02-21 17:48:42'),
@@ -474,8 +474,8 @@ INSERT INTO `part_experiences_lang` (`id_part_experiences`, `id_lang`, `descript
 (1, 2, 'Sed fermentum sollicitudin interdum. Etiam imperdiet sapien in dolor rhoncus a semper tortor posuere EN'),
 (2, 1, 'Sed fermentum sollicitudin interdum. Etiam imperdiet sapien in dolor rhoncus a semper tortor posuere FR'),
 (2, 2, 'Sed fermentum sollicitudin interdum. Etiam imperdiet sapien in dolor rhoncus a semper tortor posuere EN'),
-(3, 1, 'Sed fermentum sollicitudin interdum. Etiam imperdiet sapien in dolor rhoncus a semper tortor posuere FR'),
-(3, 2, 'Sed fermentum sollicitudin interdum. Etiam imperdiet sapien in dolor rhoncus a semper tortor posuere EN');
+(3, 1, '<ul>\r\n<li> Établit d\'excellentes relations de travail avec le personnel \"Marketing\" et \"RD & amp; E\" </li>\r\n<li> Est un \"excellent auditeur\" avec son manager, ses collègues, ses pairs et ses clients </li>\r\n<li> Travaille en étroite collaboration & amp; collabore bien avec le Sr. Tech Lead - South Rockies & amp; le Rocky Mt. Responsable technique régional </li>\r\n<li> Conduit / guide les \"Projets & amp; Travail de type RFP\" jusqu\'à leur achèvement - à temps / à chaque fois </li>\r\n<li> Un excellent \"communicateur QUOTIDIEN\" - pour les ventes, les clients, les représentants techniques, les pairs et amp; Gestionnaire </li>\r\n<li> Hiérarchisation des projets et / ou des travaux de type RFP dans les Rocheuses du Sud avec les ventes, les clients et amp; Représentants techniques - dirigez efficacement le trafic </li>\r\n<li> Conduit des \"feuilles de calcul de valeur\" hebdomadaires / trimestrielles à l\'achèvement et à la visibilité de l\'équipe de gestion des ventes dans la région </li>\r\n</ul>'),
+(3, 2, '<ul>\r\n<li>Establishes excellent working relationships with both \"Marketing\" and \"RD &amp; E\" Personal</li>\r\n<li>Is an \"Excellent Listener\" with manager, co-workers, peers, and customers</li>\r\n<li>Works closely &amp; collaborates well with the Sr. Tech Lead - South Rockies &amp; the Rocky Mt. Regional Technical Manager</li>\r\n<li>Drives/Guides \"Projects &amp; RFP Type Work\" to completion - on time/every time</li>\r\n<li>An excellent \"DAILY Communicator\" - to Sales, Customers, Tech Reps, Peers, &amp; Manager</li>\r\n<li>Prioritization of Projects and/or RFP Type Work within the Southern Rockies with Sales, Customers, &amp; Technical Reps - efficiently direct traffic</li>\r\n<li>Drives weekly/quarterly \"Value Spreadsheets\" to completion and visibility to Sales Management Team in the Region</li>\r\n</ul>');
 
 -- --------------------------------------------------------
 
