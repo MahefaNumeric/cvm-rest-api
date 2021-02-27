@@ -5,8 +5,8 @@
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 			<title>Resume</title>
 			<link type="text/css" rel="stylesheet" href="/templates/1/css/blue.css" />
-			<link type="text/css" rel="stylesheet" href="/templates/1/css/print.css" media="print"/>
             <link type="text/css" rel="stylesheet" href="/templates/1/css/template-1.css" />
+            <link type="text/css" rel="stylesheet" href="/templates/1/css/print.css" media="print"/>
 			<!--[if IE 7]>
 			<link href="/templates/1/css/ie7.css" rel="stylesheet" type="text/css" />
 			<![endif]-->

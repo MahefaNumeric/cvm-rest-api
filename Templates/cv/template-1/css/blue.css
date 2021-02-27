@@ -187,8 +187,6 @@ h2 {
 
 p {
 	width:500px;
-	margin-left:40px;
-	/* float:right;	 */
 }
 
 p img {
@@ -209,7 +207,6 @@ div.content {
 h3 {
 	width:180px;
 	text-align: right;
-	/* float:left; */
 	padding:0;
 	clear:both;
 	font-size: 13px;
@@ -312,16 +309,13 @@ ul.unordered li {
 }
 
 ul.info {
-	/* float:right; */
 	width:500px;
-	margin-left:40px;
 	list-style-type: none; 
 }
 
 ul.info li {
 	margin:0;
 	padding:0;
-	/* float:left; */
 	display: block;
 	width:500px;
 	background-image:url(../images/bullet.gif);
