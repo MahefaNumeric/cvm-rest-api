@@ -168,10 +168,12 @@
                                                 </ul>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <div class="company-separator">
-                                        <hr/>
+                                        <div class="company-separator">
+                                            <hr/>
+                                            <!-- It's not really the place to this -->
+                                        </div>
+
                                     </div>
 
 								</div>
