@@ -110,10 +110,7 @@
                         </div>
                         <div class="position-body">
                             <p>{{ itemPosition.description }}</p>
-                            <ul class="info">
-                                <li>{{ itemPosition.descriptionExperiencePosition }}</li>
-                                <li>{{ itemPosition.descriptionExperiencePosition }}</li>
-                            </ul>
+                            <div>{{ itemPosition.descriptionExperiencePosition }}</div>
                         </div>
                     </div>
 
