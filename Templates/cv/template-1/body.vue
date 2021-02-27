@@ -53,21 +53,27 @@
         </div>
         <!-- Begin 1st Row -->
         <div class="entry">
-            <h2>OBJECTIVE</h2>
-            <p>
-                {{ cv.auto_biography }}
-            </p>
+            <div>
+                <h2>OBJECTIVE</h2>
+            </div>
+            <div class="objective-column-detail">
+                <div>
+                    {{ cv.auto_biography }}
+                </div>
+            </div>
         </div>
         <!-- End 1st Row -->
         <!-- Begin 2nd Row -->
         <div class="entry">
             <h2>EDUCATION</h2>
-            <div class="content" v-for="education in cv.educations" :key="education.id">
-                <h3>{{ education.date_begin_friendly }} - {{ education.date_end_friendly }}</h3>
-                <p> {{ education.title }} 
-                    <br />
+            <div class="content education-content" v-for="education in cv.educations" :key="education.id">
+                <div class="column-timeline">
+                    <h3>{{ education.date_begin_friendly }} - {{ education.date_end_friendly }}</h3>
+                </div>
+                <div class="column-detail"> 
+                    <div>{{ education.title }}</div>
                     <em>{{ education.description }}</em>
-                </p>
+                </div>
             </div>
             <div class="content content-no-item cvm-error" v-if="Object.keys(cv.educations).length == 0">
                 {No item in educations}
@@ -84,7 +90,7 @@
                 :key="itemCompany.id"
             >
                 <!-- :class="itemCompany.hasManyPosition ? 'many-position-on-company' : 'single-position-on-company' " -->
-                <div class="column-company-timeline">
+                <div class="column-timeline company">
                     <h3>{{ itemCompany.dateStart}} - {{itemCompany.dateEnd }}</h3>
                     <div class="company-duration">7 ans et 3 mois</div>
                 </div>

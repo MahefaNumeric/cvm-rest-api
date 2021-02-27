@@ -3,6 +3,12 @@ div.content-no-item{
 }
 .cvm-error{ color: red; }
 
+
+div.objective-column-detail{
+    margin-left: 220px;
+    /* background-color: antiquewhite; */
+}
+
 /**
  * Educations - Begin
  */
@@ -14,18 +20,21 @@ div.content-no-item{
 /**
  * Experiences - Begin
  */
+div.education-content,
 div.experience-content{
     display: flex;
     flex-direction: row;
 }
-div.column-company-timeline{
+div.column-timeline{
     flex: 1;
     /* background-color: #f2f2fe; */
+    max-width: 180px;
 }
-div.column-company-timeline h3{
+div.column-timeline h3{
     margin-bottom: 5px;
+    width: 100%;
 }
-div.column-company-timeline .company-duration{
+div.column-timeline.company .company-duration{
     text-align: right;
 }
 div.column-detail{
