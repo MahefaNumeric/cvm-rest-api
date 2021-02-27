@@ -133,9 +133,9 @@ class CvController {
 
         const cvService = new CvService();
 
-        Language.createFromDbByIso(isoLang).then((language) => {
-            User.createFromDbById(idUser, language.id).then((user) => {
-                Cv.createFromDbById(idCv, language.id).then((cv) => {
+        Language.createFromDbByIso(isoLang).then(language => {
+            User.createFromDbById(idUser, language.id).then(user => {
+                Cv.createFromDbById(idCv, language.id).then(cv => {
                     const data = {
                         user: user,
                         cv: cv,
