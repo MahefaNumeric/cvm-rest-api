@@ -132,10 +132,13 @@
 										<li>Pellentesque at lectus in libero dapibus cursus. Sed arcu ipsum, varius at ultricies acuro, tincidunt iaculis diam.</li>
 									</ul>
 								</div>
+
 								<hr/>
+
 								<div class="content experience-content" v-for="itemCompany in cv.experiences.companies" :key="itemCompany.id">
                                     <div class="column-company-timeline">
                                         <h3>{{ itemCompany.dateStart}} - {{itemCompany.dateEnd }}</h3>
+                                        <div class="company-duration">7 ans et 3 mois</div>
                                     </div>
                                     <div class="column-detail">
                                         <div class="company-name">{{ itemCompany.name }}</div>
@@ -143,7 +146,7 @@
                                             <div class="position-header">
                                                 <em>{{ itemPosition.title }}</em>
                                                 <span>{{ itemPosition.experienceDateBegin}} - {{itemPosition.experienceDateEnd }}</span>
-                                                <span> - 2 ans</span>
+                                                <span class="positionDuration"> - 2 ans</span>
                                             </div>
                                             <div class="position-body">
                                                 <p>{{ itemPosition.description }}</p>
@@ -155,11 +158,13 @@
                                         </div>
                                     </div>
 								</div>
+
 								<div class="content content-no-item cvm-error" v-if="Object.keys(cv.experiences.companies).length == 0">
                                     {No item in companies}
                                 </div>
 							</div>
 							<!-- End 3rd Row -->
+
 							<!-- Begin 4th Row -->
 							<div class="entry">
 								<h2>SKILLS</h2>
