@@ -103,8 +103,8 @@ module.exports = (router) => {
      * @todo cvService.getTemplateVueFilePath : make the logic to manage by Template object
      */
     router.get("/:idCv/generate/html/view", (request, response, next) => {
-        const idCv = request.params.idCv;
         const isoLang = request.params.isoLang; // From parent params
+        const idCv = request.params.idCv;
         const idUser = 1; // Mahefa
 
         const cvService = new CvService();
@@ -130,10 +130,27 @@ module.exports = (router) => {
                 console.error("CvController:: /:idCv/generate/html/view User.createFromDbById::", error);
             });
         }).catch((error) => {
-            response.type("text/json");
-            response.status(404);
-            response.write(JSON.stringify({message: `Error: Language '${isoLang}' not exist`}));
-            response.end();
+            switch(error.code){
+                case Language.MSG_NO_LANGUAGE:
+                    response.type("text/json");
+                    response.status(404);
+                    response.write(JSON.stringify({message: `Error: Language '${isoLang}' does not exist`}));
+                    response.end();
+                    break;
+                case Language.MSG_RESULT_NOT_KNOW:
+                    response.type("text/json");
+                    response.status(500);
+                    response.write(JSON.stringify({message: `MSG_RESULT_NOT_KNOW`}));
+                    response.end();
+                    break;
+                case "ECONNREFUSED":
+                    response.type("text/json");
+                    response.status(500);
+                    response.write(JSON.stringify({message: `Database not reachable`}));
+                    response.end();
+                    break;
+                default:
+            }
         });
     });
     

@@ -7,6 +7,13 @@ const connection = mysql.createConnection({
     database: "cvm",
 });
 
-connection.connect();
+connection.connect(error => {
+    if (error) {
+      console.error('DB Error connecting: ', error);
+      return;
+    }
+  
+   console.log('DB Connected as id ', connection.threadId);
+});
 
 module.exports = connection;
