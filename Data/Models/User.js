@@ -10,8 +10,7 @@ class User{
         lastname,
         date_birth,
         phone,
-        date_add,
-        date_update,
+        url_profile,
         auto_description,
         auto_biography
     ){
@@ -21,8 +20,7 @@ class User{
         this.lastname = lastname;
         this.date_birth = date_birth;
         this.phone = phone;
-        this.date_add = date_add;
-        this.date_update = date_update;
+        this.url_profile = url_profile;
 
         this.auto_description = auto_description ?? new Array();
         this.auto_biography = auto_biography ?? new Array();
@@ -42,7 +40,13 @@ class User{
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
                 SELECT 
-                    users.*, 
+                    users.id, 
+                    users.email, 
+                    users.firstname, 
+                    users.lastname, 
+                    users.date_birth, 
+                    users.phone, 
+                    users.url_profile, 
                     users_lang.auto_description, 
                     users_lang.auto_biography
                 FROM users 

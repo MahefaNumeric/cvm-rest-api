@@ -2,7 +2,7 @@
     <div>
         <div class="entry">
             <!-- Begin Image -->
-            <img class="portrait" src="/public/Images/Users/1-mahefa-abel.jpeg" alt="John Smith" />
+            <img class="portrait" :src="user.url_profile" :alt="user.lastname" />
             <!-- End Image -->
             <!-- Begin Personal Information -->
             <div class="self">
