@@ -19,12 +19,19 @@ class Company{
         this.description = description;
 
         // // Position on a company
-        this.positions = [];
-        this.positionsValue = [];
-        this.positions = [];
+        this.positionsValue = [];   // Private
 
         this.dateStart = null;  // Calculate from this.positions
         this.dateEnd = null;  // Calculate from this.positions
+    }
+    
+    set positions(value) {
+        this.positionsValue = value;
+        this.setupPositionsBeganEnd();
+    }
+
+    get positions() {
+        return this.positionsValue;
     }
 
     /**
