@@ -126,7 +126,10 @@ class CvService{
         const minute = dateObj.getMinutes();
         const seconde = dateObj.getSeconds();
 
-        return `cv-${idCv}-${isoLang}-${year}-${month}-${day}-${hour}h${minute}m${seconde}s`;
+        let username = "Mahefa Abel";
+        const isoLangMaj = String(isoLang).toUpperCase();
+
+        return `CV-${username}-${idCv}-${isoLangMaj} ${year}-${month}-${day} ${hour}h${minute}m${seconde}s`;
     }
 
     /**
