@@ -4,7 +4,41 @@ const CvService = require("../Services/CvService");
 const User = require("../Data/Models/User");
 const Cv = require("../Data/Models/Cv");
 
-class CvController{
+module.exports = (router) => {
+    
+    // Retrive CV list
+    router.get("/", CvController.getCvList);
+    
+    // Create new CV
+    router.post("/", CvController.createNewCv);
+
+    // Get a CV by idCv
+    router.get("/:id", CvController.GetCvByid);
+
+    // Update CV
+    router.put("/:id", CvController.updateCv);
+
+    /**
+     * Generate a given CV
+     * @param {Int} idCv
+     * @param {String} format
+     * @returns 
+     */
+    router.get("/:idCv/generate/:format", CvController.generateGivenCv);
+
+    /**
+     * Previsualize the html output (Type: text/html)
+     * @since v1
+     * @tutorial If you change the url structure, don't forget to update too the url in "Services/CvService.js/generateCvPdf()"" function
+     * @todo cvService.getTemplateVueFilePath : make the logic to manage by Template object
+     * @todo Add template to url
+     */
+    router.get("/:idCv/generate/html/view", CvController.previsualizeHtmlOutput);
+    
+    return router;
+}
+
+class CvController {
 
     static getCvList = (request, response) => {
         const userService = new CvService();
@@ -51,29 +85,20 @@ class CvController{
         });
         return;
     }
-}
 
-module.exports = (router) => {
-    
-    // Recupere liste CV
-    router.get("/", CvController.getCvList);
-
-    // Creation nouvel CV
-    router.post("/", (request, response)=>{
+    static createNewCv = (request, response)=>{
         response.type("application/json");
         const userService = new CvService();
         
         const pData = request.body;
-        console.log(pData);
         userService.createNewUser(pData, (results) => {
             console.log("Results: ", results);
             response.type("application/json");
             response.json(results);
         });
-    });
+    }
 
-    // Creation nouvel CV
-    router.get("/:id", (request, response)=>{
+    static GetCvByid = (request, response)=>{
         response.type("application/json");
         const connMysql = require("../Configs/db.config");
         const id = request.params.id;
@@ -90,34 +115,18 @@ module.exports = (router) => {
                 });
             }
         });
-    });
+    }
 
-    // Mise a jours de CV
-    router.put("/:id", (request, response) => {
+    static updateCv = (request, response) => {
         response.type("application/json");
         const connMysql = require("../Configs/db.config");
         const checkIdIfExist = require("../Validation/UserValidation").checkIdIfExist;
         const pData = request.body;
         const id = request.params.id;
         console.log(pData, id, resultCheckIdUser);
-    });
+    }
 
-    /**
-     * Generate a given CV
-     * @param {Int} idCv
-     * @param {String} format
-     * @returns 
-     */
-    router.get("/:idCv/generate/:format", CvController.generateGivenCv);
-
-    /**
-     * Previsualize the html output (Type: text/html)
-     * @since v1
-     * @tutorial If you change the url structure, don't forget to update too the url in "Services/CvService.js/generateCvPdf()"" function
-     * @todo cvService.getTemplateVueFilePath : make the logic to manage by Template object
-     * @todo Add template to url
-     */
-    router.get("/:idCv/generate/html/view", (request, response, next) => {
+    static previsualizeHtmlOutput = (request, response, next) => {
         const isoLang = request.params.isoLang; // From parent params
         const idCv = request.params.idCv;
         const idUser = 1; // Mahefa
@@ -167,9 +176,7 @@ module.exports = (router) => {
                 default:
             }
         });
-    });
-    
-    return router;
+    }
 }
 
 function cvErrorHandling(error, idCv, response){
