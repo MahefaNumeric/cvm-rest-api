@@ -118,7 +118,9 @@
                         </div>
                     </div>
 
-                    <div class="company-separator">
+                    <div class="company-separator" 
+                        v-if="cv.experiences.companies[cv.experiences.companies.length-1].id != itemCompany.id"
+                    >
                         <hr/>
                         <!-- It's not really the place to this -->
                     </div>

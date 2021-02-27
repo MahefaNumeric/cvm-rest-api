@@ -285,3 +285,6 @@ big {
 div.column-detail .company-name{
     font-size: 110%;
 }
+div.column-skill-group{
+	text-align: right;
+}

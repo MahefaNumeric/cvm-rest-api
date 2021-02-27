@@ -129,7 +129,7 @@ class CvService{
     makePdfFilename(idCv, isoLang, user){
         const dateObj   = new Date();
         const month     = NumberTools.zeroLead(dateObj.getUTCMonth() + 1, 2); //months from 1-12
-        const day       = NumberTools.zeroLead(dateObj.getUTCDate(), 2);
+        const day       = NumberTools.zeroLead(dateObj.getDate(), 2);
         const year      = NumberTools.zeroLead(dateObj.getUTCFullYear(), 4);
         const hour      = NumberTools.zeroLead(dateObj.getHours(), 2);
         const minute    = NumberTools.zeroLead(dateObj.getMinutes(), 2);

@@ -33,7 +33,8 @@ div.column-skill-group{
     max-width: 180px;
     min-width: 180px;
 }
-div.column-timeline h3{
+div.column-timeline h3,
+div.column-skill-group h3{
     margin-bottom: 5px;
     width: 100%;
 }
