@@ -100,6 +100,8 @@ module.exports = (router) => {
 
     /**
      * Previsualize the html output (Type: text/html)
+     * @since v1
+     * @tutorial If you change the url structure, don't forget to update too the url in "Services/CvService.js/generateCvPdf()"" function
      * @todo cvService.getTemplateVueFilePath : make the logic to manage by Template object
      */
     router.get("/:idCv/generate/html/view", (request, response, next) => {
