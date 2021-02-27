@@ -41,6 +41,15 @@ div.position-content{
     margin-top: 20px;
     margin-bottom: 20px;
 }
+div.position-content .position-header{
+    padding-bottom: 10px;
+}
+div.position-content .position-title{
+    font-weight: 700;
+}
+div.position-content .position-duration{
+    color: #666;
+}
 /**
  * Experiences - End
  */

@@ -134,6 +134,7 @@
 								</div>
 
 								<hr/>
+                                <bodyVue :cv="cv" />
 
 								<div 
                                     class="content experience-content" 
@@ -153,10 +154,10 @@
                                             :key="itemPosition.id"
                                         >
                                             <div class="position-header">
-                                                <em>{{ itemPosition.title }}</em>
-                                                <div v-if="itemCompany.hasManyPosition == true">
-                                                    <span>{{ itemPosition.experienceDateBegin}} - {{itemPosition.experienceDateEnd }}</span>
-                                                    <span class="positionDuration"> - 2 ans</span>
+                                                <div class="position-title">{{ itemPosition.title }}</div>
+                                                <div class="position-duration" v-if="itemCompany.hasManyPosition == true">
+                                                    <span class="position-duration-1">{{ itemPosition.experienceDateBegin}} - {{itemPosition.experienceDateEnd }}</span>
+                                                    <span class="position-duration-2"> - 2 ans</span>
                                                 </div>
                                             </div>
                                             <div class="position-body">
@@ -168,6 +169,11 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="company-separator">
+                                        <hr/>
+                                    </div>
+
 								</div>
 
 								<div class="content content-no-item cvm-error" v-if="Object.keys(cv.experiences.companies).length == 0">
@@ -288,8 +294,12 @@
 </template>
 
 <script>
+    const bodyVue = require("./body.vue"); 
     // It's necessary for vue mecanism
     module.exports = {
-        data: () => {}
+        data: () => {},
+        components: {
+            bodyVue
+        }
     }
 </script>
