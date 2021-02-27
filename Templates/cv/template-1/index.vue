@@ -268,6 +268,7 @@
 		</body>
 	</html>
 </template>
+
 <script>
   // It's necessary for vue mecanism
   module.exports = {
