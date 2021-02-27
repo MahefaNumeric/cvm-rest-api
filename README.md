@@ -2,6 +2,9 @@
 A rest webservice showcase with Node.js <br/>
 Becoming CV Manager REST API
 
+## Preview
+![](https://raw.githubusercontent.com/MahefaNumeric/cvm-rest-api/main/Public/Images/preview-1.jpg)
+
 ## Used Technologies
 **Stack**
 - Node.js
