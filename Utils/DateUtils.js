@@ -78,9 +78,17 @@ class DateUtils{
     static compareDateAB_YYYYMM(dateA, dateB){
         let result;
         
-        const [dateA_year, dateA_month] = String(dateA).split("-");
-        const [dateB_year, dateB_month] = String(dateB).split("-");
+        // Collect data
+        let [dateA_year, dateA_month] = String(dateA).split("-");
+        let [dateB_year, dateB_month] = String(dateB).split("-");
 
+        // Sanitize data
+        dateA_year = parseInt(dateA_year);
+        dateB_year = parseInt(dateB_year);
+        dateA_month = parseInt(dateA_month);
+        dateB_month = parseInt(dateB_month);
+
+        // Compare data
         if(dateA_year < dateB_year) result = -1;
         if(dateA_year > dateB_year) result = 1;
         if(dateA_year == dateB_year){

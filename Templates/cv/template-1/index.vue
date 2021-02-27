@@ -108,7 +108,7 @@
           </div>
           <hr/>
           <template v-for="itemCompany in cv.experiences.companies">
-            <div class="content" v-for="itemPosition in itemCompany.positions" :key="itemPosition.id">
+            <div class="content" v-for="itemPosition in itemCompany.positionsValue" :key="itemPosition.id">
               <h3>{{ itemPosition.experienceDateBegin}} - {{itemPosition.experienceDateEnd }}</h3>
               <p>{{ itemCompany.name }} <br />
                 <em>{{ itemPosition.title }}</em></p>
