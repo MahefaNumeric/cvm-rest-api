@@ -5,9 +5,10 @@ const router = express.Router({ mergeParams: true });
 
 module.exports = router;
 
+const skillGroupService = new SkillGroupService();
+
 // Recupere liste
 router.get("/all", (request, response) => {
-    const skillGroupService = new SkillGroupService();
     const isoLang = request.params.isoLang;
     skillGroupService.getListAllSkillGroup(isoLang).then(list => {
         response.type("application/json");
@@ -16,19 +17,19 @@ router.get("/all", (request, response) => {
     });
 });
 
-// // Creation nouvel 
-// router.post("/", (request, response)=>{
-//     response.type("application/json");
-//     const userService = new UsersService();
-    
-//     const pData = request.body;
-//     console.log(pData);
-//     userService.createNewUser(pData, (results) => {
-//         console.log("Results: ", results);
-//         response.type("application/json");
-//         response.json(results);
-//     });
-// });
+// Creation nouvel 
+router.post("/", (request, response)=>{
+    const pData = request.body;
+    console.log(pData);
+    response.type("application/json");
+    response.json(pData);
+
+    // skillGroupService.createNewUser(pData, (results) => {
+    //     console.log("Results: ", results);
+    //     response.type("application/json");
+    //     response.json(results);
+    // });
+});
 
 // // Creation nouvel 
 // router.get("/:id", (request, response)=>{

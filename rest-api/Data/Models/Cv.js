@@ -5,6 +5,7 @@ const Skill = require("./Skill");
 const SkillGroup = require("./SkillGroup");
 const Experience = require("./Experience");
 const Project = require("./Project");
+const SkillGroupRepo = require("../Repositories/SkillGroupRepo");
 
 class Cv{
 
@@ -84,7 +85,7 @@ class Cv{
                             cv.educations = listEducation;
                             Skill.getListSkillsFromDbByCv(cv.id, idLang).then(listSkills => {
                                 cv.skills = listSkills;
-                                SkillGroup.getListUsedSkillsGroupFromDbByCv(cv.id, idLang).then(listGroupSkills => {
+                                SkillGroupRepo.getListUsedSkillsGroupFromDbByCv(cv.id, idLang).then(listGroupSkills => {
                                     cv.skillsGroup = listGroupSkills;
                                     Experience.buildExperienceByIdCv(cv.id, idLang).then(experiences => {
                                         cv.experiences = experiences;

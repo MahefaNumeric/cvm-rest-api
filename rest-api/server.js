@@ -33,7 +33,11 @@ app.use(expressVueMiddleware);
 // Setup controllers
 app.use("/:isoLang/users", cors(corsOption), userController);
 app.use("/:isoLang/cv", cors(corsOption), cvController);
-app.use("/:isoLang/skillGroup", cors(corsOption), skillGroupController);
+app.use("/:isoLang/skill/group", cors(corsOption), skillGroupController);
+// app.use("/:isoLang/skill", cors(corsOption), null);
+// app.use("/:isoLang/project", cors(corsOption), null);
+// app.use("/:isoLang/experience", cors(corsOption), null);
+// app.use("/:isoLang/education", cors(corsOption), null);
 
 // Start server
 app.listen(3000);

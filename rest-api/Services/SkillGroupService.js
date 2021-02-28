@@ -1,5 +1,5 @@
 const LanguageService = require("./LanguageService");
-const SkillGroup = require("../Data/Models/SkillGroup");
+const SkillGroupRepo = require("../Data/Repositories/SkillGroupRepo");
 
 class SkillGroupService{
 
@@ -14,7 +14,11 @@ class SkillGroupService{
      */
     async getListAllSkillGroup(isoLang) {
         const lang = await this.languageService.getLanguageByIso(isoLang);
-        return SkillGroup.getListAllSkillGroup(lang.id);
+        return SkillGroupRepo.getListAllSkillGroup(lang.id);
+    }
+
+    createSkillGroup(skillGroup){
+        return SkillGroupRepo.insert(skillGroup);
     }
 
 }
