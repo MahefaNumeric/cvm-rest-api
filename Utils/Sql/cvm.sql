@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : sam. 27 fév. 2021 à 21:58
+-- Généré le : Dim 28 fév. 2021 à 11:45
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -45,8 +45,9 @@ CREATE TABLE IF NOT EXISTS `address` (
 -- Déchargement des données de la table `address`
 --
 
-INSERT INTO `address` VALUES(1, 1, 1, 'ANTETEZANAFOVOANY', '2021-02-21 15:07:55', '2021-02-21 15:07:55');
-INSERT INTO `address` VALUES(2, 1, 1, 'BERAVINA', '2021-02-21 15:08:22', '2021-02-21 15:08:22');
+INSERT INTO `address` (`id`, `enable`, `id_user`, `slug`, `date_add`, `date_update`) VALUES
+(1, 1, 1, 'ANTETEZANAFOVOANY', '2021-02-21 15:07:55', '2021-02-21 15:07:55'),
+(2, 1, 1, 'BERAVINA', '2021-02-21 15:08:22', '2021-02-21 15:08:22');
 
 -- --------------------------------------------------------
 
@@ -69,10 +70,11 @@ CREATE TABLE IF NOT EXISTS `address_lang` (
 -- Déchargement des données de la table `address_lang`
 --
 
-INSERT INTO `address_lang` VALUES(1, 1, 'Lot 120M L Antentezanafovoany, Tananarive, Madagascar FR', '2021-02-21 15:23:29', '2021-02-21 15:23:29');
-INSERT INTO `address_lang` VALUES(1, 2, 'Lot 120M L Antentezanafovoany, Tananarive, Madagascar EN', '2021-02-21 15:23:29', '2021-02-21 15:23:29');
-INSERT INTO `address_lang` VALUES(2, 1, 'Lot 3305C/BA, Beravina Fianarantsoa, Madagascar FR', '2021-02-21 15:23:52', '2021-02-21 15:23:52');
-INSERT INTO `address_lang` VALUES(2, 2, 'Lot 3305C/BA, Beravina Fianarantsoa, Madagascar EN', '2021-02-21 15:23:52', '2021-02-21 15:23:52');
+INSERT INTO `address_lang` (`id_address`, `id_lang`, `value`, `date_add`, `date_update`) VALUES
+(1, 1, 'Lot 120M L Antentezanafovoany, Tananarive, Madagascar FR', '2021-02-21 15:23:29', '2021-02-21 15:23:29'),
+(1, 2, 'Lot 120M L Antentezanafovoany, Tananarive, Madagascar EN', '2021-02-21 15:23:29', '2021-02-21 15:23:29'),
+(2, 1, 'Lot 3305C/BA, Beravina Fianarantsoa, Madagascar FR', '2021-02-21 15:23:52', '2021-02-21 15:23:52'),
+(2, 2, 'Lot 3305C/BA, Beravina Fianarantsoa, Madagascar EN', '2021-02-21 15:23:52', '2021-02-21 15:23:52');
 
 -- --------------------------------------------------------
 
@@ -93,8 +95,9 @@ CREATE TABLE IF NOT EXISTS `companies` (
 -- Déchargement des données de la table `companies`
 --
 
-INSERT INTO `companies` VALUES(1, 'ETECH', '2021-02-18 20:06:56', '2021-02-18 20:06:56');
-INSERT INTO `companies` VALUES(2, 'FREELANCE', '2021-02-18 20:07:27', '2021-02-18 20:07:27');
+INSERT INTO `companies` (`id`, `slug`, `date_add`, `date_update`) VALUES
+(1, 'ETECH', '2021-02-18 20:06:56', '2021-02-18 20:06:56'),
+(2, 'FREELANCE', '2021-02-18 20:07:27', '2021-02-18 20:07:27');
 
 -- --------------------------------------------------------
 
@@ -118,10 +121,11 @@ CREATE TABLE IF NOT EXISTS `companies_lang` (
 -- Déchargement des données de la table `companies_lang`
 --
 
-INSERT INTO `companies_lang` VALUES(1, 1, 'eTech Consulting - Groupe ArkeUp', 'eTech Consulting - Groupe ArkeUp', '2021-02-21 16:57:50', '2021-02-21 16:57:50');
-INSERT INTO `companies_lang` VALUES(1, 2, 'eTech Consulting - ArkeUp Group', 'eTech Consulting - ArkeUp Group desc', '2021-02-27 21:45:22', '2021-02-27 21:45:22');
-INSERT INTO `companies_lang` VALUES(2, 1, 'Independant', 'Independant', '2021-02-21 16:59:18', '2021-02-21 16:59:18');
-INSERT INTO `companies_lang` VALUES(2, 2, 'Independent', 'Independent desc', '2021-02-27 21:45:22', '2021-02-27 21:45:22');
+INSERT INTO `companies_lang` (`id_company`, `id_lang`, `name`, `description`, `date_add`, `date_update`) VALUES
+(1, 1, 'eTech Consulting - Groupe ArkeUp', 'eTech Consulting - Groupe ArkeUp', '2021-02-21 16:57:50', '2021-02-21 16:57:50'),
+(1, 2, 'eTech Consulting - ArkeUp Group', 'eTech Consulting - ArkeUp Group desc', '2021-02-27 21:45:22', '2021-02-27 21:45:22'),
+(2, 1, 'Independant', 'Independant', '2021-02-21 16:59:18', '2021-02-21 16:59:18'),
+(2, 2, 'Independent', 'Independent desc', '2021-02-27 21:45:22', '2021-02-27 21:45:22');
 
 -- --------------------------------------------------------
 
@@ -142,10 +146,11 @@ CREATE TABLE IF NOT EXISTS `company_positions` (
 -- Déchargement des données de la table `company_positions`
 --
 
-INSERT INTO `company_positions` VALUES(1, 'dev-internship', '2021-02-24 18:49:13', '2021-02-24 18:49:01');
-INSERT INTO `company_positions` VALUES(2, 'dev-junior', '2021-02-26 16:47:35', '2021-02-26 16:47:35');
-INSERT INTO `company_positions` VALUES(3, 'dev-confirmed', '2021-02-27 08:50:00', '2021-02-27 08:50:34');
-INSERT INTO `company_positions` VALUES(4, 'dev-senior', '2021-02-27 08:50:01', '2021-02-27 08:50:01');
+INSERT INTO `company_positions` (`id`, `slug`, `date_add`, `date_update`) VALUES
+(1, 'dev-internship', '2021-02-24 18:49:13', '2021-02-24 18:49:01'),
+(2, 'dev-junior', '2021-02-26 16:47:35', '2021-02-26 16:47:35'),
+(3, 'dev-confirmed', '2021-02-27 08:50:00', '2021-02-27 08:50:34'),
+(4, 'dev-senior', '2021-02-27 08:50:01', '2021-02-27 08:50:01');
 
 -- --------------------------------------------------------
 
@@ -167,14 +172,15 @@ CREATE TABLE IF NOT EXISTS `company_positions_lang` (
 -- Déchargement des données de la table `company_positions_lang`
 --
 
-INSERT INTO `company_positions_lang` VALUES(1, 1, 'Stagiaire Developpeur', 'Stagiaire Developpeur desc');
-INSERT INTO `company_positions_lang` VALUES(1, 2, 'Developer Internship', 'Developer Internship desc');
-INSERT INTO `company_positions_lang` VALUES(2, 1, 'Développeur Junior', 'Développeur Junior Descr');
-INSERT INTO `company_positions_lang` VALUES(2, 2, 'Junior Developer', 'Junior Developer');
-INSERT INTO `company_positions_lang` VALUES(3, 1, 'Developpeur Confirmé', 'Developpeur Confirmé desc');
-INSERT INTO `company_positions_lang` VALUES(3, 2, 'Confirmed Developer', 'Confirmed Developer desc');
-INSERT INTO `company_positions_lang` VALUES(4, 1, 'Developpeur Senior', 'Developpeur Senior desc');
-INSERT INTO `company_positions_lang` VALUES(4, 2, 'Senior Developer', 'Senior Developer desc');
+INSERT INTO `company_positions_lang` (`id_company_positions`, `id_lang`, `title`, `description`) VALUES
+(1, 1, 'Stagiaire Developpeur', 'Stagiaire Developpeur desc'),
+(1, 2, 'Developer Internship', 'Developer Internship desc'),
+(2, 1, 'Développeur Junior', 'Développeur Junior Descr'),
+(2, 2, 'Junior Developer', 'Junior Developer'),
+(3, 1, 'Developpeur Confirmé', 'Developpeur Confirmé desc'),
+(3, 2, 'Confirmed Developer', 'Confirmed Developer desc'),
+(4, 1, 'Developpeur Senior', 'Developpeur Senior desc'),
+(4, 2, 'Senior Developer', 'Senior Developer desc');
 
 -- --------------------------------------------------------
 
@@ -201,13 +207,14 @@ CREATE TABLE IF NOT EXISTS `cv` (
 -- Déchargement des données de la table `cv`
 --
 
-INSERT INTO `cv` VALUES(1, 1, 1, 'LEAD_TECHNICAL', 1, '2021-02-18 20:01:36', '2021-02-18 20:01:36');
-INSERT INTO `cv` VALUES(2, 1, 1, 'DEV_PRESTASHOP', 1, '2021-02-18 20:08:12', '2021-02-18 20:08:12');
-INSERT INTO `cv` VALUES(3, 1, 1, 'DEV_SYMFONY', 1, '2021-02-18 20:08:37', '2021-02-18 20:08:37');
-INSERT INTO `cv` VALUES(4, 1, 1, 'DEV_LARAVEL', 1, '2021-02-18 20:09:10', '2021-02-18 20:09:10');
-INSERT INTO `cv` VALUES(5, 1, 1, 'DEV_ECOMMERCE', 1, '2021-02-18 20:09:22', '2021-02-18 20:09:22');
-INSERT INTO `cv` VALUES(6, 1, 1, 'DEV_BACKEND', 1, '2021-02-18 20:09:41', '2021-02-18 20:09:41');
-INSERT INTO `cv` VALUES(7, 1, 1, 'DEV_FULLSTACK', 1, '2021-02-18 20:09:53', '2021-02-18 20:09:53');
+INSERT INTO `cv` (`id`, `id_template`, `id_user`, `slug`, `id_address`, `date_add`, `date_update`) VALUES
+(1, 1, 1, 'LEAD_TECHNICAL', 1, '2021-02-18 20:01:36', '2021-02-18 20:01:36'),
+(2, 1, 1, 'DEV_PRESTASHOP', 1, '2021-02-18 20:08:12', '2021-02-18 20:08:12'),
+(3, 1, 1, 'DEV_SYMFONY', 1, '2021-02-18 20:08:37', '2021-02-18 20:08:37'),
+(4, 1, 1, 'DEV_LARAVEL', 1, '2021-02-18 20:09:10', '2021-02-18 20:09:10'),
+(5, 1, 1, 'DEV_ECOMMERCE', 1, '2021-02-18 20:09:22', '2021-02-18 20:09:22'),
+(6, 1, 1, 'DEV_BACKEND', 1, '2021-02-18 20:09:41', '2021-02-18 20:09:41'),
+(7, 1, 1, 'DEV_FULLSTACK', 1, '2021-02-18 20:09:53', '2021-02-18 20:09:53');
 
 -- --------------------------------------------------------
 
@@ -229,8 +236,9 @@ CREATE TABLE IF NOT EXISTS `cv_educations` (
 -- Déchargement des données de la table `cv_educations`
 --
 
-INSERT INTO `cv_educations` VALUES(1, 1, '2021-02-22 15:15:35', '2021-02-22 15:15:35');
-INSERT INTO `cv_educations` VALUES(1, 2, '2021-02-22 17:58:25', '2021-02-22 17:58:25');
+INSERT INTO `cv_educations` (`id_cv`, `id_education`, `date_add`, `date_update`) VALUES
+(1, 1, '2021-02-22 15:15:35', '2021-02-22 15:15:35'),
+(1, 2, '2021-02-22 17:58:25', '2021-02-22 17:58:25');
 
 -- --------------------------------------------------------
 
@@ -252,9 +260,10 @@ CREATE TABLE IF NOT EXISTS `cv_experiences` (
 -- Déchargement des données de la table `cv_experiences`
 --
 
-INSERT INTO `cv_experiences` VALUES(1, 1, '2021-02-24 18:54:28', '2021-02-24 18:54:28');
-INSERT INTO `cv_experiences` VALUES(1, 2, '2021-02-26 16:53:35', '2021-02-26 16:53:35');
-INSERT INTO `cv_experiences` VALUES(1, 3, '2021-02-27 10:09:40', '2021-02-27 10:09:40');
+INSERT INTO `cv_experiences` (`id_cv`, `id_experience`, `date_add`, `date_update`) VALUES
+(1, 1, '2021-02-24 18:54:28', '2021-02-24 18:54:28'),
+(1, 2, '2021-02-26 16:53:35', '2021-02-26 16:53:35'),
+(1, 3, '2021-02-27 10:09:40', '2021-02-27 10:09:40');
 
 -- --------------------------------------------------------
 
@@ -279,14 +288,15 @@ CREATE TABLE IF NOT EXISTS `cv_lang` (
 -- Déchargement des données de la table `cv_lang`
 --
 
-INSERT INTO `cv_lang` VALUES(1, 1, 'CV Lead Technique', 'Lead Technique', 'Ayant 4 ans d\'expérience en développement de logiciels professionnels dans les domaines des applications multiniveaux utilisant les technologies Java, J2EE comme les servlets, JSP, Struts, JDBC, Hibernate, XML et Oracle PL / SQL.', '2021-02-21 17:09:57', '2021-02-21 17:09:57');
-INSERT INTO `cv_lang` VALUES(1, 2, 'CV Technical Lead', 'Technical Lead', 'Having 4 years of strong professional software development experience in the areas of Multi-tier applications using Java, J2EE technologies like Servlets, JSP, Struts, JDBC, Hibernate, XML and Oracle PL/SQL.', '2021-02-21 17:09:57', '2021-02-21 17:09:57');
-INSERT INTO `cv_lang` VALUES(2, 1, 'CV Prestashop Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:45:34', '2021-02-21 17:45:34');
-INSERT INTO `cv_lang` VALUES(3, 1, 'CV Symfony Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:48:27', '2021-02-21 17:48:27');
-INSERT INTO `cv_lang` VALUES(4, 1, 'CV Laravel Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:48:42', '2021-02-21 17:48:42');
-INSERT INTO `cv_lang` VALUES(5, 1, 'CV eCommerce Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:48:54', '2021-02-21 17:48:54');
-INSERT INTO `cv_lang` VALUES(6, 1, 'CV Backend Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:49:07', '2021-02-21 17:49:07');
-INSERT INTO `cv_lang` VALUES(7, 1, 'CV Fullstack Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:49:20', '2021-02-21 17:49:20');
+INSERT INTO `cv_lang` (`id_cv`, `id_lang`, `title_backend`, `title_frontend`, `auto_biography`, `date_add`, `date_update`) VALUES
+(1, 1, 'CV Lead Technique', 'Lead Technique', 'Ayant 4 ans d\'expérience en développement de logiciels professionnels dans les domaines des applications multiniveaux utilisant les technologies Java, J2EE comme les servlets, JSP, Struts, JDBC, Hibernate, XML et Oracle PL / SQL.', '2021-02-21 17:09:57', '2021-02-21 17:09:57'),
+(1, 2, 'CV Technical Lead', 'Technical Lead', 'Having 4 years of strong professional software development experience in the areas of Multi-tier applications using Java, J2EE technologies like Servlets, JSP, Struts, JDBC, Hibernate, XML and Oracle PL/SQL.', '2021-02-21 17:09:57', '2021-02-21 17:09:57'),
+(2, 1, 'CV Prestashop Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:45:34', '2021-02-21 17:45:34'),
+(3, 1, 'CV Symfony Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:48:27', '2021-02-21 17:48:27'),
+(4, 1, 'CV Laravel Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:48:42', '2021-02-21 17:48:42'),
+(5, 1, 'CV eCommerce Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:48:54', '2021-02-21 17:48:54'),
+(6, 1, 'CV Backend Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:49:07', '2021-02-21 17:49:07'),
+(7, 1, 'CV Fullstack Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:49:20', '2021-02-21 17:49:20');
 
 -- --------------------------------------------------------
 
@@ -303,6 +313,13 @@ CREATE TABLE IF NOT EXISTS `cv_projects` (
   PRIMARY KEY (`id_cv`,`id_project`),
   KEY `cv_projects.id_project` (`id_project`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `cv_projects`
+--
+
+INSERT INTO `cv_projects` (`id_cv`, `id_project`, `date_add`, `date_update`) VALUES
+(1, 1, '2021-02-28 09:25:08', '2021-02-28 09:25:08');
 
 -- --------------------------------------------------------
 
@@ -324,9 +341,10 @@ CREATE TABLE IF NOT EXISTS `cv_skills` (
 -- Déchargement des données de la table `cv_skills`
 --
 
-INSERT INTO `cv_skills` VALUES(1, 1, '2021-02-23 21:18:29', '2021-02-23 21:18:29');
-INSERT INTO `cv_skills` VALUES(1, 2, '2021-02-24 13:46:05', '2021-02-24 13:46:05');
-INSERT INTO `cv_skills` VALUES(1, 3, '2021-02-24 15:26:16', '2021-02-24 15:26:16');
+INSERT INTO `cv_skills` (`id_cv`, `id_skills`, `date_add`, `date_update`) VALUES
+(1, 1, '2021-02-23 21:18:29', '2021-02-23 21:18:29'),
+(1, 2, '2021-02-24 13:46:05', '2021-02-24 13:46:05'),
+(1, 3, '2021-02-24 15:26:16', '2021-02-24 15:26:16');
 
 -- --------------------------------------------------------
 
@@ -349,9 +367,10 @@ CREATE TABLE IF NOT EXISTS `languages` (
 -- Déchargement des données de la table `languages`
 --
 
-INSERT INTO `languages` VALUES(1, 'Francais', 'FR', '2021-02-21 15:17:49', '2021-02-21 15:17:49');
-INSERT INTO `languages` VALUES(2, 'English', 'EN', '2021-02-21 15:17:57', '2021-02-21 15:17:57');
-INSERT INTO `languages` VALUES(3, 'Deutch', 'DE', '2021-02-21 15:18:09', '2021-02-21 15:18:09');
+INSERT INTO `languages` (`id`, `name`, `code_iso`, `date_add`, `date_update`) VALUES
+(1, 'Francais', 'FR', '2021-02-21 15:17:49', '2021-02-21 15:17:49'),
+(2, 'English', 'EN', '2021-02-21 15:17:57', '2021-02-21 15:17:57'),
+(3, 'Deutch', 'DE', '2021-02-21 15:18:09', '2021-02-21 15:18:09');
 
 -- --------------------------------------------------------
 
@@ -376,8 +395,9 @@ CREATE TABLE IF NOT EXISTS `part_educations` (
 -- Déchargement des données de la table `part_educations`
 --
 
-INSERT INTO `part_educations` VALUES(1, 1, 'ENI_LICENCE', '2012-01-11', '2016-06-22', '2021-02-22 14:37:34', '2021-02-22 14:37:34');
-INSERT INTO `part_educations` VALUES(2, 1, 'ENI_MASTER', '2014-09-15', '2016-02-05', '2021-02-22 17:57:22', '2021-02-22 17:57:22');
+INSERT INTO `part_educations` (`id`, `id_user`, `slug`, `date_begin`, `date_end`, `date_add`, `date_update`) VALUES
+(1, 1, 'ENI_LICENCE', '2012-01-11', '2016-06-22', '2021-02-22 14:37:34', '2021-02-22 14:37:34'),
+(2, 1, 'ENI_MASTER', '2014-09-15', '2016-02-05', '2021-02-22 17:57:22', '2021-02-22 17:57:22');
 
 -- --------------------------------------------------------
 
@@ -401,10 +421,11 @@ CREATE TABLE IF NOT EXISTS `part_educations_lang` (
 -- Déchargement des données de la table `part_educations_lang`
 --
 
-INSERT INTO `part_educations_lang` VALUES(1, 1, 'Ecole Nationale de l\'Informatique, Madagascar', 'Licence en Science Informatique', '2021-02-22 14:38:19', '2021-02-22 14:38:19');
-INSERT INTO `part_educations_lang` VALUES(1, 2, 'National School of Computer Science, Madagascar', 'Bachelor of Computer Science', '2021-02-22 14:38:19', '2021-02-22 14:38:19');
-INSERT INTO `part_educations_lang` VALUES(2, 1, 'Ecole Nationale de l\'Informatique, Madagascar', 'Master en Science Informatique', '2021-02-22 17:57:48', '2021-02-22 17:57:48');
-INSERT INTO `part_educations_lang` VALUES(2, 2, 'National School of Computer Science, Madagascar', 'Master in Computer Science', '2021-02-22 17:57:48', '2021-02-22 17:57:48');
+INSERT INTO `part_educations_lang` (`id_part_educations`, `id_lang`, `title`, `description`, `date_add`, `date_update`) VALUES
+(1, 1, 'Ecole Nationale de l\'Informatique, Madagascar', 'Licence en Science Informatique', '2021-02-22 14:38:19', '2021-02-22 14:38:19'),
+(1, 2, 'National School of Computer Science, Madagascar', 'Bachelor of Computer Science', '2021-02-22 14:38:19', '2021-02-22 14:38:19'),
+(2, 1, 'Ecole Nationale de l\'Informatique, Madagascar', 'Master en Science Informatique', '2021-02-22 17:57:48', '2021-02-22 17:57:48'),
+(2, 2, 'National School of Computer Science, Madagascar', 'Master in Computer Science', '2021-02-22 17:57:48', '2021-02-22 17:57:48');
 
 -- --------------------------------------------------------
 
@@ -433,9 +454,10 @@ CREATE TABLE IF NOT EXISTS `part_experiences` (
 -- Déchargement des données de la table `part_experiences`
 --
 
-INSERT INTO `part_experiences` VALUES(1, 1, 1, 1, 'etech-intern-dev', '2016-06-08', '2016-12-08', '2021-02-24 18:49:44', '2021-02-24 18:49:44');
-INSERT INTO `part_experiences` VALUES(2, 1, 1, 2, 'etech-junior-dev', '2016-12-09', '2018-04-24', '2021-02-26 16:50:57', '2021-02-26 16:50:57');
-INSERT INTO `part_experiences` VALUES(3, 1, 2, 4, 'freelance-artizeo-dev-senior', '2019-08-02', '2020-11-05', '2021-02-27 10:05:15', '2021-02-27 10:05:15');
+INSERT INTO `part_experiences` (`id`, `id_user`, `id_company`, `id_company_position`, `slug`, `date_begin`, `date_end`, `date_add`, `date_update`) VALUES
+(1, 1, 1, 1, 'etech-intern-dev', '2016-06-08', '2016-12-08', '2021-02-24 18:49:44', '2021-02-24 18:49:44'),
+(2, 1, 1, 2, 'etech-junior-dev', '2016-12-09', '2018-04-24', '2021-02-26 16:50:57', '2021-02-26 16:50:57'),
+(3, 1, 2, 4, 'freelance-artizeo-dev-senior', '2019-08-02', '2020-11-05', '2021-02-27 10:05:15', '2021-02-27 10:05:15');
 
 -- --------------------------------------------------------
 
@@ -456,12 +478,13 @@ CREATE TABLE IF NOT EXISTS `part_experiences_lang` (
 -- Déchargement des données de la table `part_experiences_lang`
 --
 
-INSERT INTO `part_experiences_lang` VALUES(1, 1, 'Sed fermentum sollicitudin interdum. Etiam imperdiet sapien in dolor rhoncus a semper tortor posuere FR');
-INSERT INTO `part_experiences_lang` VALUES(1, 2, 'Sed fermentum sollicitudin interdum. Etiam imperdiet sapien in dolor rhoncus a semper tortor posuere EN');
-INSERT INTO `part_experiences_lang` VALUES(2, 1, 'Sed fermentum sollicitudin interdum. Etiam imperdiet sapien in dolor rhoncus a semper tortor posuere FR');
-INSERT INTO `part_experiences_lang` VALUES(2, 2, 'Sed fermentum sollicitudin interdum. Etiam imperdiet sapien in dolor rhoncus a semper tortor posuere EN');
-INSERT INTO `part_experiences_lang` VALUES(3, 1, '<ul>\r\n<li> Établit d\'excellentes relations de travail avec le personnel \"Marketing\" et \"RD & amp; E\" </li>\r\n<li> Est un \"excellent auditeur\" avec son manager, ses collègues, ses pairs et ses clients </li>\r\n<li> Travaille en étroite collaboration & amp; collabore bien avec le Sr. Tech Lead - South Rockies & amp; le Rocky Mt. Responsable technique régional </li>\r\n<li> Conduit / guide les \"Projets & amp; Travail de type RFP\" jusqu\'à leur achèvement - à temps / à chaque fois </li>\r\n<li> Un excellent \"communicateur QUOTIDIEN\" - pour les ventes, les clients, les représentants techniques, les pairs et amp; Gestionnaire </li>\r\n<li> Hiérarchisation des projets et / ou des travaux de type RFP dans les Rocheuses du Sud avec les ventes, les clients et amp; Représentants techniques - dirigez efficacement le trafic </li>\r\n<li> Conduit des \"feuilles de calcul de valeur\" hebdomadaires / trimestrielles à l\'achèvement et à la visibilité de l\'équipe de gestion des ventes dans la région </li>\r\n</ul>');
-INSERT INTO `part_experiences_lang` VALUES(3, 2, '<ul>\r\n<li>Establishes excellent working relationships with both \"Marketing\" and \"RD &amp; E\" Personal</li>\r\n<li>Is an \"Excellent Listener\" with manager, co-workers, peers, and customers</li>\r\n<li>Works closely &amp; collaborates well with the Sr. Tech Lead - South Rockies &amp; the Rocky Mt. Regional Technical Manager</li>\r\n<li>Drives/Guides \"Projects &amp; RFP Type Work\" to completion - on time/every time</li>\r\n<li>An excellent \"DAILY Communicator\" - to Sales, Customers, Tech Reps, Peers, &amp; Manager</li>\r\n<li>Prioritization of Projects and/or RFP Type Work within the Southern Rockies with Sales, Customers, &amp; Technical Reps - efficiently direct traffic</li>\r\n<li>Drives weekly/quarterly \"Value Spreadsheets\" to completion and visibility to Sales Management Team in the Region</li>\r\n</ul>');
+INSERT INTO `part_experiences_lang` (`id_part_experiences`, `id_lang`, `description`) VALUES
+(1, 1, 'Sed fermentum sollicitudin interdum. Etiam imperdiet sapien in dolor rhoncus a semper tortor posuere FR'),
+(1, 2, 'Sed fermentum sollicitudin interdum. Etiam imperdiet sapien in dolor rhoncus a semper tortor posuere EN'),
+(2, 1, 'Sed fermentum sollicitudin interdum. Etiam imperdiet sapien in dolor rhoncus a semper tortor posuere FR'),
+(2, 2, 'Sed fermentum sollicitudin interdum. Etiam imperdiet sapien in dolor rhoncus a semper tortor posuere EN'),
+(3, 1, '<ul>\r\n<li> Établit d\'excellentes relations de travail avec le personnel \"Marketing\" et \"RD & amp; E\" </li>\r\n<li> Est un \"excellent auditeur\" avec son manager, ses collègues, ses pairs et ses clients </li>\r\n<li> Travaille en étroite collaboration & amp; collabore bien avec le Sr. Tech Lead - South Rockies & amp; le Rocky Mt. Responsable technique régional </li>\r\n<li> Conduit / guide les \"Projets & amp; Travail de type RFP\" jusqu\'à leur achèvement - à temps / à chaque fois </li>\r\n<li> Un excellent \"communicateur QUOTIDIEN\" - pour les ventes, les clients, les représentants techniques, les pairs et amp; Gestionnaire </li>\r\n<li> Hiérarchisation des projets et / ou des travaux de type RFP dans les Rocheuses du Sud avec les ventes, les clients et amp; Représentants techniques - dirigez efficacement le trafic </li>\r\n<li> Conduit des \"feuilles de calcul de valeur\" hebdomadaires / trimestrielles à l\'achèvement et à la visibilité de l\'équipe de gestion des ventes dans la région </li>\r\n</ul>'),
+(3, 2, '<ul>\r\n<li>Establishes excellent working relationships with both \"Marketing\" and \"RD &amp; E\" Personal</li>\r\n<li>Is an \"Excellent Listener\" with manager, co-workers, peers, and customers</li>\r\n<li>Works closely &amp; collaborates well with the Sr. Tech Lead - South Rockies &amp; the Rocky Mt. Regional Technical Manager</li>\r\n<li>Drives/Guides \"Projects &amp; RFP Type Work\" to completion - on time/every time</li>\r\n<li>An excellent \"DAILY Communicator\" - to Sales, Customers, Tech Reps, Peers, &amp; Manager</li>\r\n<li>Prioritization of Projects and/or RFP Type Work within the Southern Rockies with Sales, Customers, &amp; Technical Reps - efficiently direct traffic</li>\r\n<li>Drives weekly/quarterly \"Value Spreadsheets\" to completion and visibility to Sales Management Team in the Region</li>\r\n</ul>');
 
 -- --------------------------------------------------------
 
@@ -474,15 +497,25 @@ CREATE TABLE IF NOT EXISTS `part_projects` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `company_id` int(11) DEFAULT NULL,
   `id_user` int(11) NOT NULL,
+  `slug` varchar(64) NOT NULL,
   `show_in_portfolio` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0|1',
   `url_access` varchar(256) DEFAULT NULL,
   `url_preview` varchar(256) DEFAULT NULL,
+  `date_begin` date DEFAULT NULL COMMENT 'Date of you begin the project (in the past)',
+  `date_end` date DEFAULT NULL COMMENT 'Date of you end the project (in the past). If null, you are in the project actually',
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `part_projects.company_id` (`company_id`),
   KEY `part_projects.id_user` (`id_user`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `part_projects`
+--
+
+INSERT INTO `part_projects` (`id`, `company_id`, `id_user`, `slug`, `show_in_portfolio`, `url_access`, `url_preview`, `date_begin`, `date_end`, `date_add`, `date_update`) VALUES
+(1, 2, 1, 'PRB-API', 1, NULL, NULL, NULL, NULL, '2021-02-28 09:16:58', '2021-02-28 09:16:58');
 
 -- --------------------------------------------------------
 
@@ -495,12 +528,20 @@ CREATE TABLE IF NOT EXISTS `part_projects_lang` (
   `id_part_projects` int(11) NOT NULL,
   `id_lang` int(11) NOT NULL,
   `title` varchar(128) NOT NULL,
-  `description` varchar(256) NOT NULL,
+  `description` varchar(1024) NOT NULL,
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id_part_projects`,`id_lang`),
   KEY `part_projects_lang_id_lang` (`id_lang`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `part_projects_lang`
+--
+
+INSERT INTO `part_projects_lang` (`id_part_projects`, `id_lang`, `title`, `description`, `date_add`, `date_update`) VALUES
+(1, 1, 'PRB - API reliant un site ecommerce prestashop et un base de donn&eacute;e des fournisseur ', '<p>Contexte:</p>\r\n<ul>\r\n<li>Partie IHM : HTML5, CSS3, jQuery</li>\r\n<li>Base de donn&eacute;es : MySql</li>\r\n<li>Framework : Prestashop / Laravel</li>\r\n<li>Gestion de codes sources avec Git (Clone/Branch/Pull/Merge/Gestion conflit)</li>\r\n<li>Mise en place de services web</li>\r\n<li>D&eacute;veloppement de plugin</li>\r\n<li>Mise en place syst&egrave;me de connecteur entre prestashop et les fournisseurs</li>\r\n</ul>\r\n<p><strong>ENVIRONNEMENT TECHNIQUE :</strong></p>\r\n<p>Prestashop, Laravel, XML, MySql, JQuery, JavaScript, Jira, Git, Confluence, API</p>', '2021-02-28 09:23:13', '2021-02-28 09:23:13'),
+(1, 2, '<p> PRB - API connecting a prestashop ecommerce site and a supplier database </p>', '<p> Context: </p>\r\n<ul>\r\n<li> GUI part: HTML5, CSS3, jQuery </li>\r\n<li> Database: MySql </li>\r\n<li> Framework: Prestashop / Laravel </li>\r\n<li> Source code management with Git (Clone / Branch / Pull / Merge / Conflict management) </li>\r\n<li> Setting up web services </li>\r\n<li> Plugin development </li>\r\n<li> Establishment of a connector system between prestashop and suppliers </li>\r\n</ul>\r\n<p> <strong> TECHNICAL ENVIRONMENT: </strong> </p>\r\n<p> Prestashop, Laravel, XML, MySql, JQuery, JavaScript, Jira, Git, Confluence, API </p>', '2021-02-28 09:23:13', '2021-02-28 09:23:13');
 
 -- --------------------------------------------------------
 
@@ -525,9 +566,10 @@ CREATE TABLE IF NOT EXISTS `part_skills` (
 -- Déchargement des données de la table `part_skills`
 --
 
-INSERT INTO `part_skills` VALUES(1, 1, 1, 'PHP', '2021-02-23 21:04:18', '2021-02-23 21:04:18');
-INSERT INTO `part_skills` VALUES(2, 1, 1, 'JS', '2021-02-24 13:43:52', '2021-02-24 13:43:52');
-INSERT INTO `part_skills` VALUES(3, 1, 2, 'PYTHON', '2021-02-24 15:24:48', '2021-02-24 15:24:48');
+INSERT INTO `part_skills` (`id`, `id_user`, `id_skills_group`, `slug`, `date_add`, `date_update`) VALUES
+(1, 1, 1, 'PHP', '2021-02-23 21:04:18', '2021-02-23 21:04:18'),
+(2, 1, 1, 'JS', '2021-02-24 13:43:52', '2021-02-24 13:43:52'),
+(3, 1, 2, 'PYTHON', '2021-02-24 15:24:48', '2021-02-24 15:24:48');
 
 -- --------------------------------------------------------
 
@@ -551,12 +593,13 @@ CREATE TABLE IF NOT EXISTS `part_skills_lang` (
 -- Déchargement des données de la table `part_skills_lang`
 --
 
-INSERT INTO `part_skills_lang` VALUES(1, 1, 'PHP', 'PHP Desc FR', '2021-02-23 21:05:46', '2021-02-23 21:05:46');
-INSERT INTO `part_skills_lang` VALUES(1, 2, 'PHP', 'PHP Desc EN', '2021-02-23 21:05:46', '2021-02-23 21:05:46');
-INSERT INTO `part_skills_lang` VALUES(2, 1, 'Javascript', 'Javascript FR', '2021-02-24 13:44:23', '2021-02-24 13:44:23');
-INSERT INTO `part_skills_lang` VALUES(2, 2, 'Javascript', 'Javascript EN', '2021-02-24 13:44:23', '2021-02-24 13:44:23');
-INSERT INTO `part_skills_lang` VALUES(3, 1, 'Python', 'Python desc', '2021-02-24 15:25:08', '2021-02-24 15:25:08');
-INSERT INTO `part_skills_lang` VALUES(3, 2, 'Python', 'Python desc', '2021-02-24 15:25:21', '2021-02-24 15:25:21');
+INSERT INTO `part_skills_lang` (`id_part_skills`, `id_lang`, `title`, `description`, `date_add`, `date_update`) VALUES
+(1, 1, 'PHP', 'PHP Desc FR', '2021-02-23 21:05:46', '2021-02-23 21:05:46'),
+(1, 2, 'PHP', 'PHP Desc EN', '2021-02-23 21:05:46', '2021-02-23 21:05:46'),
+(2, 1, 'Javascript', 'Javascript FR', '2021-02-24 13:44:23', '2021-02-24 13:44:23'),
+(2, 2, 'Javascript', 'Javascript EN', '2021-02-24 13:44:23', '2021-02-24 13:44:23'),
+(3, 1, 'Python', 'Python desc', '2021-02-24 15:25:08', '2021-02-24 15:25:08'),
+(3, 2, 'Python', 'Python desc', '2021-02-24 15:25:21', '2021-02-24 15:25:21');
 
 -- --------------------------------------------------------
 
@@ -591,8 +634,9 @@ CREATE TABLE IF NOT EXISTS `skills_group` (
 -- Déchargement des données de la table `skills_group`
 --
 
-INSERT INTO `skills_group` VALUES(1, 'Software_Knowledge', '2021-02-23 21:35:23', '2021-02-23 21:35:23');
-INSERT INTO `skills_group` VALUES(2, 'LANGUAGES', '2021-02-24 15:23:26', '2021-02-24 15:23:26');
+INSERT INTO `skills_group` (`id`, `slug`, `date_add`, `date_update`) VALUES
+(1, 'Software_Knowledge', '2021-02-23 21:35:23', '2021-02-23 21:35:23'),
+(2, 'LANGUAGES', '2021-02-24 15:23:26', '2021-02-24 15:23:26');
 
 -- --------------------------------------------------------
 
@@ -614,10 +658,11 @@ CREATE TABLE IF NOT EXISTS `skills_group_lang` (
 -- Déchargement des données de la table `skills_group_lang`
 --
 
-INSERT INTO `skills_group_lang` VALUES(1, 1, 'Conaissance informatique', 'Software Knowledge Descr FR');
-INSERT INTO `skills_group_lang` VALUES(1, 2, 'Software Knowledge', 'Software Knowledge Descr EN');
-INSERT INTO `skills_group_lang` VALUES(2, 1, 'Langages', 'Langages Desc');
-INSERT INTO `skills_group_lang` VALUES(2, 2, 'Languages', 'Languages desc');
+INSERT INTO `skills_group_lang` (`id_skills_group`, `id_lang`, `title`, `description`) VALUES
+(1, 1, 'Conaissance informatique', 'Software Knowledge Descr FR'),
+(1, 2, 'Software Knowledge', 'Software Knowledge Descr EN'),
+(2, 1, 'Langages', 'Langages Desc'),
+(2, 2, 'Languages', 'Languages desc');
 
 -- --------------------------------------------------------
 
@@ -660,7 +705,8 @@ CREATE TABLE IF NOT EXISTS `socials_link` (
 -- Déchargement des données de la table `socials_link`
 --
 
-INSERT INTO `socials_link` VALUES(1, 'https://github.com/MahefaAbel', 'https://www.linkedin.com/in/mahefa-abel/', 'mahefa.ram', 'http://mahefa.pro', NULL);
+INSERT INTO `socials_link` (`user_id`, `github_url`, `linkedin_url`, `skype_id`, `website_url`, `zoom_id`) VALUES
+(1, 'https://github.com/MahefaAbel', 'https://www.linkedin.com/in/mahefa-abel/', 'mahefa.ram', 'http://mahefa.pro', NULL);
 
 -- --------------------------------------------------------
 
@@ -685,7 +731,8 @@ CREATE TABLE IF NOT EXISTS `templates` (
 -- Déchargement des données de la table `templates`
 --
 
-INSERT INTO `templates` VALUES(1, 'Simple CV, Black & White', 'Simple CV, Black & White', '', '', NULL, '2021-02-18 20:04:19', '2021-02-18 20:04:19');
+INSERT INTO `templates` (`id`, `name`, `description`, `contents`, `type`, `preview_url`, `date_add`, `date_update`) VALUES
+(1, 'Simple CV, Black & White', 'Simple CV, Black & White', '', '', NULL, '2021-02-18 20:04:19', '2021-02-18 20:04:19');
 
 -- --------------------------------------------------------
 
@@ -711,7 +758,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Déchargement des données de la table `users`
 --
 
-INSERT INTO `users` VALUES(1, 'abelmahefa@gmail.com', 'Razafinirina', 'Mahefa Abel', '1994-07-21', '+261 34 84 586 05', '/public/Images/Users/1-mahefa-abel.jpeg', '2021-02-10 08:03:24', '2021-02-10 08:03:24');
+INSERT INTO `users` (`id`, `email`, `firstname`, `lastname`, `date_birth`, `phone`, `url_profile`, `date_add`, `date_update`) VALUES
+(1, 'abelmahefa@gmail.com', 'Razafinirina', 'Mahefa Abel', '1994-07-21', '+261 34 84 586 05', '/public/Images/Users/1-mahefa-abel.jpeg', '2021-02-10 08:03:24', '2021-02-10 08:03:24');
 
 -- --------------------------------------------------------
 
@@ -735,8 +783,9 @@ CREATE TABLE IF NOT EXISTS `users_lang` (
 -- Déchargement des données de la table `users_lang`
 --
 
-INSERT INTO `users_lang` VALUES(1, 1, 'Lorem lupsum Desc FR', 'Lorem lupsum BIO FR', '2021-02-21 18:14:21', '2021-02-21 18:14:21');
-INSERT INTO `users_lang` VALUES(1, 2, 'Lorem lupsum Desc EN', 'Lorem lupsum AutoBio EN', '2021-02-23 18:38:24', '2021-02-23 18:38:24');
+INSERT INTO `users_lang` (`id_user`, `id_lang`, `auto_description`, `auto_biography`, `date_add`, `date_update`) VALUES
+(1, 1, 'Lorem lupsum Desc FR', 'Lorem lupsum BIO FR', '2021-02-21 18:14:21', '2021-02-21 18:14:21'),
+(1, 2, 'Lorem lupsum Desc EN', 'Lorem lupsum AutoBio EN', '2021-02-23 18:38:24', '2021-02-23 18:38:24');
 
 --
 -- Contraintes pour les tables déchargées

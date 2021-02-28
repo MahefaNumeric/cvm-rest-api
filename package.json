@@ -41,8 +41,8 @@
     "xml": "^1.0.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.7",
-    "node-sass": "^5.0.0"
+    "node-sass": "^5.0.0",
+    "nodemon": "^2.0.7"
   },
   "tips-by-mahefa-(memo)": {
     "scss": "npm run scss"
