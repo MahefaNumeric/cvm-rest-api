@@ -10,10 +10,9 @@ router.get("/all", (request, response) => {
     const skillGroupService = new SkillGroupService();
     const isoLang = request.params.isoLang;
     skillGroupService.getListAllSkillGroup(isoLang).then(list => {
-        console.log("Results: ", list);
-            response.type("application/json");
-            response.json(list);
-            response.end();
+        response.type("application/json");
+        response.json(list);
+        response.end();
     });
 });
 
