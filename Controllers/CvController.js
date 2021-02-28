@@ -44,8 +44,8 @@ class CvController {
         const userService = new CvService();
         userService.getListUser((results) => {
             console.log("Results: ", results);
-            response.type("application/json");
-            response.json(results);
+            response.type("application/json")
+                .json(results);
         });
     }
 
@@ -62,23 +62,23 @@ class CvController {
                 cvService.generateCv(isoLang, idCv, format, user, (result) => {
                     if(format == "html"){
                         resultHTML = result;
-                        response.type("application/json");
-                        response.status(200);
-                        response.json({"html": resultHTML});
-                        response.end();
+                        response.type("application/json")
+                            .status(200)
+                            .json({"html": resultHTML})
+                            .end();
                     }else if(format == "pdf"){
-                        response.type("application/json");
-                        response.status(200);
-                        response.json({
-                            "message": "PDF generation finnished",
-                            "data": result
-                        });
-                        response.end();
+                        response.type("application/json")
+                            .status(200)
+                            .json({
+                                "message": "PDF generation finnished",
+                                "data": result
+                            })
+                            .end();
                     }else{
-                        response.type("application/json");
-                        response.status(400);
-                        response.json(`Error : Format error : ${format}`);
-                        response.end();
+                        response.type("application/json")
+                            .status(400)
+                            .json(`Error : Format error : ${format}`)
+                            .end();
                     }
                 });
             }).catch(error => userGetById_ErrorHandling(error, response));
@@ -87,19 +87,17 @@ class CvController {
     }
 
     static createNewCv = (request, response)=>{
-        response.type("application/json");
         const userService = new CvService();
         
         const pData = request.body;
         userService.createNewUser(pData, (results) => {
             console.log("Results: ", results);
-            response.type("application/json");
-            response.json(results);
+            response.type("application/json")
+                .json(results);
         });
     }
 
     static GetCvByid = (request, response)=>{
-        response.type("application/json");
         const connMysql = require("../Configs/db.config");
         const id = request.params.id;
         console.log(id);
@@ -108,11 +106,13 @@ class CvController {
             if(error) throw error;
             console.log("Result: ", result.length);
             if(result.length > 0){
-                response.json(result);
+                response.type("application/json")
+                    .json(result);
             }else{
-                response.json({
-                    "message": `Pas d'utilisateur avec l'id ${id}`
-                });
+                response.type("application/json")
+                    .json({
+                        "message": `Pas d'utilisateur avec l'id ${id}`
+                    });
             }
         });
     }
@@ -146,37 +146,47 @@ class CvController {
                     request.vueOptions = vueOptions(htmlPageTitle);
                     
                     const templateVueFilePath = cvService.getTemplateVueFilePath(idCv, false);
-                    response.type("text/html");
-                    response.status(200);
-                    response.renderVue(templateVueFilePath, data, request.vueOptions);
+                    response.type("text/html")
+                        .status(200)
+                        .renderVue(templateVueFilePath, data, request.vueOptions);
                 }).catch(error => cvGetById_ErrorHandling(error, idCv, response));
-            }).catch(error => userGetById_ErrorHandling(error, response));
+            }).catch(error => userGetById_ErrorHandling(error, response, isoLangLowercase));
         }).catch(error => languageGetByIso_ErrorHandling(error, isoLangLowercase, response));
     }
 }
 
-function userGetById_ErrorHandling(error, response){
+function userGetById_ErrorHandling(error, response, isoLang){
     console.error("CvController:: /:idCv/generate/html/view User.createFromDbById::", error);
+    response.type("text/json")
+        .status(404)
+        .write(JSON.stringify({
+            message: `Error: This User doesn't have '${isoLang}' language`,
+            data: [
+                "CvController:: /:idCv/generate/html/view User.createFromDbById::",
+                error
+            ]
+        }));
+    response.end();
 }
 
 function languageGetByIso_ErrorHandling(error, isoLang, response){
     switch(error.code){
         case Language.MSG_NO_LANGUAGE:
-            response.type("text/json");
-            response.status(404);
-            response.write(JSON.stringify({message: `Error: Language '${isoLang}' does not exist`}));
+            response.type("text/json")
+                .status(404)
+                .write(JSON.stringify({message: `Error: Language '${isoLang}' does not exist`}));
             response.end();
             break;
         case Language.MSG_RESULT_NOT_KNOW:
-            response.type("text/json");
-            response.status(500);
-            response.write(JSON.stringify({message: `MSG_RESULT_NOT_KNOW`}));
+            response.type("text/json")
+                .status(500)
+                .write(JSON.stringify({message: `MSG_RESULT_NOT_KNOW`}));
             response.end();
             break;
         case "ECONNREFUSED":
-            response.type("text/json");
-            response.status(500);
-            response.write(JSON.stringify({message: `Database not reachable`}));
+            response.type("text/json")
+                .status(500)
+                .write(JSON.stringify({message: `Database not reachable`}));
             response.end();
             break;
         default:
@@ -197,9 +207,9 @@ function cvGetById_ErrorHandling(error, idCv, response){
         }
     }
 
-    response.type("text/json");
-    response.status(404);
-    response.write(JSON.stringify(dataRender));
+    response.type("text/json")
+        .status(404)
+        .write(JSON.stringify(dataRender));
     response.end();
 }
 
