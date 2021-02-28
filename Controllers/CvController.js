@@ -215,7 +215,7 @@ function cvGetById_ErrorHandling(error, idCv, response){
 
 /**
  * 
- * @param {*} htmlPageTitle 
+ * @param {string} htmlPageTitle 
  * @todo Twitter ????
  */
 const vueOptions = (htmlPageTitle) => ({

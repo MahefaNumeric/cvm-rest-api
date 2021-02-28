@@ -8,7 +8,7 @@
             <div class="self">
                 <div class="lastname-title">
                     <h1 class="name">{{ user.lastname }}</h1>
-                    <h2 class="title">{{cv.title_frontend || "{No cv title frontend}"}}</h2>
+                    <h2 class="title">{{ cv.title_frontend || "{No cv title frontend}" }}</h2>
                 </div>
                 <ul class="detail-top">
                     <li class="ad">{{ cv.address.value }}</li>
@@ -118,15 +118,6 @@
                                 {{ itemSkill.title }}
                             </li>
                         </template>
-                        <li>Photoshop</li>
-                        <li>Illustrator</li>
-                        <li>InDesign</li>
-                        <li>Flash</li>
-                        <li>Fireworks</li>
-                        <li>Dreamweaver</li>
-                        <li>After Effects</li>
-                        <li>Cinema 4D</li>
-                        <li>Maya</li>
                     </ul>
                 </div>
             </div>

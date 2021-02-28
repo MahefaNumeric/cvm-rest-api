@@ -21,9 +21,10 @@ class SkillGroup{
     }
 
     /**
-     * 
-     * @param {number} idSkill 
-     * @returns {SkillGroup}
+     * Get one by id
+     * @param {number} idGroupSkill 
+     * @param {number} idLang 
+     * @returns {Promise<SkillGroup>}
      * @todo Filter User
      */
     static createFromDbById(idGroupSkill, idLang){
@@ -56,6 +57,11 @@ class SkillGroup{
         });
     }
 
+    /**
+     * Get list by id CV, only the whom prensent for the given CV
+     * @param {number} idCv 
+     * @param {number} idLang 
+     */
     static getListUsedSkillsGroupFromDbByCv(idCv, idLang){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
@@ -77,6 +83,48 @@ class SkillGroup{
                 WHERE cv_skills.id_cv = ${idCv}
                     AND part_skills_lang.id_lang = ${idLang}
                     AND skills_group_lang.id_lang = part_skills_lang.id_lang
+            `;
+            connMysql.query(sql, (error, listSkillsResult, fields) => {
+                if(error) throw error;
+                if(Array.isArray(listSkillsResult)) {
+                    if(listSkillsResult.length > 0){
+                        const listSkills = [];
+                        listSkillsResult.forEach(element => {
+                            listSkills.push(new SkillGroup(...Object.values(element)));
+                        });
+                        resolve(listSkills);
+                    }else{
+                        resolve([]);
+                    }
+                }else{
+                    reject({
+                        message: "SkillGroup::getListSkillsFromDbByCv::listSkillsResult not array [must be an array]",
+                        code: this.MSG_ERROR_RETRIVE_SKILLGROUP,
+                        data: [listSkillsResult, error]
+                    });
+                }
+            });
+        });
+    }
+
+    /**
+     * Get list by id CV, independant of all CV
+     * @param {number} idLang 
+     * @returns {Promise<SkillGroup>}
+     */
+    static getListAllSkillGroup(idLang){
+        return new Promise((resolve, reject) => {
+            const connMysql = require("../../Configs/Databases/db.config");
+            const sql = /* sql */`
+                SELECT DISTINCT 
+                    skills_group.id,
+                    skills_group.slug,
+                    skills_group_lang.title,
+                    skills_group_lang.description
+                FROM skills_group 
+                JOIN skills_group_lang 
+                    ON skills_group_lang.id_skills_group = skills_group.id 
+                WHERE skills_group_lang.id_lang = ${idLang}
             `;
             connMysql.query(sql, (error, listSkillsResult, fields) => {
                 if(error) throw error;
