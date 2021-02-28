@@ -9,6 +9,10 @@ div.content-no-item{
 .self .lastname-title{
     margin-bottom: 20px;
 }
+.self .title{
+    width: 250px;
+    text-align: left;
+}
 
 div.objective-column-detail{
     margin-left: 220px;
