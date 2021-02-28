@@ -52,7 +52,7 @@ class Cv{
      * @param {number} idLang 
      * @returns {Promise<Cv>} The Promise of Cv requested
      */
-    static createFromDbById(idCv, idLang){
+    async static createFromDbById(idCv, idLang){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -77,7 +77,7 @@ class Cv{
                 if(error) throw error;
                 if(Array.isArray(cvResult) && cvResult.length > 0){
                     const cv = new Cv(...Object.values(cvResult[0]));
-                    Address.createFromDbById(cv.id_address, idLang, address => {
+                    Address.createFromDbById(cv.id_address, idLang).then(address => {
                         cv.address = address;
                         Education.getListEducationFromDbByIdCv(cv.id, idLang).then(listEducation => {
                             cv.educations = listEducation;

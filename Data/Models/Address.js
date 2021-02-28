@@ -1,5 +1,9 @@
 
 class Address{
+    static MSG_NO_ADRESS = "NO_ADRESS";
+    static MSG_UNKOW_ERROR = "UNKOW_ERROR";
+    static MSG_UNKOW_DATA = "UNKOW_DATA";
+
     /**
      * 
      * @param {number} id 
@@ -33,27 +37,41 @@ class Address{
      * @param {number} idUser 
      * @returns {User}
      */
-    static createFromDbById(idAddress, idLang, cbFinnished){
-        const connMysql = require("../../Configs/Databases/db.config");
-        const sql = /* sql */`
-            SELECT 
-                address.*, 
-                address_lang.value
-            FROM address 
-            JOIN address_lang 
-                ON address.id=address_lang.id_address 
-            WHERE id = ${idAddress} 
-                AND address_lang.id_lang = ${idLang}
-            LIMIT 1
-        `;
-        connMysql.query(sql, (error, result, fields) => {
-            if(error) throw error;
-            if(Array.isArray(result) && result.length > 0){
-                const address = new Address(...Object.values(result[0]));
-                cbFinnished && cbFinnished(address);
-            }else{
-                console.log("Address::createFromDbById::result", result, error);
-            }
+    static createFromDbById(idAddress, idLang){
+        return new Promise((resolve, reject) => {
+            const connMysql = require("../../Configs/Databases/db.config");
+            const sql = /* sql */`
+                SELECT 
+                    address.*, 
+                    address_lang.value
+                FROM address 
+                JOIN address_lang 
+                    ON address.id=address_lang.id_address 
+                WHERE id = ${idAddress} 
+                    AND address_lang.id_lang = ${idLang}
+                LIMIT 1
+            `;
+            connMysql.query(sql, (error, result, fields) => {
+                if(error) reject({
+                    message: "Address::createFromDbById::error",
+                    code: this.MSG_UNKOW_ERROR,
+                    data: {result, error}
+                });
+                if(Array.isArray(result)){
+                    if(result.length > 0){
+                        const address = new Address(...Object.values(result[0]));
+                        resolve(address);
+                    }else{
+                        resolve([]);
+                    }
+                }else{
+                    reject({
+                        message: "Address::createFromDbById::result",
+                        code: this.MSG_UNKOW_DATA,
+                        data: {result, error}
+                    });
+                }
+            });
         });
     }
 
