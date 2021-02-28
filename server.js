@@ -3,8 +3,8 @@ const bodyParse = require("body-parser");
 const basicAuth = require("./Utils/Auth/BasicAuth");
 const cors = require("cors");
 const expressVue = require("express-vue");
-const path = require("path");
 const util = require('util');
+const vueOptions = require("./Configs/Vue.config");
 
 const userController = require("./Controllers/UsersController");
 const cvController = require("./Controllers/CvController");
@@ -27,10 +27,6 @@ app.use('/templates/1/', express.static(__dirname + '/Templates/cv/template-1/')
 app.use('/public/', express.static(__dirname + '/Public/'));
 
 // Use ExpressVue Package
-const vueOptions = {
-    rootPath: path.join(__dirname, "/Templates"),
-    head: {},
-};
 const expressVueMiddleware = expressVue.init(vueOptions);
 app.use(expressVueMiddleware);
 

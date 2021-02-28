@@ -7,18 +7,14 @@ module.exports = router;
 
 // Recupere liste
 router.get("/all", (request, response) => {
-    console.log("/:isoLang/skillGroup/all", request.params);
-    // response.type("application/json");
-    // response.json("dfgdfgdfg");
-    // response.end();
-    // return;
-    // const skillGroupService = new SkillGroupService();
-    // skillGroupService.getListAllSkillGroup(idLang).then(list => {
-    //     console.log("Results: ", results);
-    //         response.type("application/json");
-    //         response.json(results);
-    //         response.end();
-    // });
+    const skillGroupService = new SkillGroupService();
+    const isoLang = request.params.isoLang;
+    skillGroupService.getListAllSkillGroup(isoLang).then(list => {
+        console.log("Results: ", list);
+            response.type("application/json");
+            response.json(list);
+            response.end();
+    });
 });
 
 // // Creation nouvel 

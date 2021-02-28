@@ -13,7 +13,7 @@ class SkillGroupService{
      * @returns {Promise<SkillGroup>}
      */
     async getListAllSkillGroup(isoLang) {
-        const lang = this.languageService.getLanguageByIso(isoLang);
+        const lang = await this.languageService.getLanguageByIso(isoLang);
         return SkillGroup.getListAllSkillGroup(lang.id);
     }
 
