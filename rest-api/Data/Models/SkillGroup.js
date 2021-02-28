@@ -4,6 +4,13 @@
  */
 class SkillGroup{
 
+    /**
+     * 
+     * @param {number} id 
+     * @param {string} slug 
+     * @param {string} title 
+     * @param {string} description 
+     */
     constructor(
         id,
         slug,

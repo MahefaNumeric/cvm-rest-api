@@ -1,5 +1,6 @@
 const express = require("express");
 const SkillGroupService = require("../Services/SkillGroupService");
+const SkillGroup = require("../Data/Models/SkillGroup");
 
 const router = express.Router({ mergeParams: true });
 
@@ -20,15 +21,19 @@ router.get("/all", (request, response) => {
 // Creation nouvel 
 router.post("/", (request, response)=>{
     const pData = request.body;
-    console.log(pData);
-    response.type("application/json");
-    response.json(pData);
+    const skillGroup = new SkillGroup(
+        null, pData.slug, pData.title, pData.description
+    );
 
-    // skillGroupService.createNewUser(pData, (results) => {
-    //     console.log("Results: ", results);
-    //     response.type("application/json");
-    //     response.json(results);
-    // });
+    // response.type("application/json");
+    // response.json(skillGroup);
+    // return;
+
+    skillGroupService.createSkillGroup(skillGroup).then(results => {
+        console.log("Results: ", results);
+        response.type("application/json");
+        response.json(results);
+    });
 });
 
 // // Creation nouvel 

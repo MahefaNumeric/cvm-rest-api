@@ -138,19 +138,37 @@ class SkillGroupRepo {
     /**
      * 
      * @param {SkillGroup} skillGroup 
+     * {
+            "id": null,
+            "slug": "TEST",
+            "title": {
+                "fr": "Test",
+                "en": "Test"
+            },
+            "description": {
+                "fr": "Test Desc",
+                "en": "Test Desc"
+            },
+            "skills": null
+        }
      */
     static insert(skillGroup){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
-            skillGroup = new SkillGroup(...skillGroup);
             const sqlSkillGroup = /* sql */`
                 INSERT INTO skills_group (
                     slug
                 ) VALUES (
-                    ${skillGroup.slug}
+                    ?
                 )
             `;
-            connMysql.query(sqlSkillGroup, (error, result, fields) => {
+            // console.log(skillGroup)
+            // resolve(skillGroup); return;
+
+            const sqlSkillGroupData = [ skillGroup.slug ];
+            connMysql.query(sqlSkillGroup, sqlSkillGroupData, (error, result, fields) => {
+                resolve([skillGroup, result, error]);
+
                 // const sqlSkillGroupLang = /* sql */`
                 //     INSERT INTO skills_group_lang (
                 //         id_skills_group,
@@ -164,24 +182,24 @@ class SkillGroupRepo {
                 //         ${skillGroup.description}
                 //     )
                 // `;
-                if(error) throw error;
-                if(Array.isArray(listSkillsResult)) {
-                    if(listSkillsResult.length > 0){
-                        const listSkills = [];
-                        listSkillsResult.forEach(element => {
-                            listSkills.push(new SkillGroup(...Object.values(element)));
-                        });
-                        resolve(listSkills);
-                    }else{
-                        resolve([]);
-                    }
-                }else{
-                    reject({
-                        message: "SkillGroup::getListSkillsFromDbByCv::listSkillsResult not array [must be an array]",
-                        code: this.MSG_ERROR_RETRIVE_SKILLGROUP,
-                        data: [listSkillsResult, error]
-                    });
-                }
+                // if(error) throw error;
+                // if(Array.isArray(listSkillsResult)) {
+                //     if(listSkillsResult.length > 0){
+                //         const listSkills = [];
+                //         listSkillsResult.forEach(element => {
+                //             listSkills.push(new SkillGroup(...Object.values(element)));
+                //         });
+                //         resolve(listSkills);
+                //     }else{
+                //         resolve([]);
+                //     }
+                // }else{
+                //     reject({
+                //         message: "SkillGroup::getListSkillsFromDbByCv::listSkillsResult not array [must be an array]",
+                //         code: this.MSG_ERROR_RETRIVE_SKILLGROUP,
+                //         data: [listSkillsResult, error]
+                //     });
+                // }
             });
         });
     }
