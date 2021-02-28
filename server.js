@@ -7,6 +7,7 @@ const path = require("path");
 
 const userController = require("./Controllers/UsersController");
 const cvController = require("./Controllers/CvController");
+const skillGroupController = require("./Controllers/SkillGroupController");
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.use(expressVueMiddleware);
 // Setup controllers
 app.use("/:isoLang/users", cors(corsOption), userController);
 app.use("/:isoLang/cv", cors(corsOption), cvController(router));
+app.use("/:isoLang/skillGroup", cors(corsOption), skillGroupController(router));
 
 // Start server
 app.listen(3000);

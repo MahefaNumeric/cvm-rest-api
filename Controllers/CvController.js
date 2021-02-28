@@ -4,7 +4,7 @@ const CvService = require("../Services/CvService");
 const User = require("../Data/Models/User");
 const Cv = require("../Data/Models/Cv");
 
-module.exports = (router) => {
+module.exports = router => {
     
     // Retrive CV list
     router.get("/", CvController.getCvList);
