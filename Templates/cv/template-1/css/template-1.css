@@ -3,6 +3,12 @@ div.content-no-item{
 }
 .cvm-error{ color: red; }
 
+.self ul.detail-top{
+    clear: both;
+}
+.self .lastname-title{
+    margin-bottom: 20px;
+}
 
 div.objective-column-detail{
     margin-left: 220px;

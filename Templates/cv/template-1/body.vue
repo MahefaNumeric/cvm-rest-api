@@ -6,12 +6,11 @@
             <!-- End Image -->
             <!-- Begin Personal Information -->
             <div class="self">
-                <h1 class="name">
-                    {{ user.lastname }} 
-                    <br />
-                    <span>{{cv.title_frontend || "{No cv title frontend}"}}</span>
-                </h1>
-                <ul>
+                <div class="lastname-title">
+                    <h1 class="name">{{ user.lastname }}</h1>
+                    <h2 class="title">{{cv.title_frontend || "{No cv title frontend}"}}</h2>
+                </div>
+                <ul class="detail-top">
                     <li class="ad">{{ cv.address.value }}</li>
                     <li class="mail">{{ user.email }}</li>
                     <li class="tel">{{ user.phone }}</li>

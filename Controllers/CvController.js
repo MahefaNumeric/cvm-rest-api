@@ -127,13 +127,13 @@ class CvController {
     }
 
     static previsualizeHtmlOutput = (request, response, next) => {
-        const isoLang = request.params.isoLang; // From parent params
+        const isoLangLowercase = String(request.params.isoLang).toLowerCase(); // From parent params
         const idCv = request.params.idCv;
         const idUser = 1; // Mahefa
 
         const cvService = new CvService();
 
-        Language.createFromDbByIso(isoLang).then(language => {
+        Language.createFromDbByIso(isoLangLowercase).then(language => {
             User.createFromDbById(idUser, language.id).then(user => {
                 Cv.createFromDbById(idCv, language.id).then(cv => {
                     const data = {
@@ -142,7 +142,7 @@ class CvController {
                         language: language
                     };
                     console.log("/:idCv/generate/html/view", util.inspect(data, {showHidden: false, depth: null, colors: true}));
-                    const htmlPageTitle = `Resume ${data.lastname}`;
+                    const htmlPageTitle = `${isoLangLowercase=="en" ? 'Resume':'CV'} ${data.user.lastname}`;
                     request.vueOptions = vueOptions(htmlPageTitle);
                     
                     const templateVueFilePath = cvService.getTemplateVueFilePath(idCv, false);
@@ -151,7 +151,7 @@ class CvController {
                     response.renderVue(templateVueFilePath, data, request.vueOptions);
                 }).catch(error => cvGetById_ErrorHandling(error, idCv, response));
             }).catch(error => userGetById_ErrorHandling(error, response));
-        }).catch(error => languageGetByIso_ErrorHandling(error, isoLang, response));
+        }).catch(error => languageGetByIso_ErrorHandling(error, isoLangLowercase, response));
     }
 }
 
