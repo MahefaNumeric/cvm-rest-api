@@ -179,12 +179,7 @@ h2 {
 	margin-bottom:-12px;
 }
 
-p {
-	width:500px;
-}
-
 p img {
-	float:right;
 	margin-left:20px;
 	padding-left:10px;
 }
@@ -344,15 +339,12 @@ ul.skills li {
 ul.works {
 	margin:0;
 	padding:0;
-	width:500px;
-	margin-left:40px;
 	list-style-type: none;
 }
 
 ul.works li {
 	margin:0;
 	padding:0;
-	float:left;
 }
 
 ul.works li img {
@@ -361,8 +353,6 @@ ul.works li img {
 	width:95px;
 	height:95px;
 	border:1px solid #bdc7da;
-	margin-right:20px;
-	margin-bottom:16px;
 }
 
 ul.works li img:hover {

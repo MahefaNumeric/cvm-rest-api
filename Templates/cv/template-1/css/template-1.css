@@ -12,7 +12,13 @@ div.content-no-item{
 
 div.objective-column-detail{
     margin-left: 220px;
-    /* background-color: antiquewhite; */
+    background-color: #f2f2fe;
+}
+
+.entry h2{
+	background-color: #f2f2fe;
+    width: 180px;
+    text-align: right;
 }
 
 /**
@@ -28,17 +34,28 @@ div.objective-column-detail{
  */
 div.education-content,
 div.experience-content,
-div.skills-content{
+div.skills-content,
+li.project-content{
     display: flex;
     flex-direction: row;
 }
 div.column-timeline,
 div.column-skill-group{
     flex: 1;
-    /* background-color: #f2f2fe; */
+    background-color: #f2f2fe;
     max-width: 180px;
     min-width: 180px;
 }
+div.column-detail{
+    flex: 1;
+    background-color: #f2f2fe;
+    margin-left: 40px;
+}
+div.column-detail ul,
+div.column-detail ol{
+    margin-left: 30px;
+}
+
 div.column-timeline h3,
 div.column-skill-group h3{
     margin-bottom: 5px;
@@ -46,11 +63,6 @@ div.column-skill-group h3{
 }
 div.column-timeline.company .company-duration{
     text-align: right;
-}
-div.column-detail{
-    flex: 1;
-    /* background-color: #f2f2fe; */
-    margin-left: 40px;
 }
 div.column-detail .company-name{
     font-weight: 700;
@@ -76,3 +88,12 @@ div.position-content .position-duration{
 /**
  * Experiences - End
  */
+
+
+ul.works{
+    margin-top: 40px;
+}
+.column-timeline.project .link-image{
+    text-align: right;
+    display: block;
+}

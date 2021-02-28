@@ -141,12 +141,19 @@
             <h2>WORKS</h2>
 
             <ul class="works">
-                <li  v-for="itemProject in cv.projects" :key="itemProject.id">
-                    <a href="/templates/1/images/1.jpg" rel="gallery" title="Lorem ipsum dolor sit amet.">
-                        <img src="/templates/1/images/image.jpg" alt="" />
-                    </a>
-                    <div v-html="itemProject.title"></div>
-                    <div v-html="itemProject.description"></div>
+                <li class="content project-content" 
+                    v-for="itemProject in cv.projects" 
+                    :key="itemProject.id"
+                >
+                    <div class="column-timeline project">
+                        <a class="link-image" href="/templates/1/images/1.jpg" rel="gallery" title="Lorem ipsum dolor sit amet.">
+                            <img src="/templates/1/images/image.jpg" alt="" />
+                        </a>
+                    </div>
+                    <div class="column-detail">
+                        <div v-html="itemProject.title"></div>
+                        <div v-html="itemProject.description"></div>
+                    </div>
                 </li>
             </ul>
 
