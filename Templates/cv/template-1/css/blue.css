@@ -55,7 +55,6 @@ body {
 	background-color: #e1e0db;
 	background-image: url(../images/bg.jpg);
 	background-repeat: repeat;
-	font-size:13px;
 	color:#000;
 }
 
@@ -391,7 +390,7 @@ img.portrait {
 /* ----------------------------------------- */
 
 .self {
-	width: 300px;
+	width: 450px;
 	float:left;
 	padding-top:11px;
 	margin-left:38px;
@@ -422,31 +421,8 @@ img.portrait {
 	background-repeat: no-repeat;
 	padding-left:26px;
 	background-position: 0 .1em;
-	line-height: 2;
 	display:block;
-	margin-top:-2px;
-}
-
-/* SOCIAL ICONS */
-/* ----------------------------------------- */
-
-.social {
-	width:135px;
-	float:right;
-	padding-top:10px;
-}
-
-.social ul {
-	list-style: none;
-}
-
-.social ul li {
-	float:left;
-	width:21px;
-	height:24px;
-	margin:0;
-	padding:0;
-	margin-left:6px;
+	margin-bottom: 10px;
 }
 
 /* TIPSY */

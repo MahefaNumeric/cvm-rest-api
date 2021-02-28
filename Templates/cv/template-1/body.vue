@@ -19,37 +19,6 @@
                 </ul>
             </div>
             <!-- End Personal Information -->
-            <!-- Begin Social -->
-            <div class="social">
-                <ul>
-                    <li>
-                        <a class='north' href="#" title="Download .pdf">
-                            <img src="/templates/1/images/icn-save.jpg" alt="Download the pdf version" />
-                        </a>
-                    </li>
-                    <li>
-                        <a class='north' href="javascript:window.print()" title="Print">
-                            <img src="/templates/1/images/icn-print.jpg" alt="" />
-                        </a>
-                    </li>
-                    <li>
-                        <a class='north' id="contact" href="contact/index.html" title="Contact Me">
-                            <img src="/templates/1/images/icn-contact.jpg" alt="" />
-                        </a>
-                    </li>
-                    <li>
-                        <a class='north' href="#" title="Follow me on Twitter">
-                            <img src="/templates/1/images/icn-twitter.jpg" alt="" />
-                        </a>
-                    </li>
-                    <li>
-                        <a class='north' href="#" title="My Facebook Profile">
-                            <img src="/templates/1/images/icn-facebook.jpg" alt="" />
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <!-- End Social -->
         </div>
         <!-- Begin 1st Row -->
         <div class="entry">
