@@ -4,6 +4,7 @@ const Education = require("./Education");
 const Skill = require("./Skill");
 const SkillGroup = require("./SkillGroup");
 const Experience = require("./Experience");
+const Project = require("./Project");
 
 class Cv{
 
@@ -85,9 +86,12 @@ class Cv{
                                 cv.skills = listSkills;
                                 SkillGroup.getListUsedSkillsGroupFromDbByCv(cv.id, idLang).then(listGroupSkills => {
                                     cv.skillsGroup = listGroupSkills;
-                                    Experience.buildExperienceByIdCv(cv.id, idLang).then(experience => {
-                                        cv.experiences = experience;
-                                        resolve(cv);
+                                    Experience.buildExperienceByIdCv(cv.id, idLang).then(experiences => {
+                                        cv.experiences = experiences;
+                                        Project.getListProjectFromDbByCv(cv.id, idLang).then(projects => {
+                                            cv.projects = projects;
+                                            resolve(cv);
+                                        });
                                     }).catch(error => reject(error));
                                 }).catch(error => reject(error));
                             }).catch(error => reject(error));
