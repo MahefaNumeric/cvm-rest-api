@@ -171,49 +171,17 @@
         <!-- Begin 5th Row -->
         <div class="entry">
             <h2>WORKS</h2>
+
             <ul class="works">
-                <li>
+                <li  v-for="itemProject in cv.projects" :key="itemProject.id">
                     <a href="/templates/1/images/1.jpg" rel="gallery" title="Lorem ipsum dolor sit amet.">
                         <img src="/templates/1/images/image.jpg" alt="" />
                     </a>
+                    <div v-html="itemProject.title"></div>
+                    <div v-html="itemProject.description"></div>
                 </li>
-                <li>
-                    <a href="/templates/1/images/2.jpg" rel="gallery" title="Lorem ipsum dolor sit amet.">
-                        <img src="/templates/1/images/image.jpg" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a href="/templates/1/images/3.jpg" rel="gallery" title="Lorem ipsum dolor sit amet.">
-                        <img src="/templates/1/images/image.jpg" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a href="/templates/1/images/1.jpg" rel="gallery" title="Lorem ipsum dolor sit amet.">
-                        <img src="/templates/1/images/image.jpg" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a href="/templates/1/images/2.jpg" rel="gallery" title="Lorem ipsum dolor sit amet.">
-                        <img src="/templates/1/images/image.jpg" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a href="/templates/1/images/3.jpg" rel="gallery" title="Lorem ipsum dolor sit amet.">
-                        <img src="/templates/1/images/image.jpg" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a href="/templates/1/images/1.jpg" rel="gallery" title="Lorem ipsum dolor sit amet.">
-                        <img src="/templates/1/images/image.jpg" alt="" />
-                    </a>
-                </li>
-                <li>
-                    <a href="/templates/1/images/1.jpg" rel="gallery" title="Lorem ipsum dolor sit amet.">
-                        <img src="/templates/1/images/image.jpg" alt="" />
-                    </a>
-                </li>
-                <hr/>
             </ul>
+
             <div class="content content-no-item cvm-error" v-if="Object.keys(cv.projects).length == 0">
                 {No item in projects/works}
             </div>

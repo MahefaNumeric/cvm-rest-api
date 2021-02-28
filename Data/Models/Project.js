@@ -88,6 +88,7 @@ class Project{
                     ON cv_projects.id_project = part_projects.id 
                 WHERE part_projects_lang.id_lang = ${idLang}
                     AND cv_projects.id_cv = ${idCv}
+                    AND part_projects.show_in_portfolio = 1
             `;
             connMysql.query(sql, (error, listProjectsResult, fields) => {
                 if(error) throw error;

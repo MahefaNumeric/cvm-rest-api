@@ -13,16 +13,7 @@
 			<!--[if IE 6]>
 			<link href="/templates/1/css/ie6.css" rel="stylesheet" type="text/css" />
 			<![endif]-->
-			<script type="text/javascript" src="/templates/1/js/jquery-1.4.2.min.js"></script>
-			<script type="text/javascript" src="/templates/1/js/jquery.tipsy.js"></script>
-			<script type="text/javascript" src="/templates/1/js/cufon.yui.js"></script>
-			<script type="text/javascript" src="/templates/1/js/scrollTo.js"></script>
-			<script type="text/javascript" src="/templates/1/js/myriad.js"></script>
-			<script type="text/javascript" src="/templates/1/js/jquery.colorbox.js"></script>
-			<script type="text/javascript" src="/templates/1/js/custom.js"></script>
-			<script type="text/javascript">
-                Cufon.replace('h1,h2');
-            </script>
+			
 		</head>
 		<body>
 			<!-- Begin Wrapper -->

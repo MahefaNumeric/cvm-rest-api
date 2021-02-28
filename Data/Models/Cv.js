@@ -53,7 +53,7 @@ class Cv{
      * @param {number} idLang 
      * @returns {Promise<Cv>} The Promise of Cv requested
      */
-    async static createFromDbById(idCv, idLang){
+    static createFromDbById(idCv, idLang){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -96,7 +96,7 @@ class Cv{
                                 }).catch(error => reject(error));
                             }).catch(error => reject(error));
                         }).catch(error => reject(error));
-                    });
+                    }).catch(error => reject(error));
                 }else{
                     reject({
                         message: `Cv::createFromDbById::cvResult::error, idCv:${idCv} does not exist`,
