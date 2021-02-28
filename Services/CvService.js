@@ -4,22 +4,22 @@ const NumberTools = require("../Utils/NumbersTools");
 class CvService{
     
     // @todo
-    async getListCv(cbFinnished){
-        const connMysql = require("../Configs/db.config");
-        connMysql.query("SELECT * FROM cv", (error, results, fields) => {
-            if(error) throw error;
-            cbFinnished && cbFinnished(results);
-        });
-    }
+    // async getListCv(cbFinnished){
+    //     const connMysql = require("../Configs/db.config");
+    //     connMysql.query("SELECT * FROM cv", (error, results, fields) => {
+    //         if(error) throw error;
+    //         cbFinnished && cbFinnished(results);
+    //     });
+    // }
     
     // @todo
-    async getCv(idCv, cbFinnished){
-        const connMysql = require("../Configs/db.config");
-        connMysql.query("SELECT * FROM cv", (error, results, fields) => {
-            if(error) throw error;
-            cbFinnished && cbFinnished(results);
-        });
-    }
+    // async getCv(idCv, cbFinnished){
+    //     const connMysql = require("../Configs/db.config");
+    //     connMysql.query("SELECT * FROM cv", (error, results, fields) => {
+    //         if(error) throw error;
+    //         cbFinnished && cbFinnished(results);
+    //     });
+    // }
 
     // @todo
     async createNewCv(pData, mcbFinnished){

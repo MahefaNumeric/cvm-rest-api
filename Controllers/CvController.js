@@ -1,14 +1,16 @@
 const util = require('util');
+const express = require("express");
 const Language = require("../Data/Models/Language");
 const CvService = require("../Services/CvService");
 const User = require("../Data/Models/User");
 const Cv = require("../Data/Models/Cv");
 
-module.exports = router => {
-    
+function getRoute(){
+    const router = express.Router({ mergeParams: true });
+     
     // Retrive CV list
     router.get("/", CvController.getCvList);
-    
+
     // Create new CV
     router.post("/", CvController.createNewCv);
 
@@ -34,19 +36,20 @@ module.exports = router => {
      * @todo Add template to url
      */
     router.get("/:idCv/generate/html/view", CvController.previsualizeHtmlOutput);
-    
+
     return router;
 }
 
 class CvController {
 
     static getCvList = (request, response) => {
-        const userService = new CvService();
-        userService.getListUser((results) => {
-            console.log("Results: ", results);
-            response.type("application/json")
-                .json(results);
-        });
+        console.log("CvController::getCvList");
+        // const userService = new CvService();
+        // userService.getListUser((results) => {
+        //     console.log("Results: ", results);
+        //     response.type("application/json")
+        //         .json(results);
+        // });
     }
 
     static generateGivenCv = (request, response) => {
@@ -98,32 +101,32 @@ class CvController {
     }
 
     static GetCvByid = (request, response)=>{
-        const connMysql = require("../Configs/db.config");
-        const id = request.params.id;
-        console.log(id);
-        const sql = `SELECT * FROM users WHERE id = ${id}`;
-        connMysql.query(sql, (error, result, fields) => {
-            if(error) throw error;
-            console.log("Result: ", result.length);
-            if(result.length > 0){
-                response.type("application/json")
-                    .json(result);
-            }else{
-                response.type("application/json")
-                    .json({
-                        "message": `Pas d'utilisateur avec l'id ${id}`
-                    });
-            }
-        });
+        // const connMysql = require("../Configs/db.config");
+        // const id = request.params.id;
+        // console.log(id);
+        // const sql = `SELECT * FROM users WHERE id = ${id}`;
+        // connMysql.query(sql, (error, result, fields) => {
+        //     if(error) throw error;
+        //     console.log("Result: ", result.length);
+        //     if(result.length > 0){
+        //         response.type("application/json")
+        //             .json(result);
+        //     }else{
+        //         response.type("application/json")
+        //             .json({
+        //                 "message": `Pas d'utilisateur avec l'id ${id}`
+        //             });
+        //     }
+        // });
     }
 
     static updateCv = (request, response) => {
-        response.type("application/json");
-        const connMysql = require("../Configs/db.config");
-        const checkIdIfExist = require("../Validation/UserValidation").checkIdIfExist;
-        const pData = request.body;
-        const id = request.params.id;
-        console.log(pData, id, resultCheckIdUser);
+        // response.type("application/json");
+        // const connMysql = require("../Configs/db.config");
+        // const checkIdIfExist = require("../Validation/UserValidation").checkIdIfExist;
+        // const pData = request.body;
+        // const id = request.params.id;
+        // console.log(pData, id, resultCheckIdUser);
     }
 
     static previsualizeHtmlOutput = (request, response, next) => {
@@ -227,3 +230,6 @@ const vueOptions = (htmlPageTitle) => ({
         ]
     },
 })
+
+
+module.exports = getRoute();
