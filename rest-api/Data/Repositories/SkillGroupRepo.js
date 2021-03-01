@@ -1,4 +1,5 @@
 const SkillGroup = require("../Models/SkillGroup");
+const LanguageService = require("../../Services/LanguageService");
 
 class SkillGroupRepo {
     static MSG_NO_SKILL_GROUP = "NO_SKILL_GROUP";
@@ -162,26 +163,17 @@ class SkillGroupRepo {
                     ?
                 )
             `;
-            // console.log(skillGroup)
-            // resolve(skillGroup); return;
 
             const sqlSkillGroupData = [ skillGroup.slug ];
             connMysql.query(sqlSkillGroup, sqlSkillGroupData, (error, result, fields) => {
+                // const idCreatedSkillData = ;
+                // skillGroup.id = idCreatedSkillData;
+
+                // this.insertSkillGroupLang(skillGroup);
+
+
                 resolve([skillGroup, result, error]);
 
-                // const sqlSkillGroupLang = /* sql */`
-                //     INSERT INTO skills_group_lang (
-                //         id_skills_group,
-                //         id_lang,
-                //         title,
-                //         description
-                //     ) VALUES (
-                //         ${skillGroup.id_skills_group},
-                //         ${skillGroup.id_lang},
-                //         ${skillGroup.title},
-                //         ${skillGroup.description}
-                //     )
-                // `;
                 // if(error) throw error;
                 // if(Array.isArray(listSkillsResult)) {
                 //     if(listSkillsResult.length > 0){
@@ -200,6 +192,51 @@ class SkillGroupRepo {
                 //         data: [listSkillsResult, error]
                 //     });
                 // }
+            });
+        });
+    }
+
+    
+    static insertSkillGroupLang(skillGroup){
+        return new Promise(async (resolve, reject) => {
+            if(skillGroup.id == null){
+                reject({
+                    origin: "SkillGroupRepo::insertSkillGroupLang",
+                    message: "skillGroup.id == null"
+                });
+            }
+
+            const languageService = new LanguageService();
+            const allLanguages = await languageService.getAllLanguage();
+
+            const connMysql = require("../../Configs/Databases/db.config");
+            const sqlSkillGroupLang = /* sql */`
+                INSERT INTO skills_group_lang (
+                    id_skills_group,
+                    id_lang,
+                    title,
+                    description
+                ) 
+                VALUES 
+                ( ?, ?, ?, ? ),
+                ( ?, ?, ?, ? ),
+            `;
+
+            const sqlSkillGroupData = [];
+            if(Array.isArray(skillGroup.title)){
+                for (let index = 0; index < skillGroup.title.length; index++) {
+                    const idLang = languageService.convertIsoToId(allLanguages, skillGroup.title[index].iso);
+                    sqlSkillGroupData.push(...[
+                        skillGroup.id,
+                        idLang,
+                        skillGroup.title[index].value,
+                        skillGroup.description[index].value
+                    ]); 
+                }
+            }
+            
+            connMysql.query(sqlSkillGroup, sqlSkillGroupData, (error, result, fields) => {
+                resolve([skillGroup, result, error]);
             });
         });
     }

@@ -7,12 +7,12 @@ class Language{
 
     constructor(
         id,
-        name,
-        code_iso
+        code_iso,
+        name
     ){
         this.id = id;
-        this.name = name;
         this.code_iso = code_iso;
+        this.name = name;
     }
 
     /**
@@ -26,8 +26,12 @@ class Language{
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
                 SELECT 
-                    ${this._table}.*
-                FROM ${this._table}
+                    languages.id,
+                    languages.code_iso,
+                    languages_lang.name
+                FROM languages
+                JOIN languages_lang
+                    ON languages_lang.id_lang = languages.id
                 WHERE id = ${idLang} 
                 LIMIT 1
             `;
@@ -56,8 +60,12 @@ class Language{
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
                 SELECT 
-                    ${this._table}.*
-                FROM ${this._table}
+                    languages.id,
+                    languages.code_iso,
+                    languages_lang.name
+                FROM languages
+                JOIN languages_lang
+                    ON languages_lang.id_lang = languages.id
                 WHERE code_iso = ? 
                 LIMIT 1
             `;
@@ -84,6 +92,51 @@ class Language{
                 }else{
                     reject({
                         message: "Language::createFromDbById::languageResult result not array (why?)",
+                        code: this.MSG_RESULT_NOT_KNOW,
+                        data: [languageResult, error]
+                    });
+                }
+            });
+        });
+    }
+
+    getAllLanguage(){
+        return new Promise((resolve, reject) => {
+            const connMysql = require("../../Configs/Databases/db.config");
+            const sql = /* sql */`
+                SELECT 
+                    languages.id,
+                    languages.code_iso,
+                    languages_lang.name
+                FROM languages
+                JOIN languages_lang
+                    ON languages_lang.id_lang = languages.id
+            `;
+            connMysql.query(sql, (error, languageResult, fields) => {
+                if(error) {
+                    reject({
+                        message: "Language::getAllLanguage, error",
+                        code: error.code,
+                        data: [languageResult, error]
+                    });
+                };
+                if(Array.isArray(languageResult)) {
+                    if(languageResult.length > 0){
+                        const languagesList = [];
+                        languageResult.forEach(item => {
+                            languagesList.push( new Language(...item) );
+                        });
+                        resolve(languagesList);
+                    }else{
+                        reject({
+                            message: "Language::getAllLanguage::languageResult null",
+                            code: this.MSG_NO_LANGUAGE,
+                            data: [languageResult, error]
+                        });
+                    }
+                }else{
+                    reject({
+                        message: "Language::getAllLanguage::languageResult result not array (why?)",
                         code: this.MSG_RESULT_NOT_KNOW,
                         data: [languageResult, error]
                     });

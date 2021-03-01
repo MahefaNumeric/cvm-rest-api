@@ -135,7 +135,7 @@ class CvController {
         const idUser = 1; // Mahefa
 
         const cvService = new CvService();
-
+        
         Language.createFromDbByIso(isoLangLowercase).then(language => {
             User.createFromDbById(idUser, language.id).then(user => {
                 Cv.createFromDbById(idCv, language.id).then(cv => {
