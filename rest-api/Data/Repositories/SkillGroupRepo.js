@@ -1,7 +1,8 @@
 const SkillGroup = require("../Models/SkillGroup");
 const LanguageService = require("../../Services/LanguageService");
+const BaseRepo = require("./BaseRepo");
 
-class SkillGroupRepo {
+class SkillGroupRepo extends BaseRepo {
     static MSG_NO_SKILL_GROUP = "NO_SKILL_GROUP";
     static MSG_ERROR_RETRIVE_SKILLGROUP = "ERROR_RETRIVE_SKILLGROUP";
 
@@ -139,19 +140,6 @@ class SkillGroupRepo {
     /**
      * 
      * @param {SkillGroup} skillGroup 
-     * {
-            "id": null,
-            "slug": "TEST",
-            "title": {
-                "fr": "Test",
-                "en": "Test"
-            },
-            "description": {
-                "fr": "Test Desc",
-                "en": "Test Desc"
-            },
-            "skills": null
-        }
      */
     static insert(skillGroup){
         return new Promise((resolve, reject) => {
@@ -176,84 +164,13 @@ class SkillGroupRepo {
 
                 skillGroup.id = result.insertId;
 
-                this.insertSkillGroupLang(skillGroup).then(resultInsertSkillGroupLang => {
-                    // console.log("insertSkillGroupLang::then", resultInsertSkillGroupLang);
-                    resolve([skillGroup, result, error, resultInsertSkillGroupLang]);
-                }).catch(errorInsertSkillGroupLang => {
-                    // console.log("insertSkillGroupLang::catch", errorInsertSkillGroupLang);
-                    reject(["insertSkillGroupLang::catch", errorInsertSkillGroupLang, skillGroup, result, error]);
-                });
-
-                return;
-
-                // if(error) throw error;
-                // if(Array.isArray(listSkillsResult)) {
-                //     if(listSkillsResult.length > 0){
-                //         const listSkills = [];
-                //         listSkillsResult.forEach(element => {
-                //             listSkills.push(new SkillGroup(...Object.values(element)));
-                //         });
-                //         resolve(listSkills);
-                //     }else{
-                //         resolve([]);
-                //     }
-                // }else{
-                //     reject({
-                //         message: "SkillGroup::getListSkillsFromDbByCv::listSkillsResult not array [must be an array]",
-                //         code: this.MSG_ERROR_RETRIVE_SKILLGROUP,
-                //         data: [listSkillsResult, error]
-                //     });
-                // }
-            });
-        });
-    }
-
-    
-    static insertSkillGroupLang(skillGroup){
-        return new Promise(async (resolve, reject) => {
-            if(skillGroup.id == null){
-                reject({
-                    origin: "SkillGroupRepo::insertSkillGroupLang",
-                    message: "skillGroup.id == null"
-                });
-                return false;
-            }
-
-            const languageService = new LanguageService();
-            languageService.getAllLanguage().then(allLanguages => {
-                // return;
-
-                const sqlSkillGroupLang = /* sql */`
-                    INSERT INTO skills_group_lang (
-                        id_skills_group,
-                        id_lang,
-                        title,
-                        description
-                    ) 
-                    VALUES 
-                    ( ?, ?, ?, ? ),
-                    ( ?, ?, ?, ? ),
-                `;
-
-                const sqlSkillGroupData = [];
-                if(Array.isArray(skillGroup.title)){
-                    for (let index = 0; index < skillGroup.title.length; index++) {
-                        const idLang = languageService.convertIsoToId(allLanguages, skillGroup.title[index].iso);
-                        sqlSkillGroupData.push(...[
-                            skillGroup.id,
-                            idLang,
-                            skillGroup.title[index].value,
-                            skillGroup.description[index].value
-                        ]); 
-                    }
-                }
-
-                // resolve(sqlSkillGroupData);
-                
-                const connMysql = require("../../Configs/Databases/db.config");
-                connMysql.query(sqlSkillGroupLang, sqlSkillGroupData, (error, result, fields) => {
-                    resolve([skillGroup, sqlSkillGroupData, result, error]);
-                });
+                this.insertObjectLang(skillGroup)
+                    .then(resultInsertSkillGroupLang => {
+                        resolve([skillGroup, result, error, resultInsertSkillGroupLang]);
+                    })
+                    .catch(errorInsertSkillGroupLang => {
+                        reject(["insertSkillGroupLang::catch", errorInsertSkillGroupLang, skillGroup, result, error]);
+                    });
             });
         });
     }

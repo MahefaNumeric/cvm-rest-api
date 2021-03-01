@@ -1,8 +1,9 @@
+const BaseModel = require("./BaseModel");
 
 /**
  * @todo Redo structuration SkillGroup and Skill (actually not good)
  */
-class SkillGroup{
+class SkillGroup extends BaseModel {
 
     /**
      * 
@@ -17,12 +18,34 @@ class SkillGroup{
         title,
         description
     ){
+        super();
+
         this.id = id;
         this.slug = slug;
         this.title = title;
         this.description = description;
 
         this.skills = null;
+
+        this.setupDefinirition();
+    }
+
+    setupDefinirition(){
+        this._table = "skills_group";
+        this._definitions = {
+            id: {
+                lang: false,
+            },
+            slug: {
+                lang: false,
+            },
+            title: {
+                lang: true,
+            },
+            description: {
+                lang: true,
+            }
+        };
     }
 
 }
