@@ -166,13 +166,24 @@ class SkillGroupRepo {
 
             const sqlSkillGroupData = [ skillGroup.slug ];
             connMysql.query(sqlSkillGroup, sqlSkillGroupData, (error, result, fields) => {
-                // const idCreatedSkillData = ;
-                // skillGroup.id = idCreatedSkillData;
+                if(error){
+                    reject({
+                        message: "Error insert",
+                        data: [error]
+                    });
+                }
 
-                // this.insertSkillGroupLang(skillGroup);
+                skillGroup.id = result.insertId;
 
+                this.insertSkillGroupLang(skillGroup).then(resultInsertSkillGroupLang => {
+                    console.log("insertSkillGroupLang::then", resultInsertSkillGroupLang);
+                    resolve([skillGroup, result, error, resultInsertSkillGroupLang]);
+                }).catch(errorInsertSkillGroupLang => {
+                    console.log("insertSkillGroupLang::catch", errorInsertSkillGroupLang);
+                    reject(["insertSkillGroupLang::catch", errorInsertSkillGroupLang, skillGroup, result, error]);
+                });
 
-                resolve([skillGroup, result, error]);
+                return;
 
                 // if(error) throw error;
                 // if(Array.isArray(listSkillsResult)) {
@@ -207,9 +218,14 @@ class SkillGroupRepo {
             }
 
             const languageService = new LanguageService();
-            const allLanguages = await languageService.getAllLanguage();
+            languageService.getAllLanguage().then(result => {
+                // const allLanguages
 
-            const connMysql = require("../../Configs/Databases/db.config");
+                resolve(result); 
+            });
+
+            return;
+
             const sqlSkillGroupLang = /* sql */`
                 INSERT INTO skills_group_lang (
                     id_skills_group,
@@ -234,10 +250,13 @@ class SkillGroupRepo {
                     ]); 
                 }
             }
+
+            resolve(sqlSkillGroupData);
             
-            connMysql.query(sqlSkillGroup, sqlSkillGroupData, (error, result, fields) => {
-                resolve([skillGroup, result, error]);
-            });
+            // const connMysql = require("../../Configs/Databases/db.config");
+            // connMysql.query(sqlSkillGroup, sqlSkillGroupData, (error, result, fields) => {
+            //     resolve([skillGroup, result, error]);
+            // });
         });
     }
 

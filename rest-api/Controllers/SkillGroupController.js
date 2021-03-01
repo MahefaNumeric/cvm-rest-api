@@ -11,11 +11,17 @@ const skillGroupService = new SkillGroupService();
 // Recupere liste
 router.get("/all", (request, response) => {
     const isoLang = request.params.isoLang;
-    skillGroupService.getListAllSkillGroup(isoLang).then(list => {
-        response.type("application/json");
-        response.json(list);
-        response.end();
-    });
+    skillGroupService.getListAllSkillGroup(isoLang)
+        .then(list => {
+            response.type("application/json").status(200);
+            response.json(list);
+            response.end();
+        })
+        .catch(error => {
+            response.type("application/json").status(500);
+            response.json(error);
+            response.end();
+        });
 });
 
 // Creation nouvel 
@@ -29,11 +35,17 @@ router.post("/", (request, response)=>{
     // response.json(skillGroup);
     // return;
 
-    skillGroupService.createSkillGroup(skillGroup).then(results => {
-        console.log("Results: ", results);
-        response.type("application/json");
-        response.json(results);
-    });
+    skillGroupService.createSkillGroup(skillGroup)
+        .then(results => {
+            console.log("Results: ", results);
+            response.type("application/json");
+            response.json(results).status(200);
+        })
+        .catch(error => {
+            console.log("Results: ", error);
+            response.type("application/json");
+            response.json(error).status(500);
+        });
 });
 
 // // Creation nouvel 

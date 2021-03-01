@@ -100,7 +100,7 @@ class Language{
         });
     }
 
-    getAllLanguage(){
+    static getAllLanguage(){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -111,6 +111,7 @@ class Language{
                 FROM languages
                 JOIN languages_lang
                     ON languages_lang.id_lang = languages.id
+                WHERE languages_lang.id_lang_translate = 1
             `;
             connMysql.query(sql, (error, languageResult, fields) => {
                 if(error) {
@@ -122,6 +123,7 @@ class Language{
                 };
                 if(Array.isArray(languageResult)) {
                     if(languageResult.length > 0){
+                        resolve(languageResult); return;
                         const languagesList = [];
                         languageResult.forEach(item => {
                             languagesList.push( new Language(...item) );
