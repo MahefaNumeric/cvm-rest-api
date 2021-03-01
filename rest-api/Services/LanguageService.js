@@ -22,15 +22,13 @@ class LanguageService{
      */
     convertIsoToId(allLanguages, iso){
         if(Array.isArray(allLanguages)){
-            allLanguages.forEach(element => {
-                if( String(element.code_iso).toLocaleLowerCase() == String(iso).toLocaleLowerCase() ){
+            for (const element of allLanguages) {
+                if( String(element.code_iso).toLocaleLowerCase() == String(iso).toLocaleLowerCase() )
                     return element.id;
-                }
-            });
+            }
             return false;
-        }else{
+        }else
             throw Error("LangugageService::convertIsoToId | allLanguages Not Array");
-        }
     }
 
     /**
@@ -41,11 +39,11 @@ class LanguageService{
      */
     convertIdToIso(allLanguages, id){
         if(Array.isArray(allLanguages)){
-            allLanguages.forEach(element => {
-                if( element.id == id ){
+            for (const element of allLanguages) {
+                if( element.id == id )
                     return element.code_iso;
-                }
-            });
+            }
+            return false;
         }else{
             throw Error("LangugageService::convertIdToIso | allLanguages Not Array");
         }

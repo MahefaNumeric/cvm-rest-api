@@ -169,17 +169,18 @@ class SkillGroupRepo {
                 if(error){
                     reject({
                         message: "Error insert",
-                        data: [error]
+                        data: [error, result]
                     });
+                    return false;
                 }
 
                 skillGroup.id = result.insertId;
 
                 this.insertSkillGroupLang(skillGroup).then(resultInsertSkillGroupLang => {
-                    console.log("insertSkillGroupLang::then", resultInsertSkillGroupLang);
+                    // console.log("insertSkillGroupLang::then", resultInsertSkillGroupLang);
                     resolve([skillGroup, result, error, resultInsertSkillGroupLang]);
                 }).catch(errorInsertSkillGroupLang => {
-                    console.log("insertSkillGroupLang::catch", errorInsertSkillGroupLang);
+                    // console.log("insertSkillGroupLang::catch", errorInsertSkillGroupLang);
                     reject(["insertSkillGroupLang::catch", errorInsertSkillGroupLang, skillGroup, result, error]);
                 });
 
@@ -215,48 +216,45 @@ class SkillGroupRepo {
                     origin: "SkillGroupRepo::insertSkillGroupLang",
                     message: "skillGroup.id == null"
                 });
+                return false;
             }
 
             const languageService = new LanguageService();
-            languageService.getAllLanguage().then(result => {
-                // const allLanguages
+            languageService.getAllLanguage().then(allLanguages => {
+                // return;
 
-                resolve(result); 
-            });
+                const sqlSkillGroupLang = /* sql */`
+                    INSERT INTO skills_group_lang (
+                        id_skills_group,
+                        id_lang,
+                        title,
+                        description
+                    ) 
+                    VALUES 
+                    ( ?, ?, ?, ? ),
+                    ( ?, ?, ?, ? ),
+                `;
 
-            return;
-
-            const sqlSkillGroupLang = /* sql */`
-                INSERT INTO skills_group_lang (
-                    id_skills_group,
-                    id_lang,
-                    title,
-                    description
-                ) 
-                VALUES 
-                ( ?, ?, ?, ? ),
-                ( ?, ?, ?, ? ),
-            `;
-
-            const sqlSkillGroupData = [];
-            if(Array.isArray(skillGroup.title)){
-                for (let index = 0; index < skillGroup.title.length; index++) {
-                    const idLang = languageService.convertIsoToId(allLanguages, skillGroup.title[index].iso);
-                    sqlSkillGroupData.push(...[
-                        skillGroup.id,
-                        idLang,
-                        skillGroup.title[index].value,
-                        skillGroup.description[index].value
-                    ]); 
+                const sqlSkillGroupData = [];
+                if(Array.isArray(skillGroup.title)){
+                    for (let index = 0; index < skillGroup.title.length; index++) {
+                        const idLang = languageService.convertIsoToId(allLanguages, skillGroup.title[index].iso);
+                        sqlSkillGroupData.push(...[
+                            skillGroup.id,
+                            idLang,
+                            skillGroup.title[index].value,
+                            skillGroup.description[index].value
+                        ]); 
+                    }
                 }
-            }
 
-            resolve(sqlSkillGroupData);
-            
-            // const connMysql = require("../../Configs/Databases/db.config");
-            // connMysql.query(sqlSkillGroup, sqlSkillGroupData, (error, result, fields) => {
-            //     resolve([skillGroup, result, error]);
-            // });
+                // resolve(sqlSkillGroupData);
+                
+                const connMysql = require("../../Configs/Databases/db.config");
+                connMysql.query(sqlSkillGroupLang, sqlSkillGroupData, (error, result, fields) => {
+                    resolve([skillGroup, sqlSkillGroupData, result, error]);
+                });
+            });
         });
     }
 

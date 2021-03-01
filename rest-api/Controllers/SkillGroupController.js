@@ -37,12 +37,12 @@ router.post("/", (request, response)=>{
 
     skillGroupService.createSkillGroup(skillGroup)
         .then(results => {
-            console.log("Results: ", results);
+            // console.log("Results: ", results);
             response.type("application/json");
             response.json(results).status(200);
         })
         .catch(error => {
-            console.log("Results: ", error);
+            // console.log("Results: ", error);
             response.type("application/json");
             response.json(error).status(500);
         });
