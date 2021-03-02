@@ -1,7 +1,7 @@
 const path = require("path");
 
 const vueOptions = {
-    rootPath: path.join(__dirname, "../Templates"),
+    rootPath: path.join(__dirname, "../../Templates"),
     head: {},
 };
 

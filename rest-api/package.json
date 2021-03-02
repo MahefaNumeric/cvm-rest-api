@@ -6,11 +6,11 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "startold": "node server.js",
-    "start": "nodemon server.js",
+    "start": "nodemon",
     "start:dev": "nodemon",
+    "start:prod": "npm run build && node build/index.js",
     "build:scss": "node-sass -w -r assets/src/scss/ -o assets/dist/css/",
-    "build": "rimraf ./build && tsc",
-    "start:prod": "npm run build && node build/index.js"
+    "build": "rimraf ./build && tsc"
   },
   "watches": {
     "sass": "sass/**"
