@@ -1,6 +1,6 @@
-const Company = require("./Company");
+import Company from "./Company";
 
-class Experiences{
+export default class Experiences{
     // static _table = 'part_experiences';
 
     static MSG_NO_EXPERIENCE = "NO_EXPERIENCE";
@@ -37,5 +37,3 @@ class Experiences{
     }
 
 }
-
-module.exports = Experiences;

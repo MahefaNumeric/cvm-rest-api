@@ -1,60 +1,22 @@
-const Address = require("./Address");
-const Template = require("./Template");
-const Education = require("./Education");
-const Skill = require("./Skill");
-const SkillGroup = require("./SkillGroup");
-const Experience = require("./Experience");
-const Project = require("./Project");
-const SkillGroupRepo = require("../Repositories/SkillGroupRepo");
+import Address from "../Models/Address";
+import Cv from "../Models/Cv";
+import Education from "../Models/Education";
+import Experiences from "../Models/Experience";
+import Project from "../Models/Project";
+import Skill from "../Models/Skill";
+import SkillGroupRepo from './SkillGroupRepo';
+import SkillGroup from '../Models/SkillGroup';
 
-class Cv{
 
-    static MSG_NO_CV_GIVEN_ID = "NO_CV_GIVEN_ID";
-
-    /**
-     * 
-     * @param {number} id 
-     * @param {Template} template 
-     * @param {string} slug 
-     * @param {Address} address 
-     * @param {string} title 
-     * @param {string} auto_biography 
-     * @param {Date} date_add 
-     * @param {Date} date_update 
-     */
-    constructor(
-        id,
-        id_template,
-        slug,
-        id_address,
-        title_backend,
-        title_frontend,
-        auto_biography
-    ){
-        this.id = id;
-        this.id_template = id_template;
-        this.slug = slug;
-        this.id_address = id_address;
-        this.title_backend = title_backend;
-        this.title_frontend = title_frontend;
-        this.auto_biography = auto_biography;
-
-        this.template = null;
-        this.address = null;
-        this.educations = null;
-        this.experiences = null;
-        this.projects = [];   // Works  
-        this.skills = null;
-        this.skillsGroup = null;
-    }
-
+export default class CvRepo {
+    
     /**
      * 
      * @param {number} idCv 
      * @param {number} idLang 
      * @returns {Promise<Cv>} The Promise of Cv requested
      */
-    static createFromDbById(idCv, idLang){
+    static createFromDbById(idCv: number, idLang: number){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -74,20 +36,20 @@ class Cv{
                     AND cv_lang.id_lang = ${idLang}
                 LIMIT 1
             `;
-            connMysql.query(sql, (error, cvResult, fields) => {
+            connMysql.query(sql, (error: any, cvResult: Array<any>, fields: any) => {
                 // console.log("Cv::createFromDbById, cvResult:", cvResult);
                 if(error) throw error;
                 if(Array.isArray(cvResult) && cvResult.length > 0){
                     const cv = new Cv(...Object.values(cvResult[0]));
-                    Address.createFromDbById(cv.id_address, idLang).then(address => {
+                    Address.createFromDbById(cv.id_address, idLang).then((address: Address) => {
                         cv.address = address;
-                        Education.getListEducationFromDbByIdCv(cv.id, idLang).then(listEducation => {
+                        Education.getListEducationFromDbByIdCv(cv.id, idLang).then((listEducation: Array<Education>) => {
                             cv.educations = listEducation;
-                            Skill.getListSkillsFromDbByCv(cv.id, idLang).then(listSkills => {
+                            Skill.getListSkillsFromDbByCv(cv.id, idLang).then((listSkills: Skill[]) => {
                                 cv.skills = listSkills;
-                                SkillGroupRepo.getListUsedSkillsGroupFromDbByCv(cv.id, idLang).then(listGroupSkills => {
+                                SkillGroupRepo.getListUsedSkillsGroupFromDbByCv(cv.id, idLang).then((listGroupSkills: SkillGroup[]) => {
                                     cv.skillsGroup = listGroupSkills;
-                                    Experience.buildExperienceByIdCv(cv.id, idLang).then(experiences => {
+                                    Experiences.buildExperienceByIdCv(cv.id, idLang).then((experiences: Array<Experiences>) => {
                                         cv.experiences = experiences;
                                         Project.getListProjectFromDbByCv(cv.id, idLang).then(projects => {
                                             cv.projects = projects;
@@ -120,5 +82,3 @@ class Cv{
         );
     }
 }
-
-module.exports = Cv;

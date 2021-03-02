@@ -1,7 +1,7 @@
-// const express = require("express");
-// const { default: SkillGroup } = require("../Data/Models/SkillGroup");
+const express = require("express");
 
 import SkillGroup from "../Data/Models/SkillGroup";
+import SkillGroupService from "../Services/SkillGroupService";
 
 export const router = express.Router({ mergeParams: true });
 

@@ -206,7 +206,8 @@ function cvGetById_ErrorHandling(error, idCv, response){
     }else{
         dataRender = {
             message: `Error: Unknow`,
-            code: "UNKNOW_ERROR"
+            code: "UNKNOW_ERROR",
+            data: [error]
         }
     }
 

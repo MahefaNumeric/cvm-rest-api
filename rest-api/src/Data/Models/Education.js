@@ -75,7 +75,7 @@ class Education{
      * 
      * @param {number} idCv 
      * @param {number} idLang 
-     * @returns {Array<Education>}
+     * @returns {Promise<Array<Education>>}
      */
     static getListEducationFromDbByIdCv(idCv, idLang){
         return new Promise((resolve, reject) => {
