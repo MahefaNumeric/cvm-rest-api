@@ -7,7 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "startold": "node server.js",
     "start": "nodemon server.js",
-    "build:scss": "node-sass -w -r assets/src/scss/ -o assets/dist/css/"
+    "start:dev": "nodemon",
+    "build:scss": "node-sass -w -r assets/src/scss/ -o assets/dist/css/",
+    "build": "rimraf ./build && tsc",
+    "start:prod": "npm run build && node build/index.js"
   },
   "watches": {
     "sass": "sass/**"
@@ -44,6 +47,7 @@
     "@types/node": "^14.14.31",
     "node-sass": "^5.0.0",
     "nodemon": "^2.0.7",
+    "rimraf": "^3.0.2",
     "ts-node": "^9.1.1",
     "typescript": "^4.2.2"
   },
