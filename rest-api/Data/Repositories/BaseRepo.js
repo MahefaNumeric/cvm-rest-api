@@ -1,22 +1,24 @@
+const LanguageService = require("../../Services/LanguageService");
+const BaseModel = require("../Models/BaseModel");
 
 class BaseRepo {
 
     /**
      * 
-     * @param {Object} object 
+     * @param {BaseModel} model 
      */
-    static insertObjectLang(object){
+    static insertObjectLang(model){
         return new Promise(async (resolve, reject) => {
-            if(object.id == null){
+            if(model.id == null){
                 reject({
                     origin: "BaseRepo::insertObjectLang",
-                    message: "object.id == null"
+                    message: "model.id == null"
                 });
                 return false;
             }
 
-            const tableName = object._table;
-            const definitionsLang = object.getDefinitionsLang();
+            const tableName = model._table;
+            const definitionsLang = model.getDefinitionsLang();
 
             // resolve([tableName, definitionsLang]); return;
 
@@ -24,8 +26,8 @@ class BaseRepo {
             languageService.getAllLanguage().then(allLanguages => {
 
                 const columnsLang = this.buildSqlColumn(definitionsLang);
-                const interogationsSqlPart = this.buildSqlInterogation(columnsLang.length);
-                const valuesIntergationOnInsert = this.buildValuesInterogationsOnInsert(object, interogationsSqlPart);
+                const interogationsSqlPart = this.buildSqlInterogation(allLanguages.length);
+                const valuesIntergationOnInsert = this.buildValuesInterogationsOnInsert(model, interogationsSqlPart);
 
                 const sql = /* sql */`
                     INSERT INTO ${tableName}_lang (
@@ -36,22 +38,26 @@ class BaseRepo {
                     ${valuesIntergationOnInsert}
                 `;
 
+                // resolve([columnsLang, interogationsSqlPart, valuesIntergationOnInsert, sql]);
+
                 const sqlData = [];
-                if(Array.isArray(object.title)){
-                    for (let index = 0; index < object.title.length; index++) {
-                        const idLang = languageService.convertIsoToId(allLanguages, object.title[index].iso);
+                if(Array.isArray(model.title)){
+                    for (let index = 0; index < model.title.length; index++) {
+                        const idLang = languageService.convertIsoToId(allLanguages, model.title[index].iso);
+                        const arrayValueData = this.buildArrayValueData(model, definitionsLang, index);
                         sqlData.push(...[
-                            object.id,
+                            model.id,
                             idLang,
-                            object.title[index].value,
-                            object.description[index].value
+                            // model.title[index].value,
+                            // model.description[index].value
+                            ...arrayValueData
                         ]); 
                     }
                 }
                 
                 const connMysql = require("../../Configs/Databases/db.config");
                 connMysql.query(sql, sqlData, (error, result, fields) => {
-                    resolve([object, sqlData, result, error]);
+                    resolve([model, sqlData, result, error]);
                 });
             });
         });
@@ -94,13 +100,75 @@ class BaseRepo {
         return result;
     }
 
-    static buildValuesInterogationsOnInsert(object, interogationsSqlPart){
-        const nbOfTranslation = object.title.length
+    /**
+     * 
+     * @param {BaseModel} model 
+     * @param {string} interogationsSqlPart 
+     * Example : "?, ?, ?"
+     * @returns {string}
+     * Example : "(?, ?, ?), (?, ?, ?)"
+     */
+    static buildValuesInterogationsOnInsert(model, interogationsSqlPart){
+        const nbOfTranslation = model.title.length
         let result = ``;
         for(let i = 0; i < nbOfTranslation; i++){
             result += `( ?, ?, ${interogationsSqlPart} )`;
-            if(i < nbOfTranslation) result += ",";
+            if(i < nbOfTranslation-1) result += ",";
         }
+        return result;
+    }
+
+    /**
+     * 
+     * @param {BaseModel} model 
+     * Example :
+     * {
+        "id": 13,
+        "slug": "TEST",
+        "title": [
+            {
+                "iso": "fr",
+                "value": "Test fr"
+            },
+            {
+                "iso": "en",
+                "value": "Test en"
+            }
+        ],
+        ... (Property suite)
+     * @param {JSON} definitionsLang
+     * Example :
+        {
+            "title": {
+                "lang": true
+            },
+            "description": {
+                "lang": true
+            }
+     *  }
+     * @param {number} indexTranslation
+     * Explication :
+     *  "propertyLooped": [             <- Property looped
+            {                           <- indexTranslation = 0
+                "iso": "fr",
+                "value": "Test fr"
+            },
+            {                           <- indexTranslation = 1
+                "iso": "en",
+                "value": "Test en"
+            }
+     *  ],
+     *
+     * @returns {Array}
+     */
+    static buildArrayValueData(model, definitionsLang, indexTranslation){
+        const result = [];
+        const definitionsLangKeys = Object.keys(definitionsLang);
+        definitionsLangKeys.forEach(keyLang => {
+            result.push(
+                model[keyLang][indexTranslation].value
+            );
+        });
         return result;
     }
 }
