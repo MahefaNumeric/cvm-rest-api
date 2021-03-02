@@ -1,6 +1,6 @@
-const Language = require("../Data/Models/Language");
+import Language from "../Data/Models/Language";
 
-class LanguageService{
+export default class LanguageService{
     
     async getLanguageByIso(isoLang) {
         const lang = await Language.createFromDbByIso(isoLang);
@@ -8,7 +8,7 @@ class LanguageService{
     }
 
     /**
-     * @returns {Promise<Language>}
+     * @returns {Promise<Array<Language>>}
      */
     getAllLanguage(){
         return Language.getAllLanguage();
@@ -50,5 +50,3 @@ class LanguageService{
     }
 
 }
-
-module.exports = LanguageService;

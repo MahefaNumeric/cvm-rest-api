@@ -1,9 +1,9 @@
-const BaseModel = require("./BaseModel");
+import BaseModel from './BaseModel';
 
 /**
  * @todo Redo structuration SkillGroup and Skill (actually not good)
  */
-class SkillGroup extends BaseModel {
+export default class SkillGroup extends BaseModel {
 
     /**
      * 
@@ -12,11 +12,11 @@ class SkillGroup extends BaseModel {
      * @param {string} title 
      * @param {string} description 
      */
-    constructor(
-        id,
-        slug,
-        title,
-        description
+    public constructor(
+        id: number,
+        slug: string,
+        title: string,
+        description: string
     ){
         super();
 
@@ -30,7 +30,7 @@ class SkillGroup extends BaseModel {
         this.setupDefinirition();
     }
 
-    setupDefinirition(){
+    public setupDefinirition(): void {
         this._table = "skills_group";
         this._definitions = {
             id: {
@@ -49,5 +49,3 @@ class SkillGroup extends BaseModel {
     }
 
 }
-
-module.exports = SkillGroup;

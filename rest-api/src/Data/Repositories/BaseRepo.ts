@@ -1,16 +1,16 @@
-const LanguageService = require("../../Services/LanguageService");
-const BaseModel = require("../Models/BaseModel");
-const SqlUtil = require("../../Utils/Strings/SqlUtil");
+import LanguageService from '../../Services/LanguageService';
+import BaseModel from '../Models/BaseModel';
+import SqlUtil from '../../Utils/Strings/SqlUtil';
+const connMysql = require("../../Configs/Databases/db.config");
 
-class BaseRepo {
+export default class BaseRepo {
 
     /**
      * 
      * @param {BaseModel} model 
      */
-    static insert(model){
+    static insert(model: BaseModel){
         return new Promise((resolve, reject) => {
-            const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
                 INSERT INTO skills_group (
                     slug
@@ -20,7 +20,7 @@ class BaseRepo {
             `;
 
             const sqlData = [ model.slug ];
-            connMysql.query(sql, sqlData, (error, result, fields) => {
+            connMysql.query(sql, sqlData, (error: any, result: any, fields: any) => {
                 if(error){
                     reject({
                         message: "Error insert",
@@ -46,7 +46,7 @@ class BaseRepo {
      * 
      * @param {BaseModel} model 
      */
-    static insertLang(model){
+    static insertLang(model: BaseModel){
         return new Promise((resolve, reject) => {
             if(model.id == null){
                 reject({
@@ -78,7 +78,7 @@ class BaseRepo {
 
                 // resolve([columnsLang, interogationsSqlPart, valuesIntergationOnInsert, sql]);
 
-                const sqlData = [];
+                const sqlData = new Array<any>();
                 if(Array.isArray(model.title)){
                     for (let index = 0; index < model.title.length; index++) {
                         const idLang = languageService.convertIsoToId(allLanguages, model.title[index].iso);
@@ -91,13 +91,10 @@ class BaseRepo {
                     }
                 }
                 
-                const connMysql = require("../../Configs/Databases/db.config");
-                connMysql.query(sql, sqlData, (error, result, fields) => {
+                connMysql.query(sql, sqlData, (error: any, result: any, fields: any) => {
                     resolve([model, sqlData, result, error]);
                 });
             });
         });
     }
 }
-
-module.exports = BaseRepo;

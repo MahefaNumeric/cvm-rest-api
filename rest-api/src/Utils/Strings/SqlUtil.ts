@@ -1,11 +1,10 @@
+import BaseModel from '../../Data/Models/BaseModel';
 
-module.exports = 
-
-class SqlUtil{
+export default class SqlUtil {
 
     /**
      * 
-     * @param {Array<Object>} definitionsLang 
+     * @param {Object} definitionsLang 
      *  Example : 
         {
             "title": {
@@ -18,7 +17,7 @@ class SqlUtil{
      * @returns {string} 
         Ex: "title, description"
      */
-    static buildSqlColumn(definitionsLang){
+    static buildSqlColumn(definitionsLang: Object): string{
         const keys = Object.keys(definitionsLang);
         return keys.join(', ');
     }
@@ -29,7 +28,7 @@ class SqlUtil{
      * @returns {string}
      *  Example : "?, ?, ?" if number is 3
      */
-    static buildSqlInterogation(number){
+    static buildSqlInterogation(number: number): string{
         if(!Number.isInteger(number)) throw Error("BaseRepo::buildSqlInterogation, number is not a number");
 
         let result = "";
@@ -48,7 +47,7 @@ class SqlUtil{
      * @returns {string}
      * Example : "(?, ?, ?), (?, ?, ?)"
      */
-    static buildValuesInterogationsOnInsert(model, interogationsSqlPart){
+    static buildValuesInterogationsOnInsert(model: BaseModel, interogationsSqlPart: string): string{
         const nbOfTranslation = model.title.length
         let result = ``;
         for(let i = 0; i < nbOfTranslation; i++){
@@ -101,8 +100,8 @@ class SqlUtil{
      *
      * @returns {Array}
      */
-    static buildArrayValueData(model, definitionsLang, indexTranslation){
-        const result = [];
+    static buildArrayValueData(model: BaseModel, definitionsLang: Object, indexTranslation: number): Array<string> {
+        const result = new Array<string>();
         const definitionsLangKeys = Object.keys(definitionsLang);
         definitionsLangKeys.forEach(keyLang => {
             result.push( model[keyLang][indexTranslation].value );
