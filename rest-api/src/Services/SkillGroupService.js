@@ -1,7 +1,7 @@
-const LanguageService = require("./LanguageService");
-const SkillGroupRepo = require("../Data/Repositories/SkillGroupRepo");
+import SkillGroupRepo from "../Data/Repositories/SkillGroupRepo";
+import LanguageService from "./LanguageService";
 
-class SkillGroupService{
+export default class SkillGroupService{
 
     constructor(){
         this.languageService = new LanguageService();
@@ -22,5 +22,3 @@ class SkillGroupService{
     }
 
 }
-
-module.exports = SkillGroupService;

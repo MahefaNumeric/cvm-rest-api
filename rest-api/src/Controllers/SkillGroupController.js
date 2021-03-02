@@ -1,10 +1,9 @@
-const express = require("express");
-const SkillGroupService = require("../Services/SkillGroupService");
-const SkillGroup = require("../Data/Models/SkillGroup");
+// const express = require("express");
+// const { default: SkillGroup } = require("../Data/Models/SkillGroup");
 
-const router = express.Router({ mergeParams: true });
+import SkillGroup from "../Data/Models/SkillGroup";
 
-module.exports = router;
+export const router = express.Router({ mergeParams: true });
 
 const skillGroupService = new SkillGroupService();
 
@@ -89,3 +88,6 @@ router.post("/", (request, response)=>{
 //     //     response.json(results);
 //     // });
 // });
+
+
+module.exports = router;
