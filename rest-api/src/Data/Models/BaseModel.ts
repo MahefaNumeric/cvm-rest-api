@@ -3,7 +3,7 @@ import LooseObject from "../Types/LooseObject";
 export default abstract class BaseModel {
     public _table: string;
     public _definitions: any;
-    [key: string]: any; // Special : For TypeScript accept property unknow
+    [key: string]: any; // Special : For TypeScript accept unknow property
 
     public constructor() {
         this._table = "";

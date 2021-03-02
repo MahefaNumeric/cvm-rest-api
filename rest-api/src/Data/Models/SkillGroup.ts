@@ -13,24 +13,18 @@ export default class SkillGroup extends BaseModel {
      * @param {string} description 
      */
     public constructor(
-        id: number,
-        slug: string,
-        title: string,
-        description: string
+        public id: number,
+        public slug: string,
+        public title: string,
+        public description: string
     ){
         super();
-
-        this.id = id;
-        this.slug = slug;
-        this.title = title;
-        this.description = description;
-
         this.skills = null;
 
-        this.setupDefinirition();
+        this.setupDefinition();
     }
 
-    public setupDefinirition(): void {
+    public setupDefinition(): void {
         this._table = "skills_group";
         this._definitions = {
             id: {

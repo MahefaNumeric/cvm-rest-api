@@ -1,8 +1,7 @@
-const SkillGroup = require("../Models/SkillGroup");
-const LanguageService = require("../../Services/LanguageService");
-const BaseRepo = require("./BaseRepo");
+import BaseRepo from './BaseRepo';
+import SkillGroup from '../Models/SkillGroup';
 
-class SkillGroupRepo extends BaseRepo {
+export default class SkillGroupRepo extends BaseRepo {
     static MSG_NO_SKILL_GROUP = "NO_SKILL_GROUP";
     static MSG_ERROR_RETRIVE_SKILLGROUP = "ERROR_RETRIVE_SKILLGROUP";
 
@@ -14,7 +13,7 @@ class SkillGroupRepo extends BaseRepo {
      * @returns {Promise<SkillGroup>}
      * @todo Filter User
      */
-    static getFromDbById(idGroupSkill, idLang){
+    static getFromDbById(idGroupSkill: number, idLang: number){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -30,11 +29,24 @@ class SkillGroupRepo extends BaseRepo {
                     AND skills_group_lang.id_lang = ${idLang}
                 LIMIT 1
             `;
-            connMysql.query(sql, (error, skillsGroupResult, fields) => {
-                if(error) throw error;
-                if(Array.isArray(skillsGroupResult) && skillsGroupResult.length > 0) {
-                    const skillGroup = new SkillGroup(...Object.values(skillsGroupResult[0]));
-                    resolve(skillGroup);
+            connMysql.query(sql, (error: any, skillsGroupResult: Array<SkillGroup>, fields: any) => {
+                if(error){
+                    reject({
+                        message: "SkillGroup::createFromDbById::skillsGroupResult error",
+                        data: [error]
+                    });
+                    throw error;
+                }
+                if(Array.isArray(skillsGroupResult)) {
+                    if(skillsGroupResult.length > 0){
+                        const first = skillsGroupResult[0];
+                        const skillGroup = new SkillGroup(
+                            first.id, first.slug, first.title, first.description
+                        );
+                        resolve(skillGroup);
+                    }else{
+                        resolve([]);
+                    }
                 }else{
                     reject({
                         message: "SkillGroup::createFromDbById::skillsGroupResult null"
@@ -49,7 +61,7 @@ class SkillGroupRepo extends BaseRepo {
      * @param {number} idCv 
      * @param {number} idLang 
      */
-    static getListUsedSkillsGroupFromDbByCv(idCv, idLang){
+    static getListUsedSkillsGroupFromDbByCv(idCv: number, idLang: number){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -71,15 +83,17 @@ class SkillGroupRepo extends BaseRepo {
                     AND part_skills_lang.id_lang = ${idLang}
                     AND skills_group_lang.id_lang = part_skills_lang.id_lang
             `;
-            connMysql.query(sql, (error, listSkillsResult, fields) => {
+            connMysql.query(sql, (error: any, listSkillsResult: Array<SkillGroup>, fields: any) => {
                 if(error) throw error;
                 if(Array.isArray(listSkillsResult)) {
                     if(listSkillsResult.length > 0){
-                        const listSkills = [];
+                        const list = new Array<SkillGroup>();
                         listSkillsResult.forEach(element => {
-                            listSkills.push(new SkillGroup(...Object.values(element)));
+                            list.push(new SkillGroup(
+                                element.id, element.slug, element.title, element.description
+                            ));
                         });
-                        resolve(listSkills);
+                        resolve(list);
                     }else{
                         resolve([]);
                     }
@@ -99,7 +113,7 @@ class SkillGroupRepo extends BaseRepo {
      * @param {number} idLang 
      * @returns {Promise<SkillGroup>}
      */
-    static getListAllSkillGroup(idLang){
+    static getListAllSkillGroup(idLang: number){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -113,15 +127,17 @@ class SkillGroupRepo extends BaseRepo {
                     ON skills_group_lang.id_skills_group = skills_group.id 
                 WHERE skills_group_lang.id_lang = ${idLang}
             `;
-            connMysql.query(sql, (error, listSkillsResult, fields) => {
+            connMysql.query(sql, (error: any, listSkillsResult: any, fields: any) => {
                 if(error) throw error;
                 if(Array.isArray(listSkillsResult)) {
                     if(listSkillsResult.length > 0){
-                        const listSkills = [];
+                        const list = new Array<SkillGroup>();
                         listSkillsResult.forEach(element => {
-                            listSkills.push(new SkillGroup(...Object.values(element)));
+                            list.push(new SkillGroup(
+                                element.id, element.slug, element.title, element.description
+                            ));
                         });
-                        resolve(listSkills);
+                        resolve(list);
                     }else{
                         resolve([]);
                     }
@@ -137,5 +153,3 @@ class SkillGroupRepo extends BaseRepo {
     }
 
 }
-
-module.exports = SkillGroupRepo;
