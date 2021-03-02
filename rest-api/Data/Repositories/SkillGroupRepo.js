@@ -135,45 +135,6 @@ class SkillGroupRepo extends BaseRepo {
             });
         });
     }
-    
-
-    /**
-     * 
-     * @param {SkillGroup} skillGroup 
-     */
-    static insert(skillGroup){
-        return new Promise((resolve, reject) => {
-            const connMysql = require("../../Configs/Databases/db.config");
-            const sqlSkillGroup = /* sql */`
-                INSERT INTO skills_group (
-                    slug
-                ) VALUES (
-                    ?
-                )
-            `;
-
-            const sqlSkillGroupData = [ skillGroup.slug ];
-            connMysql.query(sqlSkillGroup, sqlSkillGroupData, (error, result, fields) => {
-                if(error){
-                    reject({
-                        message: "Error insert",
-                        data: [error, result]
-                    });
-                    return false;
-                }
-
-                skillGroup.id = result.insertId;
-
-                this.insertObjectLang(skillGroup)
-                    .then(resultInsertSkillGroupLang => {
-                        resolve([skillGroup, result, error, resultInsertSkillGroupLang]);
-                    })
-                    .catch(errorInsertSkillGroupLang => {
-                        reject(["insertSkillGroupLang::catch", errorInsertSkillGroupLang, skillGroup, result, error]);
-                    });
-            });
-        });
-    }
 
 }
 
