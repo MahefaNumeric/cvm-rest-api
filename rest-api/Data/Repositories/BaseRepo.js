@@ -6,12 +6,12 @@ class BaseRepo {
 
     /**
      * 
-     * @param {SkillGroup} skillGroup 
+     * @param {BaseModel} model 
      */
-    static insert(skillGroup){
+    static insert(model){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
-            const sqlSkillGroup = /* sql */`
+            const sql = /* sql */`
                 INSERT INTO skills_group (
                     slug
                 ) VALUES (
@@ -19,8 +19,8 @@ class BaseRepo {
                 )
             `;
 
-            const sqlSkillGroupData = [ skillGroup.slug ];
-            connMysql.query(sqlSkillGroup, sqlSkillGroupData, (error, result, fields) => {
+            const sqlData = [ model.slug ];
+            connMysql.query(sql, sqlData, (error, result, fields) => {
                 if(error){
                     reject({
                         message: "Error insert",
@@ -29,14 +29,14 @@ class BaseRepo {
                     return false;
                 }
 
-                skillGroup.id = result.insertId;
+                model.id = result.insertId;
 
-                this.insertObjectLang(skillGroup)
+                this.insertLang(model)
                     .then(resultInsertSkillGroupLang => {
-                        resolve([skillGroup, result, error, resultInsertSkillGroupLang]);
+                        resolve([model, result, error, resultInsertSkillGroupLang]);
                     })
                     .catch(errorInsertSkillGroupLang => {
-                        reject(["insertSkillGroupLang::catch", errorInsertSkillGroupLang, skillGroup, result, error]);
+                        reject(["insertSkillGroupLang::catch", errorInsertSkillGroupLang, model, result, error]);
                     });
             });
         });
@@ -46,20 +46,19 @@ class BaseRepo {
      * 
      * @param {BaseModel} model 
      */
-    static insertObjectLang(model){
+    static insertLang(model){
         return new Promise((resolve, reject) => {
             if(model.id == null){
                 reject({
-                    origin: "BaseRepo::insertObjectLang",
+                    origin: "BaseRepo::insertLang",
                     message: "model.id == null"
                 });
                 return false;
             }
 
-            const tableName = model._table;
             const definitionsLang = model.getDefinitionsLang();
 
-            // resolve([tableName, definitionsLang]); return;
+            // resolve([model._table, definitionsLang]); return;
 
             const languageService = new LanguageService();
             languageService.getAllLanguage()
@@ -69,8 +68,8 @@ class BaseRepo {
                 const valuesIntergationOnInsert = SqlUtil.buildValuesInterogationsOnInsert(model, interogationsSqlPart);
 
                 const sql = /* sql */`
-                    INSERT INTO ${tableName}_lang (
-                        id_${tableName},
+                    INSERT INTO ${model._table}_lang (
+                        id_${model._table},
                         id_lang,
                         ${columnsLang}
                     ) VALUES 
