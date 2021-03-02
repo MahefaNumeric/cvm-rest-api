@@ -24,7 +24,8 @@ class BaseRepo {
             languageService.getAllLanguage().then(allLanguages => {
 
                 const columnsLang = this.buildSqlColumn(definitionsLang);
-                const integrationsSqlPart = this.buildSqlInterogation(columnsLang.length);
+                const interogationsSqlPart = this.buildSqlInterogation(columnsLang.length);
+                const valuesIntergationOnInsert = this.buildValuesInterogationsOnInsert(object, interogationsSqlPart);
 
                 const sql = /* sql */`
                     INSERT INTO ${tableName}_lang (
@@ -32,8 +33,7 @@ class BaseRepo {
                         id_lang,
                         ${columnsLang}
                     ) VALUES 
-                    ( ?, ?, ${integrationsSqlPart} ),
-                    ( ?, ?, ?, ? )
+                    ${valuesIntergationOnInsert}
                 `;
 
                 const sqlData = [];
@@ -88,8 +88,18 @@ class BaseRepo {
 
         let result = "";
         for(let i = number; i > 0; i--){
-            if(i > 1) result = result + "?, ";
-            else result = result + "?";
+            if(i > 1) result += "?, ";
+            else result += "?";
+        }
+        return result;
+    }
+
+    static buildValuesInterogationsOnInsert(object, interogationsSqlPart){
+        const nbOfTranslation = object.title.length
+        let result = ``;
+        for(let i = 0; i < nbOfTranslation; i++){
+            result += `( ?, ?, ${interogationsSqlPart} )`;
+            if(i < nbOfTranslation) result += ",";
         }
         return result;
     }
