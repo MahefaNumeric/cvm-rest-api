@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : Dim 28 fév. 2021 à 11:45
+-- Généré le : mar. 02 mars 2021 à 19:00
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -289,7 +289,7 @@ CREATE TABLE IF NOT EXISTS `cv_lang` (
 --
 
 INSERT INTO `cv_lang` (`id_cv`, `id_lang`, `title_backend`, `title_frontend`, `auto_biography`, `date_add`, `date_update`) VALUES
-(1, 1, 'CV Lead Technique', 'Lead Technique', 'Ayant 4 ans d\'expérience en développement de logiciels professionnels dans les domaines des applications multiniveaux utilisant les technologies Java, J2EE comme les servlets, JSP, Struts, JDBC, Hibernate, XML et Oracle PL / SQL.', '2021-02-21 17:09:57', '2021-02-21 17:09:57'),
+(1, 1, 'CV Lead Technique', 'Lead Technique', 'Ayant 4 ans d\'expérience en développement de logiciels professionnels dans les domaines des applications multiniveaux utilisant les technologies Java, J2EE comme les servlets, JSP, Struts, JDBC, Hibernate, XML et Oracle PL / SQL.\r\nmanaging people, it’s also managing projects, and managing a crisis', '2021-02-21 17:09:57', '2021-02-21 17:09:57'),
 (1, 2, 'CV Technical Lead', 'Technical Lead', 'Having 4 years of strong professional software development experience in the areas of Multi-tier applications using Java, J2EE technologies like Servlets, JSP, Struts, JDBC, Hibernate, XML and Oracle PL/SQL.', '2021-02-21 17:09:57', '2021-02-21 17:09:57'),
 (2, 1, 'CV Prestashop Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:45:34', '2021-02-21 17:45:34'),
 (3, 1, 'CV Symfony Developer', '', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin dignissim viverra nibh sed varius. Proin bibendum nunc in sem ultrices posuere. Aliquam ut aliquam lacus. FR', '2021-02-21 17:48:27', '2021-02-21 17:48:27'),
@@ -344,7 +344,15 @@ CREATE TABLE IF NOT EXISTS `cv_skills` (
 INSERT INTO `cv_skills` (`id_cv`, `id_skills`, `date_add`, `date_update`) VALUES
 (1, 1, '2021-02-23 21:18:29', '2021-02-23 21:18:29'),
 (1, 2, '2021-02-24 13:46:05', '2021-02-24 13:46:05'),
-(1, 3, '2021-02-24 15:26:16', '2021-02-24 15:26:16');
+(1, 3, '2021-02-24 15:26:16', '2021-02-24 15:26:16'),
+(1, 4, '2021-02-28 12:35:55', '2021-02-28 12:35:55'),
+(1, 5, '2021-02-28 14:07:08', '2021-02-28 14:07:08'),
+(1, 6, '2021-02-28 14:36:59', '2021-02-28 14:36:59'),
+(1, 7, '2021-02-28 15:13:41', '2021-02-28 15:13:41'),
+(1, 8, '2021-02-28 15:23:10', '2021-02-28 15:23:10'),
+(1, 9, '2021-02-28 15:25:07', '2021-02-28 15:25:07'),
+(1, 10, '2021-03-02 18:58:38', '2021-03-02 18:58:38'),
+(1, 11, '2021-03-02 18:58:38', '2021-03-02 18:58:38');
 
 -- --------------------------------------------------------
 
@@ -355,7 +363,6 @@ INSERT INTO `cv_skills` (`id_cv`, `id_skills`, `date_add`, `date_update`) VALUES
 DROP TABLE IF EXISTS `languages`;
 CREATE TABLE IF NOT EXISTS `languages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(16) NOT NULL,
   `code_iso` varchar(6) NOT NULL,
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -367,10 +374,35 @@ CREATE TABLE IF NOT EXISTS `languages` (
 -- Déchargement des données de la table `languages`
 --
 
-INSERT INTO `languages` (`id`, `name`, `code_iso`, `date_add`, `date_update`) VALUES
-(1, 'Francais', 'FR', '2021-02-21 15:17:49', '2021-02-21 15:17:49'),
-(2, 'English', 'EN', '2021-02-21 15:17:57', '2021-02-21 15:17:57'),
-(3, 'Deutch', 'DE', '2021-02-21 15:18:09', '2021-02-21 15:18:09');
+INSERT INTO `languages` (`id`, `code_iso`, `date_add`, `date_update`) VALUES
+(1, 'FR', '2021-02-21 15:17:49', '2021-02-21 15:17:49'),
+(2, 'EN', '2021-02-21 15:17:57', '2021-02-21 15:17:57'),
+(3, 'DE', '2021-02-21 15:18:09', '2021-02-21 15:18:09');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `languages_lang`
+--
+
+DROP TABLE IF EXISTS `languages_lang`;
+CREATE TABLE IF NOT EXISTS `languages_lang` (
+  `id_lang` int(11) NOT NULL,
+  `id_lang_translate` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  PRIMARY KEY (`id_lang`,`id_lang_translate`),
+  KEY `languages_lang.id_lang_translate` (`id_lang_translate`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Déchargement des données de la table `languages_lang`
+--
+
+INSERT INTO `languages_lang` (`id_lang`, `id_lang_translate`, `name`) VALUES
+(1, 1, 'Francais'),
+(1, 2, 'French'),
+(2, 1, 'Anglais'),
+(2, 2, 'English');
 
 -- --------------------------------------------------------
 
@@ -541,7 +573,7 @@ CREATE TABLE IF NOT EXISTS `part_projects_lang` (
 
 INSERT INTO `part_projects_lang` (`id_part_projects`, `id_lang`, `title`, `description`, `date_add`, `date_update`) VALUES
 (1, 1, 'PRB - API reliant un site ecommerce prestashop et un base de donn&eacute;e des fournisseur ', '<p>Contexte:</p>\r\n<ul>\r\n<li>Partie IHM : HTML5, CSS3, jQuery</li>\r\n<li>Base de donn&eacute;es : MySql</li>\r\n<li>Framework : Prestashop / Laravel</li>\r\n<li>Gestion de codes sources avec Git (Clone/Branch/Pull/Merge/Gestion conflit)</li>\r\n<li>Mise en place de services web</li>\r\n<li>D&eacute;veloppement de plugin</li>\r\n<li>Mise en place syst&egrave;me de connecteur entre prestashop et les fournisseurs</li>\r\n</ul>\r\n<p><strong>ENVIRONNEMENT TECHNIQUE :</strong></p>\r\n<p>Prestashop, Laravel, XML, MySql, JQuery, JavaScript, Jira, Git, Confluence, API</p>', '2021-02-28 09:23:13', '2021-02-28 09:23:13'),
-(1, 2, '<p> PRB - API connecting a prestashop ecommerce site and a supplier database </p>', '<p> Context: </p>\r\n<ul>\r\n<li> GUI part: HTML5, CSS3, jQuery </li>\r\n<li> Database: MySql </li>\r\n<li> Framework: Prestashop / Laravel </li>\r\n<li> Source code management with Git (Clone / Branch / Pull / Merge / Conflict management) </li>\r\n<li> Setting up web services </li>\r\n<li> Plugin development </li>\r\n<li> Establishment of a connector system between prestashop and suppliers </li>\r\n</ul>\r\n<p> <strong> TECHNICAL ENVIRONMENT: </strong> </p>\r\n<p> Prestashop, Laravel, XML, MySql, JQuery, JavaScript, Jira, Git, Confluence, API </p>', '2021-02-28 09:23:13', '2021-02-28 09:23:13');
+(1, 2, 'PRB - API connecting a prestashop ecommerce site and a supplier database', '<p> Context: </p>\r\n<ul>\r\n<li> GUI part: HTML5, CSS3, jQuery </li>\r\n<li> Database: MySql </li>\r\n<li> Framework: Prestashop / Laravel </li>\r\n<li> Source code management with Git (Clone / Branch / Pull / Merge / Conflict management) </li>\r\n<li> Setting up web services </li>\r\n<li> Plugin development </li>\r\n<li> Establishment of a connector system between prestashop and suppliers </li>\r\n</ul>\r\n<p> <strong> TECHNICAL ENVIRONMENT: </strong> </p>\r\n<p> Prestashop, Laravel, XML, MySql, JQuery, JavaScript, Jira, Git, Confluence, API </p>', '2021-02-28 09:23:13', '2021-02-28 09:23:13');
 
 -- --------------------------------------------------------
 
@@ -558,18 +590,27 @@ CREATE TABLE IF NOT EXISTS `part_skills` (
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `slug` (`slug`),
   KEY `part_skills.id_user` (`id_user`),
   KEY `part_skills.id_skills_group` (`id_skills_group`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `part_skills`
 --
 
 INSERT INTO `part_skills` (`id`, `id_user`, `id_skills_group`, `slug`, `date_add`, `date_update`) VALUES
-(1, 1, 1, 'PHP', '2021-02-23 21:04:18', '2021-02-23 21:04:18'),
-(2, 1, 1, 'JS', '2021-02-24 13:43:52', '2021-02-24 13:43:52'),
-(3, 1, 2, 'PYTHON', '2021-02-24 15:24:48', '2021-02-24 15:24:48');
+(1, 1, 2, 'PHP', '2021-02-23 21:04:18', '2021-02-23 21:04:18'),
+(2, 1, 2, 'JS', '2021-02-24 13:43:52', '2021-02-24 13:43:52'),
+(3, 1, 2, 'PYTHON', '2021-02-24 15:24:48', '2021-02-24 15:24:48'),
+(4, 1, 3, 'MANAGMENT', '2021-02-28 12:32:39', '2021-02-28 12:32:39'),
+(5, 1, 4, 'LEADERSHIP', '2021-02-28 14:06:34', '2021-02-28 14:06:34'),
+(6, 1, 3, 'JIRA', '2021-02-28 14:21:15', '2021-02-28 14:21:15'),
+(7, 1, 3, 'ESTIMATING', '2021-02-28 15:12:34', '2021-02-28 15:12:34'),
+(8, 1, 1, 'AWS', '2021-02-28 15:21:48', '2021-02-28 15:21:48'),
+(9, 1, 1, 'NODEJS', '2021-02-28 15:24:25', '2021-02-28 15:24:25'),
+(10, 1, 2, 'JAVA', '2021-03-02 18:54:47', '2021-03-02 18:54:47'),
+(11, 1, 1, 'SPRINGBOOT', '2021-03-02 18:56:34', '2021-03-02 18:56:34');
 
 -- --------------------------------------------------------
 
@@ -599,7 +640,23 @@ INSERT INTO `part_skills_lang` (`id_part_skills`, `id_lang`, `title`, `descripti
 (2, 1, 'Javascript', 'Javascript FR', '2021-02-24 13:44:23', '2021-02-24 13:44:23'),
 (2, 2, 'Javascript', 'Javascript EN', '2021-02-24 13:44:23', '2021-02-24 13:44:23'),
 (3, 1, 'Python', 'Python desc', '2021-02-24 15:25:08', '2021-02-24 15:25:08'),
-(3, 2, 'Python', 'Python desc', '2021-02-24 15:25:21', '2021-02-24 15:25:21');
+(3, 2, 'Python', 'Python desc', '2021-02-24 15:25:21', '2021-02-24 15:25:21'),
+(4, 1, 'Management', '', '2021-02-28 12:34:35', '2021-02-28 12:34:35'),
+(4, 2, 'Managment', '', '2021-02-28 12:34:35', '2021-02-28 12:34:35'),
+(5, 1, 'Leadership', '', '2021-02-28 14:06:55', '2021-02-28 14:06:55'),
+(5, 2, 'Leadership', '', '2021-02-28 14:06:55', '2021-02-28 14:06:55'),
+(6, 1, 'Jira', '', '2021-02-28 14:23:01', '2021-02-28 14:23:01'),
+(6, 2, 'Jira', '', '2021-02-28 14:23:01', '2021-02-28 14:23:01'),
+(7, 1, 'Estimation', '', '2021-02-28 15:13:01', '2021-02-28 15:13:01'),
+(7, 2, 'Estimating', '', '2021-02-28 15:13:01', '2021-02-28 15:13:01'),
+(8, 1, 'AWS', 'Amazon Web Services', '2021-02-28 15:22:27', '2021-02-28 15:22:27'),
+(8, 2, 'AWS', 'Amazon Web Services', '2021-02-28 15:22:27', '2021-02-28 15:22:27'),
+(9, 1, 'Node.js', '', '2021-02-28 15:24:54', '2021-02-28 15:24:54'),
+(9, 2, 'Node.js', '', '2021-02-28 15:24:54', '2021-02-28 15:24:54'),
+(10, 1, 'Java', 'Java', '2021-03-02 18:55:26', '2021-03-02 18:55:26'),
+(10, 2, 'Java', '', '2021-03-02 18:55:26', '2021-03-02 18:55:26'),
+(11, 1, 'SpringBoot', '', '2021-03-02 18:58:01', '2021-03-02 18:58:01'),
+(11, 2, 'SpringBoot', '', '2021-03-02 18:58:01', '2021-03-02 18:58:01');
 
 -- --------------------------------------------------------
 
@@ -624,19 +681,22 @@ CREATE TABLE IF NOT EXISTS `preferences_users` (
 DROP TABLE IF EXISTS `skills_group`;
 CREATE TABLE IF NOT EXISTS `skills_group` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `slug` varchar(128) NOT NULL,
+  `slug` char(128) NOT NULL,
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `slug` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `skills_group`
 --
 
 INSERT INTO `skills_group` (`id`, `slug`, `date_add`, `date_update`) VALUES
-(1, 'Software_Knowledge', '2021-02-23 21:35:23', '2021-02-23 21:35:23'),
-(2, 'LANGUAGES', '2021-02-24 15:23:26', '2021-02-24 15:23:26');
+(1, 'TECHNO_TOOLS', '2021-02-23 21:35:23', '2021-02-23 21:35:23'),
+(2, 'LANGUAGES', '2021-02-24 15:23:26', '2021-02-24 15:23:26'),
+(3, 'PROJECT_MANAGMENT', '2021-02-28 12:29:27', '2021-02-28 12:29:27'),
+(4, 'LEADERSHIP', '2021-02-28 14:05:48', '2021-02-28 14:05:48');
 
 -- --------------------------------------------------------
 
@@ -659,10 +719,14 @@ CREATE TABLE IF NOT EXISTS `skills_group_lang` (
 --
 
 INSERT INTO `skills_group_lang` (`id_skills_group`, `id_lang`, `title`, `description`) VALUES
-(1, 1, 'Conaissance informatique', 'Software Knowledge Descr FR'),
-(1, 2, 'Software Knowledge', 'Software Knowledge Descr EN'),
+(1, 1, 'Technologies / Outils', 'Software Knowledge Descr FR'),
+(1, 2, 'Technologies / Tools', 'Software Knowledge Descr EN'),
 (2, 1, 'Langages', 'Langages Desc'),
-(2, 2, 'Languages', 'Languages desc');
+(2, 2, 'Languages', 'Languages desc'),
+(3, 1, 'Gestion de projet', ''),
+(3, 2, 'Project Managment', ''),
+(4, 1, 'Leadership', 'Leadership desc fr'),
+(4, 2, 'Leadership', 'Leadership desc en');
 
 -- --------------------------------------------------------
 
@@ -860,6 +924,13 @@ ALTER TABLE `cv_projects`
 ALTER TABLE `cv_skills`
   ADD CONSTRAINT `cv_skills.id_cv` FOREIGN KEY (`id_cv`) REFERENCES `cv` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
   ADD CONSTRAINT `cv_skills.id_skills` FOREIGN KEY (`id_skills`) REFERENCES `part_skills` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
+
+--
+-- Contraintes pour la table `languages_lang`
+--
+ALTER TABLE `languages_lang`
+  ADD CONSTRAINT `languages_lang.id_lang_translate` FOREIGN KEY (`id_lang_translate`) REFERENCES `languages` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  ADD CONSTRAINT `languages_langid_lang` FOREIGN KEY (`id_lang`) REFERENCES `languages` (`id`) ON DELETE CASCADE ON UPDATE NO ACTION;
 
 --
 -- Contraintes pour la table `part_educations`
