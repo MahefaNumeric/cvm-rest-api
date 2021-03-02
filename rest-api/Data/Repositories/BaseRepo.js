@@ -8,7 +8,7 @@ class BaseRepo {
      * @param {BaseModel} model 
      */
     static insertObjectLang(model){
-        return new Promise(async (resolve, reject) => {
+        return new Promise((resolve, reject) => {
             if(model.id == null){
                 reject({
                     origin: "BaseRepo::insertObjectLang",
@@ -23,8 +23,8 @@ class BaseRepo {
             // resolve([tableName, definitionsLang]); return;
 
             const languageService = new LanguageService();
-            languageService.getAllLanguage().then(allLanguages => {
-
+            languageService.getAllLanguage()
+            .then(allLanguages => {
                 const columnsLang = this.buildSqlColumn(definitionsLang);
                 const interogationsSqlPart = this.buildSqlInterogation(allLanguages.length);
                 const valuesIntergationOnInsert = this.buildValuesInterogationsOnInsert(model, interogationsSqlPart);
@@ -48,8 +48,6 @@ class BaseRepo {
                         sqlData.push(...[
                             model.id,
                             idLang,
-                            // model.title[index].value,
-                            // model.description[index].value
                             ...arrayValueData
                         ]); 
                     }
