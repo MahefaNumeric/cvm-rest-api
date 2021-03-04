@@ -1,4 +1,5 @@
-const mysql = require("mysql");
+// const mysql = require("mysql");
+import mysql from "mysql";
 
 const connection = mysql.createConnection({
     host: "localhost",
@@ -15,5 +16,5 @@ connection.connect((error: any) => {
   
    console.log('DB Connected as id ', connection.threadId);
 });
-connection.
+
 export default connection;
