@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3306
--- Généré le : mar. 02 mars 2021 à 19:00
+-- Généré le : jeu. 04 mars 2021 à 22:16
 -- Version du serveur :  5.7.31
 -- Version de PHP : 7.3.21
 
@@ -686,7 +686,7 @@ CREATE TABLE IF NOT EXISTS `skills_group` (
   `date_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `slug` (`slug`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Déchargement des données de la table `skills_group`
