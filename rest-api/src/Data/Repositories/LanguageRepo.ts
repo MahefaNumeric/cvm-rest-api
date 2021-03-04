@@ -1,7 +1,6 @@
-import BaseRepo from './BaseRepo';
 import Language from '../Models/Language';
 
-export default class LanguageRepo extends BaseRepo<Language> {
+export default class LanguageRepo {
     static MSG_NO_LANGUAGE = "NO_LANGUAGE";
     static MSG_RESULT_NOT_KNOW = "RESULT_NOT_KNOW";
 
@@ -139,3 +138,5 @@ export default class LanguageRepo extends BaseRepo<Language> {
     }
 
 }
+
+module.exports = LanguageRepo;
