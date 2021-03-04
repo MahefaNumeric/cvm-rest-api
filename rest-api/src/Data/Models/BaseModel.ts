@@ -13,7 +13,7 @@ export default abstract class BaseModel // extends Object
         this._table = "";
     }
 
-    static initalize(objectType: any): any{
+    public static initalize(objectType: any): any{
         const arrayProperties: string[] = Object.getOwnPropertyNames(objectType);
         const className = objectType.constructor.name;
         const newObject: any = new Models[className];

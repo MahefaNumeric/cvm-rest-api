@@ -7,7 +7,7 @@ const connection = mysql.createConnection({
     database: "cvm",
 });
 
-connection.connect(error => {
+connection.connect((error: any) => {
     if (error) {
       console.error('DB Error connecting: ', error);
       return;

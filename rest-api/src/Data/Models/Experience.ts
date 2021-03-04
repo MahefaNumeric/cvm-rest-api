@@ -1,4 +1,5 @@
 import Company from './Company';
+import CompanyRepo from '../Repositories/CompanyRepo';
 
 export default class Experiences{
     static _table = 'part_experiences';
@@ -16,22 +17,15 @@ export default class Experiences{
         // date_begin,
         // date_end
     ){
-        // this.id = id;
-        // this.id_user = id_user;
-        // this.id_company = id_company;
-        // this.id_company_position = id_company_position;
-        // this.slug = slug;
-        // this.date_begin = date_begin;
-        // this.date_end = date_end;
 
         // List of companies
         this.companies = [];
     }
 
-    static buildExperienceByIdCv(idCv: number, idLang: number){
+    static buildExperienceByIdCv(idCv: number, idLang: number): Promise<Experiences>{
         return new Promise((resolve, reject) => {
             const experience = new Experiences();
-            Company.getListCompaniesFromDbByCv(idCv, idLang).then((listCompanies: Array<Company>) => {
+            CompanyRepo.getListCompaniesFromDbByCv(idCv, idLang).then((listCompanies: Array<Company>) => {
                 experience.companies = listCompanies;
                 resolve(experience);
             }).catch(error => reject(error));

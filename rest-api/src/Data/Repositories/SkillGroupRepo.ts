@@ -61,7 +61,7 @@ export default class SkillGroupRepo extends BaseRepo {
      * @param {number} idCv 
      * @param {number} idLang 
      */
-    static getListUsedSkillsGroupFromDbByCv(idCv: number, idLang: number){
+    static getListUsedSkillsGroupFromDbByCv(idCv: number, idLang: number): Promise<SkillGroup[]>{
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`

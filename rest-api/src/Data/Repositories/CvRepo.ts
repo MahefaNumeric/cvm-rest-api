@@ -6,9 +6,10 @@ import Project from "../Models/Project";
 import Skill from "../Models/Skill";
 import SkillGroupRepo from './SkillGroupRepo';
 import SkillGroup from '../Models/SkillGroup';
-
+import AddressRepo from "./AddressRepo";
 
 export default class CvRepo {
+    static MSG_NO_CV_GIVEN_ID = "NO_CV_GIVEN_ID";
     
     /**
      * 
@@ -40,8 +41,8 @@ export default class CvRepo {
                 // console.log("Cv::createFromDbById, cvResult:", cvResult);
                 if(error) throw error;
                 if(Array.isArray(cvResult) && cvResult.length > 0){
-                    const cv = new Cv(...Object.values(cvResult[0]));
-                    Address.createFromDbById(cv.id_address, idLang).then((address: Address) => {
+                    const cv = Cv.createFromObj(cvResult[0]);
+                    AddressRepo.createFromDbById(cv.id_address, idLang).then((address: Address) => {
                         cv.address = address;
                         Education.getListEducationFromDbByIdCv(cv.id, idLang).then((listEducation: Array<Education>) => {
                             cv.educations = listEducation;
@@ -49,7 +50,7 @@ export default class CvRepo {
                                 cv.skills = listSkills;
                                 SkillGroupRepo.getListUsedSkillsGroupFromDbByCv(cv.id, idLang).then((listGroupSkills: SkillGroup[]) => {
                                     cv.skillsGroup = listGroupSkills;
-                                    Experiences.buildExperienceByIdCv(cv.id, idLang).then((experiences: Array<Experiences>) => {
+                                    Experiences.buildExperienceByIdCv(cv.id, idLang).then((experiences: Experiences) => {
                                         cv.experiences = experiences;
                                         Project.getListProjectFromDbByCv(cv.id, idLang).then(projects => {
                                             cv.projects = projects;
@@ -63,22 +64,11 @@ export default class CvRepo {
                 }else{
                     reject({
                         message: `Cv::createFromDbById::cvResult::error, idCv:${idCv} does not exist`,
-                        code: this.MSG_NO_CV_GIVEN_ID,
+                        code: CvRepo.MSG_NO_CV_GIVEN_ID,
                         data: [cvResult, error]
                     });
                 }
             });
         });
-    }
-
-    /**
-     * 
-     * @param {FormData} form 
-     * @returns {User}
-     */
-    static createFromForm(form){
-        const user = new User(
-            null
-        );
     }
 }

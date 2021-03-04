@@ -5,11 +5,7 @@ const connMysql = require("../../Configs/Databases/db.config");
 
 export default class BaseRepo {
 
-    /**
-     * 
-     * @param {BaseModel} model 
-     */
-    static insert(model: BaseModel){
+    public static insert(model: BaseModel): Promise<any>{
         return new Promise((resolve, reject) => {
             const sql = /* sql */`
                 INSERT INTO skills_group (
@@ -46,7 +42,7 @@ export default class BaseRepo {
      * 
      * @param {BaseModel} model 
      */
-    static insertLang(model: BaseModel){
+    public static insertLang(model: BaseModel): Promise<any>{
         return new Promise((resolve, reject) => {
             if(model.id == null){
                 reject({
@@ -96,4 +92,8 @@ export default class BaseRepo {
             });
         });
     }
+
+    // public static update(model: BaseModel): Promise<any>{}
+    // public static listAll(model: BaseModel): Promise<any>{}
+    // public static delete(model: BaseModel): Promise<any>{}
 }

@@ -7,8 +7,8 @@ export default class Position{
         public title: string,
         public description: string,
         public descriptionExperiencePosition: string,
-        public experienceDateBegin: Date,
-        public experienceDateEnd: Date
+        public experienceDateBegin: string,
+        public experienceDateEnd: string
     ){
     }
 

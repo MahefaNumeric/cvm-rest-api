@@ -1,8 +1,6 @@
 import BaseModel from './BaseModel';
 
 export default class Cv extends BaseModel {
-    static MSG_NO_CV_GIVEN_ID = "NO_CV_GIVEN_ID";
-
     public template: any;
     public address: any;
     public educations: any;
@@ -21,5 +19,17 @@ export default class Cv extends BaseModel {
         public auto_biography: string
     ){
         super();
+    }
+
+    public static createFromObj(obj: Cv): Cv{
+        return new Cv(
+            obj.id, 
+            obj.id_template, 
+            obj.slug, 
+            obj.id_address, 
+            obj.title_backend,
+            obj.title_frontend,
+            obj.auto_biography
+        );
     }
 }
