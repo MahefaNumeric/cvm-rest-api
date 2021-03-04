@@ -1,18 +1,15 @@
 
-class Language{
+export default class Language{
     static _table = "languages";
 
     static MSG_NO_LANGUAGE = "NO_LANGUAGE";
     static MSG_RESULT_NOT_KNOW = "RESULT_NOT_KNOW";
 
     constructor(
-        id,
-        code_iso,
-        name
+        public id: number,
+        public code_iso: string,
+        public name: string
     ){
-        this.id = id;
-        this.code_iso = code_iso;
-        this.name = name;
     }
 
     /**
@@ -21,7 +18,7 @@ class Language{
      * @param {CallableFunction} cbFinnished
      * @returns {Language}
      */
-    static createFromDbById(idLang){
+    static createFromDbById(idLang: number){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -35,7 +32,7 @@ class Language{
                 WHERE id = ${idLang} 
                 LIMIT 1
             `;
-            connMysql.query(sql, (error, languageResult, fields) => {
+            connMysql.query(sql, (error: any, languageResult: any, fields: any) => {
                 if(error) throw error;
                 if(Array.isArray(languageResult) && languageResult.length > 0) {
                     const language = new Language(...Object.values(languageResult[0]));
@@ -55,7 +52,7 @@ class Language{
      * @param {string} isoLang 
      * @returns {Promise<Language>} Promise of Language requested
      */
-    static createFromDbByIso(isoLang){
+    static createFromDbByIso(isoLang: string){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -70,7 +67,7 @@ class Language{
                 LIMIT 1
             `;
             const sqlParams = [isoLang];
-            connMysql.query(sql, sqlParams, (error, languageResult, fields) => {
+            connMysql.query(sql, sqlParams, (error: any, languageResult: any, fields: any) => {
                 if(error) {
                     reject({
                         message: "Language::createFromDbById, error",
@@ -113,7 +110,7 @@ class Language{
                     ON languages_lang.id_lang = languages.id
                 WHERE languages_lang.id_lang_translate = 1
             `;
-            connMysql.query(sql, (error, languageResult, fields) => {
+            connMysql.query(sql, (error: any, languageResult: any, fields: any) => {
                 if(error) {
                     reject({
                         message: "Language::getAllLanguage, error",
@@ -125,7 +122,7 @@ class Language{
                     if(languageResult.length > 0){
                         resolve(languageResult); return;
                         const languagesList = [];
-                        languageResult.forEach(item => {
+                        languageResult.forEach((item: Language) => {
                             languagesList.push( new Language(...item) );
                         });
                         resolve(languagesList);
@@ -148,5 +145,3 @@ class Language{
     }
 
 }
-
-module.exports = Language;

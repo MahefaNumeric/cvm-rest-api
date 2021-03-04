@@ -1,25 +1,25 @@
-const CompanyPosition = require("./CompanyPosition");
-const DateUtils = require("../../Utils/DateUtils");
+import Position from './Position';
 
 class Company{
-    static _table = 'companies';
+    public _table = 'companies';
+
+    private positionsValue: Array<Position>;
+
+    public dateStart: any;
+    public dateEnd: any;
+    public hasManyPosition: boolean;
 
     static MSG_NO_COMPANY = "NO_COMPANY";
     static MSG_ERROR_RETRIVE_COMPANY = "ERROR_RETRIVE_COMPANY";
 
     constructor(
-        id,
-        slug,
-        name,
-        description
+        public id: number,
+        public slug: string,
+        public name: string,
+        public description: string
     ){
-        this.id = id;
-        this.slug = slug;
-        this.name = name;
-        this.description = description;
-
         // // Position on a company
-        this.positionsValue = [];   // Private
+        this.positionsValue = [];
 
         this.dateStart = null;  // Calculate from this.positions
         this.dateEnd = null;  // Calculate from this.positions
@@ -28,13 +28,13 @@ class Company{
         this.hasManyPosition = false;
     }
     
-    set positions(value) {
+    set positions(value: Array<Position>) {
         this.positionsValue = value;
         this.setupPositionsBeganEnd();
         this.setupProperty_hasManyPosition();
     }
 
-    get positions() {
+    get positions(): Array<Position> {
         return this.positionsValue;
     }
 
@@ -44,7 +44,7 @@ class Company{
      * @param {*} idLang 
      * @returns {Array<Company>}
      */
-    static getListCompaniesFromDbByCv(idCv, idLang){
+    static getListCompaniesFromDbByCv(idCv: number, idLang: number){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -88,14 +88,14 @@ class Company{
                 GROUP BY part_experiences.id_company
             `;
             // console.log("CompanyPosition::getListCompaniesFromDbByCv::sql", sql);
-            connMysql.query(sql, async (error, listCompaniesResult, fields) => {
+            connMysql.query(sql, async (error: any, listCompaniesResult: any[], fields: any) => {
                 if(error) throw error;
                 if(Array.isArray(listCompaniesResult)) {
                     if(listCompaniesResult.length > 0){
                         const listCompanies = [];
                         for (let element of listCompaniesResult) {
                             const company = new Company(...Object.values(element));
-                            company.positions = await CompanyPosition.getListPositionByCv(idCv, company.id, idLang);
+                            company.positions = await Position.getListPositionByCv(idCv, company.id, idLang);
                             listCompanies.push(company);
                         };
                         resolve(listCompanies);

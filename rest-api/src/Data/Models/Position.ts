@@ -1,25 +1,18 @@
 
-class CompanyPosition{
+export default class Position{
 
     constructor(
-        id,
-        slug,
-        title,
-        description,
-        descriptionExperiencePosition,
-        experienceDateBegin,
-        experienceDateEnd
+        public id: number,
+        public slug: string,
+        public title: string,
+        public description: string,
+        public descriptionExperiencePosition: string,
+        public experienceDateBegin: Date,
+        public experienceDateEnd: Date
     ){
-        this.id = id;
-        this.slug = slug;
-        this.title = title;
-        this.description = description;
-        this.descriptionExperiencePosition = descriptionExperiencePosition;
-        this.experienceDateBegin = experienceDateBegin;
-        this.experienceDateEnd = experienceDateEnd;
     }
 
-    static getListPositionByCv(idCv, idCompany, idLang){
+    static getListPositionByCv(idCv: number, idCompany: number, idLang: number){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -65,21 +58,21 @@ class CompanyPosition{
                     AND part_experiences_lang.id_lang = companies_lang.id_lang
                     AND part_experiences.id_company = ${idCompany}
             `;
-            // console.log("CompanyPosition::getListPositionByCv::sql", sql);
-            connMysql.query(sql, (error, listPositionsResult, fields) => {
+            // console.log("Position::getListPositionByCv::sql", sql);
+            connMysql.query(sql, (error: any, listPositionsResult: any[], fields: any) => {
                 if(error) reject({
-                    message: "CompanyPosition::getListPositionByCv::error",
+                    message: "Position::getListPositionByCv::error",
                     data: error
                 });
                 if(Array.isArray(listPositionsResult) && listPositionsResult.length > 0) {
-                    const listPositions = [];
+                    const listPositions: Position[] = [];
                     listPositionsResult.forEach(element => {
-                        listPositions.push(new CompanyPosition(...Object.values(element)));
+                        listPositions.push(new Position(...Object.values(element)));
                     });
                     resolve(listPositions);
                 }else{
                     reject({
-                        message: "CompanyPosition::getListPositionByCv::listPositionsResult null",
+                        message: "Position::getListPositionByCv::listPositionsResult null",
                         data: {listPositionsResult, error}
                     });
                 }
@@ -88,5 +81,3 @@ class CompanyPosition{
     }
 
 }
-
-module.exports = CompanyPosition;

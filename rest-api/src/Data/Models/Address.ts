@@ -1,5 +1,5 @@
 
-class Address{
+export default class Address{
     static MSG_NO_ADRESS = "NO_ADRESS";
     static MSG_UNKOW_ERROR = "UNKOW_ERROR";
     static MSG_UNKOW_DATA = "UNKOW_DATA";
@@ -15,21 +15,14 @@ class Address{
      * @param {string} value 
      */
     constructor(
-        id,
-        enable,
-        id_user,
-        slug,
-        date_add,
-        date_update,
-        value
+        public id: number,
+        public enable: number,
+        public id_user: number,
+        public slug: string,
+        public date_add: string,
+        public date_update: string,
+        public value: string 
     ){
-        this.id = id;
-        this.enable = enable;
-        this.id_user = id_user;
-        this.slug = slug;
-        this.date_add = date_add;
-        this.date_update = date_update;
-        this.value = value;
     }
 
     /**
@@ -37,7 +30,7 @@ class Address{
      * @param {number} idUser 
      * @returns {User}
      */
-    static createFromDbById(idAddress, idLang){
+    static createFromDbById(idAddress: number, idLang: number){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -51,7 +44,7 @@ class Address{
                     AND address_lang.id_lang = ${idLang}
                 LIMIT 1
             `;
-            connMysql.query(sql, (error, result, fields) => {
+            connMysql.query(sql, (error: any, result: any, fields: any) => {
                 if(error) reject({
                     message: "Address::createFromDbById::error",
                     code: this.MSG_UNKOW_ERROR,
@@ -79,12 +72,11 @@ class Address{
      * 
      * @param {FormData} form 
      * @returns {User}
+     * @todo implementation
      */
-    static createFromForm(form){
+    static createFromForm(form: any){
         const user = new User(
             null
         );
     }
 }
-
-module.exports = Address;

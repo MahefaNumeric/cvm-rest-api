@@ -42,7 +42,7 @@ function getRoute(){
 
 class CvController {
 
-    static getCvList = (request, response) => {
+    static getCvList = (request: any, response: any) => {
         console.log("CvController::getCvList");
         // const userService = new CvService();
         // userService.getListUser((results) => {
@@ -52,7 +52,7 @@ class CvController {
         // });
     }
 
-    static generateGivenCv = (request, response) => {
+    static generateGivenCv = (request: any, response: any) => {
         const isoLang = request.params.isoLang; // From parent params
         const idCv = request.params.idCv;
         const format = request.params.format;
@@ -60,7 +60,7 @@ class CvController {
 
         const cvService = new CvService();
         let resultHTML = null;
-        Language.createFromDbByIso(isoLang).then((language) => {
+        Language.createFromDbByIso(isoLang).then((language: Language) => {
             User.createFromDbById(idUser, language.id).then((user) => {
                 cvService.generateCv(isoLang, idCv, format, user, (result) => {
                     if(format == "html"){
