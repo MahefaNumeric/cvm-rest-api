@@ -90,4 +90,4 @@ router.post("/", (request: any, response: any)=>{
 // });
 
 
-module.exports = router;
+export default router;

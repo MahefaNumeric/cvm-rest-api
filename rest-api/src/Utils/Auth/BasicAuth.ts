@@ -1,8 +1,9 @@
+import { NextFunction, Request, Response } from 'express';
 import UsersService from '../../Services/UserService';
 
 export default class BasicAuth {
     
-    public static async middleware(request: any, response: any, next: any){
+    public static async middleware(request: Request, response: Response, next: NextFunction){
         const notAuthUrls = [
             "/login",
             "/users/auth"

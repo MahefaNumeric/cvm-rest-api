@@ -9,4 +9,4 @@ function checkIdIfExist(idUser, connection){
     return null;
 }
 
-module.exports.checkIdIfExist = checkIdIfExist;
+export default checkIdIfExist;

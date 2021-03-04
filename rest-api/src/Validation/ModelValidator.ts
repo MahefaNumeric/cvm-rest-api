@@ -1,8 +1,9 @@
+import BaseModel from '../Data/Models/BaseModel';
 
-module.exports =
+export default class ModelValidator {
 
-class ModelValidator {
-    static checkIfBaseModel(model){
+    public static checkIfBaseModel(model: any){
         return model instanceof BaseModel;
     }
+
 }

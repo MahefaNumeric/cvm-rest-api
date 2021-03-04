@@ -1,19 +1,9 @@
 
-class DateUtils{
-    monthName = [];
-
-    static constructor(){
-        
-    }
+export default class DateUtils{
+    public monthName = [];
     
-    /**
-     * 
-     * @param {number} monthNumber 
-     * @param {string} isoLang 
-     * @returns {string}
-     */
-    static getMonthName(monthNumber, isoLang = "fr", longMonthName = true){
-        const monthName = [];
+    static getMonthName(monthNumber: number, isoLang: string = "fr", longMonthName: boolean = true): string{
+        const monthName: {[key: string]: any} = [];
         monthName["fr"] = [];
         monthName["fr"][1] = longMonthName ? "Janvier" : "Jan";
         monthName["fr"][2] = longMonthName ? "Fevrier" : "Fev";
@@ -57,12 +47,12 @@ class DateUtils{
      * @returns {+1} When dateA > dateB
      * @returns {null} When format is unkown
      */
-    static compareDateAB(dateA, dateB, format = "YYYY-MM"){
+    static compareDateAB(dateA: string, dateB: string, format: string = "YYYY-MM"): number|false{
         switch(format){
             case "YYYY-MM":
                 return this.compareDateAB_YYYYMM(dateA, dateB);
             default:
-                return null;
+                return false;
         }
     }
 
@@ -75,30 +65,28 @@ class DateUtils{
      * @returns { 0} When dateA = dateB
      * @returns {+1} When dateA > dateB
      */
-    static compareDateAB_YYYYMM(dateA, dateB){
-        let result;
+    static compareDateAB_YYYYMM(dateA: string, dateB: string): number|false{
+        let result: any = false;
         
         // Collect data
-        let [dateA_year, dateA_month] = String(dateA).split("-");
-        let [dateB_year, dateB_month] = String(dateB).split("-");
+        const [dateA_year, dateA_month] = String(dateA).split("-");
+        const [dateB_year, dateB_month] = String(dateB).split("-");
 
         // Sanitize data
-        dateA_year = parseInt(dateA_year);
-        dateB_year = parseInt(dateB_year);
-        dateA_month = parseInt(dateA_month);
-        dateB_month = parseInt(dateB_month);
+        const iDateA_year: number = parseInt(dateA_year);
+        const iDateB_year: number = parseInt(dateB_year);
+        const iDateA_month: number = parseInt(dateA_month);
+        const iDateB_month: number = parseInt(dateB_month);
 
         // Compare data
-        if(dateA_year < dateB_year) result = -1;
-        if(dateA_year > dateB_year) result = 1;
-        if(dateA_year == dateB_year){
-            if(dateA_month < dateB_month) result = -1;
-            if(dateA_month == dateB_month) result = 0;
-            if(dateA_month > dateB_month) result = 1;
+        if(iDateA_year < iDateB_year) result = -1;
+        else if(iDateA_year > iDateB_year) result = 1;
+        else if(iDateA_year == iDateB_year){
+            if(iDateA_month < iDateB_month) result = -1;
+            else if(iDateA_month == iDateB_month) result = 0;
+            else if(iDateA_month > iDateB_month) result = 1;
         }
 
         return result;
     }
 }
-
-module.exports = DateUtils;

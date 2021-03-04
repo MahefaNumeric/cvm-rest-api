@@ -1,5 +1,5 @@
 
-class NumberTools {
+export default class NumberTools {
 
     /**
      * Add zero leading to a number
@@ -7,12 +7,10 @@ class NumberTools {
      * @param {number} size 
      * @returns {string}
      */
-    static zeroLead(number, size) {
-        number = number.toString();
-        while (number.length < size) number = "0" + number;
-        return number;
+    public static zeroLead(nb: number, size: number): string {
+        let result: string = nb.toString();
+        while (result.length < size) result = "0" + result;
+        return result;
     }
 
 }
-
-module.exports = NumberTools;

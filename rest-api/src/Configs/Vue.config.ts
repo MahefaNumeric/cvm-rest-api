@@ -5,4 +5,4 @@ const vueOptions = {
     head: {},
 };
 
-module.exports = vueOptions;
+export default vueOptions;

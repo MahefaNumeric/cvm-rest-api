@@ -1,9 +1,8 @@
 import BasicAuth from './Utils/Auth/BasicAuth';
-import * as express from "express";
+import express from "express";
 const bodyParse = require("body-parser");
 const cors = require("cors");
 const expressVue = require("express-vue");
-const util = require('util');
 const vueOptions = require("./Configs/Vue.config");
 
 const userController = require("./Controllers/UsersController");

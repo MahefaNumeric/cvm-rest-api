@@ -6,3 +6,6 @@
 
 ## Node guides
 - https://khalilstemmler.com/blogs/typescript/node-starter-project/
+
+## Controllers routing
+- https://github.com/typestack/routing-controllers

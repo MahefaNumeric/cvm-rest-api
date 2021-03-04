@@ -3,6 +3,7 @@ import User from '../Data/Models/User';
 import CvService from '../Services/CvService';
 import Cv from '../Data/Models/Cv';
 import CvRepo from '../Data/Repositories/CvRepo';
+import * as express from 'express';
 
 function getRoute(){
     const router = express.Router({ mergeParams: true });
@@ -232,4 +233,4 @@ const vueOptions = (htmlPageTitle: string) => ({
 })
 
 
-module.exports = getRoute();
+export default getRoute();

@@ -1,10 +1,9 @@
 import UsersService from '../Services/UserService';
-// const mysql = require("mysql");
-// const express = require("express");
+import * as express from 'express';
 
 const router = express.Router();
 
-module.exports = router;
+export default router;
 
 // Recupere liste Users
 router.get("/", (request: any, response: any) => {
