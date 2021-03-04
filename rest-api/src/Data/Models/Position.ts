@@ -1,5 +1,5 @@
 
-export default class Position{
+export default class Position {
 
     constructor(
         public id: number,

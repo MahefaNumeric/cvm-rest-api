@@ -1,10 +1,8 @@
 import Company from './Company';
-import CompanyRepo from '../Repositories/CompanyRepo';
+import ErrorTools from '../../Utils/ErrorTools';
 
-export default class Experiences{
+export default class Experience {
     static _table = 'part_experiences';
-
-    static MSG_NO_EXPERIENCE = "NO_EXPERIENCE";
 
     public companies: Array<Company>;
 
@@ -22,14 +20,9 @@ export default class Experiences{
         this.companies = [];
     }
 
-    static buildExperienceByIdCv(idCv: number, idLang: number): Promise<Experiences>{
-        return new Promise((resolve, reject) => {
-            const experience = new Experiences();
-            CompanyRepo.getListCompaniesFromDbByCv(idCv, idLang).then((listCompanies: Array<Company>) => {
-                experience.companies = listCompanies;
-                resolve(experience);
-            }).catch(error => reject(error));
-        });
+    public static createFromObj(obj: Experience): Experience{
+        ErrorTools.throwNotYetImplementedError("Experience::createFromObj");
+        return new Experience();
     }
 
 }
