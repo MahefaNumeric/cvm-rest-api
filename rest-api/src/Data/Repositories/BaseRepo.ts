@@ -3,7 +3,7 @@ import BaseModel from '../Models/BaseModel';
 import SqlUtil from '../../Utils/Strings/SqlUtil';
 const connMysql = require("../../Configs/Databases/db.config");
 
-export default class BaseRepo {
+export default class BaseRepo<T> {
 
     public static insert(model: BaseModel): Promise<any>{
         return new Promise((resolve, reject) => {

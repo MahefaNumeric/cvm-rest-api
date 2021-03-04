@@ -1,5 +1,6 @@
+import BaseModel from './BaseModel';
 
-export default class SocialLink{
+export default class SocialLink extends BaseModel {
     static _table = "socials_link";
 
     constructor(
@@ -10,33 +11,18 @@ export default class SocialLink{
         public website_url: string,
         public zoom_id: number,
     ){
+        super();
     }
 
-    /**
-     * 
-     * @param {number} idUser 
-     * @returns {SocialLink}
-     */
-    static createFromDbById(idUser: number): Promise<SocialLink>{
-        return new Promise((resolve, reject) => {
-            const connMysql = require("../../Configs/Databases/db.config");
-            const sql = /* sql */`
-                SELECT 
-                    ${this._table}.*
-                FROM ${this._table}
-                WHERE user_id = ${idUser} 
-                LIMIT 1
-            `;
-            connMysql.query(sql, (error: any, socialLinkResult: any, fields: any) => {
-                if(error) throw error;
-                if(Array.isArray(socialLinkResult) && socialLinkResult.length > 0) {
-                    const socialLink = new SocialLink(...Object.values(socialLinkResult[0]));
-                    resolve(socialLink);
-                }else{
-                    console.log("SocialLink::createFromDbById::socialLinkResult", socialLinkResult, error);
-                }
-            });
-        });
+    public static createFromObj(obj: SocialLink): SocialLink{
+        return new SocialLink(
+            obj.user_id,
+            obj.github_url, 
+            obj.linkedin_url, 
+            obj.skype_id, 
+            obj.website_url,
+            obj.zoom_id
+        );
     }
 
 }

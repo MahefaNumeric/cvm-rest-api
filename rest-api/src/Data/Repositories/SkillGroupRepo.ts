@@ -39,10 +39,7 @@ export default class SkillGroupRepo extends BaseRepo {
                 }
                 if(Array.isArray(skillsGroupResult)) {
                     if(skillsGroupResult.length > 0){
-                        const first = skillsGroupResult[0];
-                        const skillGroup = new SkillGroup(
-                            first.id, first.slug, first.title, first.description
-                        );
+                        const skillGroup = SkillGroup.createFromObj(skillsGroupResult[0]);
                         resolve(skillGroup);
                     }else{
                         resolve([]);
@@ -89,9 +86,7 @@ export default class SkillGroupRepo extends BaseRepo {
                     if(listSkillsResult.length > 0){
                         const list = new Array<SkillGroup>();
                         listSkillsResult.forEach(element => {
-                            list.push(new SkillGroup(
-                                element.id, element.slug, element.title, element.description
-                            ));
+                            list.push(SkillGroup.createFromObj(element));
                         });
                         resolve(list);
                     }else{

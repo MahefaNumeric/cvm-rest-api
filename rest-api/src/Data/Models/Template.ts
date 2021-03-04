@@ -9,7 +9,11 @@ export default class Template {
         throw Error("Template Not yet implemented");
     }
 
-    static createFromDbById(idTemplate: number){
-        throw Error("Template Not yet implemented");
+    public static createFromObj(obj: Template): Template{
+        return new Template(
+            obj.id, 
+            obj.slug, 
+            obj.title, 
+        );
     }
 }

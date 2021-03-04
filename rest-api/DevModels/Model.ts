@@ -1,6 +1,6 @@
 import BaseModel from './BaseModel';
 
-export default class Address extends BaseModel {
+export default class Model extends BaseModel {
 
     /**
      * 

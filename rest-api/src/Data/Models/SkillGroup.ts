@@ -42,4 +42,13 @@ export default class SkillGroup extends BaseModel {
         };
     }
 
+    public static createFromObj(obj: SkillGroup): SkillGroup{
+        return new SkillGroup(
+            obj.id, 
+            obj.slug, 
+            obj.title, 
+            obj.description
+        );
+    }
+
 }
