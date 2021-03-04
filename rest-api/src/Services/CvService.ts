@@ -3,6 +3,7 @@ const path = require("path");
 const fs = require('fs');
 import Cv from "../Data/Models/Cv";
 import User from '../Data/Models/User';
+import NumberTools from '../Utils/NumbersTools';
 
 export default class CvService{
     

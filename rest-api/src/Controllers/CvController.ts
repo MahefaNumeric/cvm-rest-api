@@ -5,6 +5,8 @@ import Cv from '../Data/Models/Cv';
 import CvRepo from '../Data/Repositories/CvRepo';
 import * as express from 'express';
 import util from "util";
+import LanguageRepo from '../Data/Repositories/LanguageRepo';
+import UserRepo from '../Data/Repositories/UserRepo';
 
 function getRoute(){
     const router = express.Router({ mergeParams: true });
@@ -61,8 +63,8 @@ class CvController {
 
         const cvService = new CvService();
         let resultHTML = null;
-        Language.createFromDbByIso(isoLang).then((language: Language) => {
-            User.createFromDbById(idUser, language.id).then((user: User) => {
+        LanguageRepo.createFromDbByIso(isoLang).then((language: Language) => {
+            UserRepo.createFromDbById(idUser, language.id).then((user: User) => {
                 cvService.generateCv(isoLang, idCv, format, user).then((result: any) => {
                     if(format == "html"){
                         resultHTML = result;
@@ -137,8 +139,8 @@ class CvController {
 
         const cvService = new CvService();
         
-        Language.createFromDbByIso(isoLangLowercase).then(language => {
-            User.createFromDbById(idUser, language.id).then(user => {
+        LanguageRepo.createFromDbByIso(isoLangLowercase).then(language => {
+            UserRepo.createFromDbById(idUser, language.id).then(user => {
                 CvRepo.createFromDbById(idCv, language.id).then(cv => {
                     const data = {
                         user: user,
@@ -175,13 +177,13 @@ function userGetById_ErrorHandling(error: any, response: any, isoLang: string){
 
 function languageGetByIso_ErrorHandling(error: any, isoLang: string, response: any){
     switch(error.code){
-        case Language.MSG_NO_LANGUAGE:
+        case LanguageRepo.MSG_NO_LANGUAGE:
             response.type("text/json")
                 .status(404)
                 .write(JSON.stringify({message: `Error: Language '${isoLang}' does not exist`}));
             response.end();
             break;
-        case Language.MSG_RESULT_NOT_KNOW:
+        case LanguageRepo.MSG_RESULT_NOT_KNOW:
             response.type("text/json")
                 .status(500)
                 .write(JSON.stringify({message: `MSG_RESULT_NOT_KNOW`}));
@@ -199,7 +201,7 @@ function languageGetByIso_ErrorHandling(error: any, isoLang: string, response: a
 
 function cvGetById_ErrorHandling(error: any, idCv: number, response: any){
     let dataRender = {};
-    if(error.code == Cv.MSG_NO_CV_GIVEN_ID){
+    if(error.code == CvRepo.MSG_NO_CV_GIVEN_ID){
         dataRender = {
             message: `Error: CV id #${idCv} does not exist`,
             code: error.code

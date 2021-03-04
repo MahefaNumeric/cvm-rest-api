@@ -10,7 +10,6 @@ export default class SkillGroupService{
     constructor(
         public languageService: LanguageService = new LanguageService()
     ){
-        // this.languageService = new LanguageService();
     }
     
     /**

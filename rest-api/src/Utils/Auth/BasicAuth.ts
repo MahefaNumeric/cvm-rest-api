@@ -3,7 +3,7 @@ import UsersService from '../../Services/UserService';
 
 export default class BasicAuth {
     
-    public static async middleware(request: Request, response: Response, next: NextFunction){
+    public static async middleware(request: Request|any, response: Response, next: NextFunction){
         const notAuthUrls = [
             "/login",
             "/users/auth"

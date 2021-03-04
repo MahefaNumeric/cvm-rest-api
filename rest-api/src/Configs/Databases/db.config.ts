@@ -15,5 +15,5 @@ connection.connect((error: any) => {
   
    console.log('DB Connected as id ', connection.threadId);
 });
-
+connection.
 export default connection;

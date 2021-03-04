@@ -1,9 +1,10 @@
 import Language from "../Data/Models/Language";
+import LanguageRepo from '../Data/Repositories/LanguageRepo';
 
 export default class LanguageService{
     
     async getLanguageByIso(isoLang: string) {
-        const lang = await Language.createFromDbByIso(isoLang);
+        const lang = await LanguageRepo.createFromDbByIso(isoLang);
         return lang;
     }
 
@@ -11,7 +12,7 @@ export default class LanguageService{
      * @returns {Promise<Array<Language>>}
      */
     public getAllLanguage(): Promise<Array<Language>>{
-        return Language.getAllLanguage();
+        return LanguageRepo.getAllLanguage();
     }
 
     /**
