@@ -12,7 +12,7 @@ export default class Position{
     ){
     }
 
-    static getListPositionByCv(idCv: number, idCompany: number, idLang: number){
+    static getListPositionByCv(idCv: number, idCompany: number, idLang: number): Promise<Array<Position>>{
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`

@@ -1,22 +1,26 @@
-const DateUtils = require("../../Utils/DateUtils");
-const Language = require("./Language");
+import Language from './Language';
 
-class Education{
+export default class Education{
     static _table = "part_educations";
 
     static ERROR_RETRIVE_EDUCATION = "ERROR_RETRIVE_EDUCATION";
 
+    public date_begin_friendly: string;
+    public date_end_friendly: string;
+    private date_begin_value: string;
+    private date_end_value: string;
+
     constructor(
-        isoLang,
-        id,
-        id_user,
-        slug,
-        date_begin,
-        date_end,
-        date_add,
-        date_update,
-        title,
-        description
+        public isoLang: string,
+        public id: number,
+        public id_user: number,
+        public slug: string,
+        date_begin: string,
+        date_end: string,
+        public date_add: string,
+        public date_update: string,
+        public title: string,
+        public description: string
     ){
         this.isoLang = isoLang;
         this.id = id;
@@ -35,12 +39,30 @@ class Education{
         this.description = description;
     }
 
+    set date_begin(dateBegin) {
+        this.date_begin_value = dateBegin;
+        this.date_begin_friendly = this.formatDateToFriendly(dateBegin, "fr", false);
+    }
+
+    get date_begin() {
+        return this.date_begin_value;
+    }    
+
+    set date_end(dateEnd) {
+        this.date_end_value = dateEnd;
+        this.date_end_friendly = this.formatDateToFriendly(dateEnd, "fr", false);
+    }
+
+    get date_end() {
+        return this.date_end_value;
+    }
+
     /**
      * 
      * @param {number} idEducation
      * @returns {Education}
      */
-    static createFromDbById(idEducation, idLang){
+    static createFromDbById(idEducation: number, idLang: number){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -53,13 +75,13 @@ class Education{
                     AND part_educations_lang.id_lang = ${idLang}
                 LIMIT 1
             `;
-            connMysql.query(sql, (error, educationResult, fields) => {
+            connMysql.query(sql, (error: any, educationResult: any, fields: any) => {
                 if(error) throw error;
                 if(Array.isArray(educationResult) && educationResult.length > 0) {
-                    Language.createFromDbById(idLang).then((language) => {
+                    Language.createFromDbById(idLang).then((language: Language) => {
                         const education = new Education(language.code_iso, ...Object.values(educationResult[0]));
                         resolve(education);
-                    }).catch((error) => {
+                    }).catch((error: any) => {
                         console.log("Education::createFromDbById::catch", error);
                         reject({message: "Education::createFromDbById::catch"});
                     });
@@ -77,7 +99,7 @@ class Education{
      * @param {number} idLang 
      * @returns {Promise<Array<Education>>}
      */
-    static getListEducationFromDbByIdCv(idCv, idLang){
+    static getListEducationFromDbByIdCv(idCv: number, idLang: number){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -97,12 +119,12 @@ class Education{
             `;
             // console.log("Education::getListEducationFromDbByIdCv:sql", sql, idCv, idLang);
             const sqlParams = [idCv, idLang];
-            connMysql.query(sql, sqlParams, (error, listEducationResult, fields) => {
+            connMysql.query(sql, sqlParams, (error: any, listEducationResult: any, fields: any) => {
                 if(error) throw error;
                 if(Array.isArray(listEducationResult)) {
                     if(listEducationResult.length > 0){
-                        Language.createFromDbById(idLang).then((language) => {
-                            const listEducation = [];
+                        Language.createFromDbById(idLang).then((language: Language) => {
+                            const listEducation: Education[] = [];
                             listEducationResult.forEach(element => {
                                 listEducation.push(new Education(language.code_iso, ...Object.values(element)));
                             });
@@ -133,38 +155,18 @@ class Education{
      * @param {FormData} form 
      * @returns {Education}
      */
-    static createFromForm(form){
-        const user = new Education(
-            null
-        );
+    static createFromForm(form: any){
+        // const user = new Education();
     }
 
-    set date_begin(dateBegin) {
-        this.date_begin_value = dateBegin;
-        this.date_begin_friendly = this.formatDateToFriendly(dateBegin, "fr", false);
-    }
-
-    get date_begin() {
-        return this.date_begin_value;
-    }    
-
-    set date_end(dateEnd) {
-        this.date_end_value = dateEnd;
-        this.date_end_friendly = this.formatDateToFriendly(dateEnd, "fr", false);
-    }
-
-    get date_end() {
-        return this.date_end_value;
-    }
-
-    formatDateToFriendly(date, isoLang, longMonthName){
+    formatDateToFriendly(date: string, isoLang: string, longMonthName: boolean): string{
         const date_array = date.split("-");
         const year = parseInt(date_array[0]);
         const month = parseInt(date_array[1]);
         const monthName = DateUtils.getMonthName(month, isoLang, longMonthName);
         
         let enFriendlyDate = `${year} ${monthName}`; // Default : EN 
-        let result = null;
+        let result: string = ``;
         switch(String(isoLang).toLowerCase()){
             case "fr":
                 result = `${monthName} ${year}`;
@@ -177,5 +179,3 @@ class Education{
     }
 
 }
-
-module.exports = Education;

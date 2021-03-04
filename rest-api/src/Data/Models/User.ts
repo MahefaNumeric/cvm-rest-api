@@ -1,33 +1,31 @@
-const Address = require("./Address");
-const SocialLink = require("./SocialLink");
+import Address from './Address';
+import SocialLink from './SocialLink';
+import BaseModel from './BaseModel';
 
-class User{
+export default class User extends BaseModel {
+
+    public address: Address;
+    public socialLink: SocialLink;
 
     constructor(
-        id,
-        email,
-        firstname,
-        lastname,
-        date_birth,
-        phone,
-        url_profile,
-        auto_description,
-        auto_biography
+        public id: number,
+        public email: string,
+        public firstname: string,
+        public lastname: string,
+        public date_birth: string,
+        public phone: string,
+        public url_profile: string,
+        public auto_description: string,
+        public auto_biography: string
     ){
-        this.id = id;
-        this.email = email;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.date_birth = date_birth;
-        this.phone = phone;
-        this.url_profile = url_profile;
-
-        this.auto_description = auto_description ?? new Array();
-        this.auto_biography = auto_biography ?? new Array();
-
-        this.address = null;
-        this.socialLink = null;
+        super();
+        // this.address = new Address();
+        // this.socialLink = undefined;
     }
+
+    // static initalize(): void{
+
+    // }
 
     /**
      * 
@@ -35,7 +33,7 @@ class User{
      * @param {number} idLang 
      * @returns {Promise<User>} Promise of User requested
      */
-    static createFromDbById(idUser, idLang){
+    static createFromDbById(idUser: number, idLang: number): Promise<User>{
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -56,12 +54,12 @@ class User{
                     AND users_lang.id_lang = ${idLang}
                 LIMIT 1
             `;
-            connMysql.query(sql, (error, usersResult, fields) => {
+            connMysql.query(sql, (error: any, usersResult: any, fields: any) => {
                 if(error) throw error;
                 if(Array.isArray(usersResult) && usersResult.length > 0) {
                     const userResultFirst = usersResult[0];
                     const user = new User(...Object.values(userResultFirst));
-                    SocialLink.createFromDbById(userResultFirst.id, (socialLink) => {
+                    SocialLink.createFromDbById(userResultFirst.id).then((socialLink: SocialLink) => {
                         user.socialLink = socialLink;
                         resolve(user);
                     });
@@ -80,13 +78,8 @@ class User{
      * @param {FormData} form 
      * @returns {User}
      */
-    static createFromForm(form){
-        const user = new User(
-            null
-        );
+    static createFromForm(form: any){
     }
 
 
 }
-
-module.exports = User;

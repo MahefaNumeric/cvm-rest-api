@@ -1,12 +1,26 @@
 import LooseObject from "../Types/LooseObject";
+import Company from './Company';
+import User from './User';
 
-export default abstract class BaseModel {
+export default abstract class BaseModel // extends Object 
+{
     public _table: string;
     public _definitions: any;
     [key: string]: any; // Special : For TypeScript accept unknow property
 
     public constructor() {
+        // super();
         this._table = "";
+    }
+
+    static initalize(objectType: any): any{
+        const arrayProperties: string[] = Object.getOwnPropertyNames(objectType);
+        const className = objectType.constructor.name;
+        const newObject: any = new Models[className];
+        arrayProperties.forEach(property => {
+            newObject[property] = null;
+        });
+        return newObject;
     }
 
     /**
@@ -31,3 +45,8 @@ export default abstract class BaseModel {
         return defLang;
     }
 }
+
+const Models: { [key: string]: any } = {
+    User,
+    Company
+};

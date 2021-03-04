@@ -1,9 +1,12 @@
 import SkillGroupRepo from "../Data/Repositories/SkillGroupRepo";
-import LanguageService from "./LanguageService";
+import LanguageService from './LanguageService';
+import SkillGroup from '../Data/Models/SkillGroup';
 
 export default class SkillGroupService{
 
-    constructor(){
+    constructor(
+        public languageService: LanguageService
+    ){
         this.languageService = new LanguageService();
     }
     
@@ -12,12 +15,12 @@ export default class SkillGroupService{
      * @param {string} isoLang 
      * @returns {Promise<SkillGroup>}
      */
-    async getListAllSkillGroup(isoLang) {
+    async getListAllSkillGroup(isoLang: string): Promise<Array<SkillGroup>>{
         const lang = await this.languageService.getLanguageByIso(isoLang);
         return SkillGroupRepo.getListAllSkillGroup(lang.id);
     }
 
-    createSkillGroup(skillGroup){
+    createSkillGroup(skillGroup: SkillGroup){
         return SkillGroupRepo.insert(skillGroup);
     }
 

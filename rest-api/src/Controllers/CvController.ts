@@ -1,9 +1,8 @@
-const util = require('util');
-const express = require("express");
-const Language = require("../Data/Models/Language");
-const CvService = require("../Services/CvService");
-const User = require("../Data/Models/User");
-const Cv = require("../Data/Models/Cv");
+import Language from '../Data/Models/Language';
+import User from '../Data/Models/User';
+import CvService from '../Services/CvService';
+import Cv from '../Data/Models/Cv';
+import CvRepo from '../Data/Repositories/CvRepo';
 
 function getRoute(){
     const router = express.Router({ mergeParams: true });
@@ -61,8 +60,8 @@ class CvController {
         const cvService = new CvService();
         let resultHTML = null;
         Language.createFromDbByIso(isoLang).then((language: Language) => {
-            User.createFromDbById(idUser, language.id).then((user) => {
-                cvService.generateCv(isoLang, idCv, format, user, (result) => {
+            User.createFromDbById(idUser, language.id).then((user: User) => {
+                cvService.generateCv(isoLang, idCv, format, user, (result: any) => {
                     if(format == "html"){
                         resultHTML = result;
                         response.type("application/json")
@@ -84,23 +83,23 @@ class CvController {
                             .end();
                     }
                 });
-            }).catch(error => userGetById_ErrorHandling(error, response));
+            }).catch(error => userGetById_ErrorHandling(error, response, isoLang));
         }).catch(error => languageGetByIso_ErrorHandling(error, isoLang, response));
         return;
     }
 
-    static createNewCv = (request, response)=>{
-        const userService = new CvService();
+    static createNewCv = (request: any, response: any)=>{
+        const cvService = new CvService();
         
         const pData = request.body;
-        userService.createNewUser(pData, (results) => {
+        cvService.createNewCv(pData, (results: any) => {
             console.log("Results: ", results);
             response.type("application/json")
                 .json(results);
         });
     }
 
-    static GetCvByid = (request, response)=>{
+    static GetCvByid = (request: any, response: any)=>{
         // const connMysql = require("../Configs/db.config");
         // const id = request.params.id;
         // console.log(id);
@@ -120,7 +119,7 @@ class CvController {
         // });
     }
 
-    static updateCv = (request, response) => {
+    static updateCv = (request: any, response: any) => {
         // response.type("application/json");
         // const connMysql = require("../Configs/db.config");
         // const checkIdIfExist = require("../Validation/UserValidation").checkIdIfExist;
@@ -129,7 +128,7 @@ class CvController {
         // console.log(pData, id, resultCheckIdUser);
     }
 
-    static previsualizeHtmlOutput = (request, response, next) => {
+    static previsualizeHtmlOutput = (request: any, response: any, next: any) => {
         const isoLangLowercase = String(request.params.isoLang).toLowerCase(); // From parent params
         const idCv = request.params.idCv;
         const idUser = 1; // Mahefa
@@ -138,7 +137,7 @@ class CvController {
         
         Language.createFromDbByIso(isoLangLowercase).then(language => {
             User.createFromDbById(idUser, language.id).then(user => {
-                Cv.createFromDbById(idCv, language.id).then(cv => {
+                CvRepo.createFromDbById(idCv, language.id).then(cv => {
                     const data = {
                         user: user,
                         cv: cv,
@@ -152,13 +151,13 @@ class CvController {
                     response.type("text/html")
                         .status(200)
                         .renderVue(templateVueFilePath, data, request.vueOptions);
-                }).catch(error => cvGetById_ErrorHandling(error, idCv, response));
+                }).catch((error: any) => cvGetById_ErrorHandling(error, idCv, response));
             }).catch(error => userGetById_ErrorHandling(error, response, isoLangLowercase));
         }).catch(error => languageGetByIso_ErrorHandling(error, isoLangLowercase, response));
     }
 }
 
-function userGetById_ErrorHandling(error, response, isoLang){
+function userGetById_ErrorHandling(error: any, response: any, isoLang: string){
     console.error("CvController:: /:idCv/generate/html/view User.createFromDbById::", error);
     response.type("text/json")
         .status(404)
@@ -172,7 +171,7 @@ function userGetById_ErrorHandling(error, response, isoLang){
     response.end();
 }
 
-function languageGetByIso_ErrorHandling(error, isoLang, response){
+function languageGetByIso_ErrorHandling(error: any, isoLang: string, response: any){
     switch(error.code){
         case Language.MSG_NO_LANGUAGE:
             response.type("text/json")
@@ -196,7 +195,7 @@ function languageGetByIso_ErrorHandling(error, isoLang, response){
     }
 }
 
-function cvGetById_ErrorHandling(error, idCv, response){
+function cvGetById_ErrorHandling(error: any, idCv: number, response: any){
     let dataRender = {};
     if(error.code == Cv.MSG_NO_CV_GIVEN_ID){
         dataRender = {
@@ -222,7 +221,7 @@ function cvGetById_ErrorHandling(error, idCv, response){
  * @param {string} htmlPageTitle 
  * @todo Twitter ????
  */
-const vueOptions = (htmlPageTitle) => ({
+const vueOptions = (htmlPageTitle: string) => ({
     head: {
         title: htmlPageTitle,
         metas: [

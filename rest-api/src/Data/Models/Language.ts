@@ -18,7 +18,7 @@ export default class Language{
      * @param {CallableFunction} cbFinnished
      * @returns {Language}
      */
-    static createFromDbById(idLang: number){
+    static createFromDbById(idLang: number): Promise<Language>{
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -52,7 +52,7 @@ export default class Language{
      * @param {string} isoLang 
      * @returns {Promise<Language>} Promise of Language requested
      */
-    static createFromDbByIso(isoLang: string){
+    static createFromDbByIso(isoLang: string): Promise<Language>{
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -97,7 +97,7 @@ export default class Language{
         });
     }
 
-    static getAllLanguage(){
+    public static getAllLanguage(): Promise<Array<Language>>{
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`

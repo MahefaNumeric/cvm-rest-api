@@ -1,6 +1,6 @@
 import Position from './Position';
 
-class Company{
+export default class Company{
     public _table = 'companies';
 
     private positionsValue: Array<Position>;
@@ -44,7 +44,7 @@ class Company{
      * @param {*} idLang 
      * @returns {Array<Company>}
      */
-    static getListCompaniesFromDbByCv(idCv: number, idLang: number){
+    static getListCompaniesFromDbByCv(idCv: number, idLang: number): Promise<Array<Company>>{
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -92,7 +92,7 @@ class Company{
                 if(error) throw error;
                 if(Array.isArray(listCompaniesResult)) {
                     if(listCompaniesResult.length > 0){
-                        const listCompanies = [];
+                        const listCompanies: Company[] = [];
                         for (let element of listCompaniesResult) {
                             const company = new Company(...Object.values(element));
                             company.positions = await Position.getListPositionByCv(idCv, company.id, idLang);
@@ -113,7 +113,7 @@ class Company{
         });
     }
 
-    setupPositionsBeganEnd(){
+    setupPositionsBeganEnd(): boolean{
         if(Array.isArray(this.positions) == false) return false;
         if(this.positions.length == 0) return false;
 
@@ -127,15 +127,16 @@ class Company{
         });
         this.dateStart = dateMin;
         this.dateEnd = dateMax;
+
+        return true;
     }
 
-    setupProperty_hasManyPosition(){
+    setupProperty_hasManyPosition(): boolean{
         if(Array.isArray(this.positions) == false) return false;
         if(this.positions.length == 0) return false;
 
         this.hasManyPosition = this.positions.length > 1;
+        return true;
     }
 
 }
-
-module.exports = Company;

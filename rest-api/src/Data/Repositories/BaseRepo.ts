@@ -61,8 +61,7 @@ export default class BaseRepo {
             // resolve([model._table, definitionsLang]); return;
 
             const languageService = new LanguageService();
-            languageService.getAllLanguage()
-            .then(allLanguages => {
+            languageService.getAllLanguage().then((allLanguages) => {
                 const columnsLang = SqlUtil.buildSqlColumn(definitionsLang);
                 const interogationsSqlPart = SqlUtil.buildSqlInterogation(allLanguages.length);
                 const valuesIntergationOnInsert = SqlUtil.buildValuesInterogationsOnInsert(model, interogationsSqlPart);

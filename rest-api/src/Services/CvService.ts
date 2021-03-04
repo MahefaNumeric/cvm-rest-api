@@ -1,7 +1,10 @@
-const User = require("../Data/Models/User");
-const NumberTools = require("../Utils/NumbersTools");
+const connMysql = require("../Configs/Databases/db.config");
+const path = require("path");
+const fs = require('fs');
+import Cv from "../Data/Models/Cv";
+import User from '../Data/Models/User';
 
-class CvService{
+export default class CvService{
     
     // @todo
     // async getListCv(cbFinnished){
@@ -21,15 +24,23 @@ class CvService{
     //     });
     // }
 
-    // @todo
-    async createNewCv(pData, mcbFinnished){
-        const connMysql = require("../Configs/Databases/db.config");
-        const sql = `INSERT INTO 
-        users (firstname, lastname, date_birth, auto_desc) 
-        VALUE ('${pData.firstname}', '${pData.lastname}', '${pData.date_birth}', '${pData.auto_desc}')`;
-        connMysql.query(sql, (error, results, fields)=> {
-            if(error) throw error;
-            cbFinnished && cbFinnished(results);
+    /**
+     * 
+     * @param pData 
+     * @todo reject
+     */
+    public createNewCv(pData: any): Promise<Cv>{
+        return new Promise((resolve, reject) => {
+            const sql = /* sql */`
+                INSERT INTO 
+                users (firstname, lastname, date_birth, auto_desc) 
+                VALUE (?, ?, ?, ?)
+            `;
+            const sqlData = [pData.firstname, pData.lastname, pData.date_birth, pData.auto_desc];
+            connMysql.query(sql, sqlData, (error: any, results: any, fields: any)=> {
+                if(error) throw error;
+                resolve(results);
+            });
         });
     }
 
@@ -42,16 +53,27 @@ class CvService{
      * @param {CallableFunction} mcbFinnished : Callback
      * @returns {String}
      * @async
+     * @todo add catch for then
      */
-    generateCv(isoLang, idCv, format, user, mcbFinnished){
-        const formatLC = String(format).toLowerCase();
-        if(formatLC == "html"){
-            return this.generateCvHtml(isoLang, idCv, user, mcbFinnished);
-        }else if(formatLC == "pdf"){
-            return this.generateCvPdf(isoLang, idCv, user, mcbFinnished);
-        }else{
-            return null;
-        }
+    public generateCv(isoLang: string, idCv: number, format: string, user: User): Promise<Cv>{
+        return new Promise((resolve, reject) => {
+            const formatLC = String(format).toLowerCase();
+            if(formatLC == "html"){
+                this.generateCvHtml(isoLang, idCv, user)
+                    .then((result: any) => {
+                        resolve(result);
+                    });
+            }else if(formatLC == "pdf"){
+                this.generateCvPdf(isoLang, idCv, user)
+                    .then((result: any) => {
+                        resolve(result);
+                    });
+            }else{
+                reject({
+                    source : "CvService::generateCv"
+                });
+            }
+        });
     }
 
     /**
@@ -64,16 +86,16 @@ class CvService{
      * @todo Create a new function : filename->htmlContent
      * @todo Create another bloc to handle generation html from database
      * @todo Add function to handle variable remplacement to the cv content (name, etc...)
+     * @todo remove user argument if not used
      * @async
      */
-    async generateCvHtml(isoLang, idCv, user, mcbFinnished){
-        const path = require("path");
-        const fs = require('fs');
-        
-        const filename = this.getTemplateVueFilePath(idCv, true);
-        const htmlFilename = path.resolve(filename);
-        await fs.readFile(htmlFilename, 'utf8', (err, htmlContent) => {
-            mcbFinnished(htmlContent);
+    public generateCvHtml(isoLang: string, idCv: number, user: User): Promise<string>{
+        return new Promise(async (resolve, reject) => {
+            const filename = this.getTemplateVueFilePath(idCv, true);
+            const htmlFilename = path.resolve(filename);
+            await fs.readFile(htmlFilename, 'utf8', (err: any, htmlContent: any) => {
+                resolve(htmlContent);
+            });
         });
     }
 
@@ -87,24 +109,25 @@ class CvService{
      * @async
      * @todo Check if urlCv exist
      */
-    async generateCvPdf(isoLang, idCv, user, mcbFinnished){
-        const pdfFilename = this.makePdfFilename(idCv, isoLang, user);
-        const filenameOutput = `./Public/CvOutput/${pdfFilename}.pdf`;
-
-        const host = this.getHostUrl();
-        const urlCv = `${host}/${isoLang}/cv/${idCv}/generate/html/view`;
-
-        const puppeteer = require("puppeteer");
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        await page.goto(urlCv);
-        await page.pdf({ path: filenameOutput, format: "Letter" });
-        await browser.close();
-
-        mcbFinnished({
-            "filenameOutput": filenameOutput
+    public generateCvPdf(isoLang: string, idCv: number, user: User): Promise<Object>{
+        return new Promise(async (resolve, reject) => {
+            const pdfFilename = this.makePdfFilename(idCv, isoLang, user);
+            const filenameOutput = `./Public/CvOutput/${pdfFilename}.pdf`;
+    
+            const host = this.getHostUrl();
+            const urlCv = `${host}/${isoLang}/cv/${idCv}/generate/html/view`;
+    
+            const puppeteer = require("puppeteer");
+            const browser = await puppeteer.launch();
+            const page = await browser.newPage();
+            await page.goto(urlCv);
+            await page.pdf({ path: filenameOutput, format: "Letter" });
+            await browser.close();
+    
+            resolve({
+                "filenameOutput": filenameOutput
+            });
         });
-        return;
     }
 
     /**
@@ -113,7 +136,7 @@ class CvService{
      * @param {boolean} withTemplatesRoot 
      * @todo cvService.getTemplateVueFilePath : make the logic to manage by Template object
      */
-    getTemplateVueFilePath(idCv, withTemplatesRoot = false){
+    public getTemplateVueFilePath(idCv: number, withTemplatesRoot: boolean = false): string{
         let rootView = '';
         if(withTemplatesRoot) rootView = "Templates/";
 
@@ -126,7 +149,7 @@ class CvService{
      * @todo Move to a dedicated utils class
      * @todo Should contain too the name of the User
      */
-    makePdfFilename(idCv, isoLang, user){
+    public makePdfFilename(idCv: number, isoLang: string, user: User): string{
         const dateObj   = new Date();
         const month     = NumberTools.zeroLead(dateObj.getUTCMonth() + 1, 2); //months from 1-12
         const day       = NumberTools.zeroLead(dateObj.getDate(), 2);
@@ -144,10 +167,8 @@ class CvService{
     /**
      * @todo Move to a dedicated utils class
      */
-    getHostUrl(){
+    public getHostUrl(): string{
         return `http://localhost:3000`;
     }
 
 }
-
-module.exports = CvService;

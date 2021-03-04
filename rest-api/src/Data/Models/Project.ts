@@ -1,30 +1,19 @@
 
-/**
- */
-class Project{
+export default class Project{
     static MSG_NO_PROJECT = "NO_PROJECT";
     static MSG_ERROR_RETRIVE_PROJECT = "ERROR_RETRIVE_PROJECT";
 
     constructor(
-        id,
-        company_id,
-        id_user,
-        slug,
-        title,
-        description,
-        show_in_portfolio,
-        url_access,
-        url_preview
+        public id: number,
+        public company_id: number,
+        public id_user: number,
+        public slug: string,
+        public title: string,
+        public description: string,
+        public show_in_portfolio: boolean,
+        public url_access: string,
+        public url_preview: string
     ){
-        this.id = id;
-        this.company_id = company_id;
-        this.id_user = id_user;
-        this.slug = slug;
-        this.title = title;
-        this.description = description;
-        this.show_in_portfolio = show_in_portfolio;
-        this.url_access = url_access;
-        this.url_preview = url_preview;
     }
 
     /**
@@ -33,7 +22,7 @@ class Project{
      * @returns {Project}
      * @todo Filter User
      */
-    static createFromDbById(idProject, idLang){
+    static createFromDbById(idProject: number, idLang: number){
         // return new Promise((resolve, reject) => {
         //     const connMysql = require("../../Configs/Databases/db.config");
         //     const sql = /* sql */`
@@ -67,7 +56,7 @@ class Project{
         // });
     }
 
-    static getListProjectFromDbByCv(idCv, idLang){
+    static getListProjectFromDbByCv(idCv: number, idLang: number): Promise<Array<Project>>{
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -90,11 +79,11 @@ class Project{
                     AND cv_projects.id_cv = ${idCv}
                     AND part_projects.show_in_portfolio = 1
             `;
-            connMysql.query(sql, (error, listProjectsResult, fields) => {
+            connMysql.query(sql, (error: any, listProjectsResult: any, fields: any) => {
                 if(error) throw error;
                 if(Array.isArray(listProjectsResult)) {
                     if(listProjectsResult.length > 0){
-                        const listProjects = [];
+                        const listProjects: Project[] = [];
                         listProjectsResult.forEach(element => {
                             listProjects.push(new Project(...Object.values(element)));
                         });
@@ -114,5 +103,3 @@ class Project{
     }
 
 }
-
-module.exports = Project;

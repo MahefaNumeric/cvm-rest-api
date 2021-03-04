@@ -1,4 +1,5 @@
-class UsersService{
+
+export default class UsersService{
     
     // async getListUser(cbFinnished){
     //     const connMysql = require("../Configs/db.config");
@@ -19,7 +20,7 @@ class UsersService{
     //     });
     // }
 
-    async checkCredentials(username, password){
+    checkCredentials(username: string, password: string){
         if(username == "test" && password == "pwd"){
             return {
                 name: "Test",
@@ -30,5 +31,3 @@ class UsersService{
         }
     }
 }
-
-module.exports = UsersService;

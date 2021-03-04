@@ -1,34 +1,30 @@
-const Address = require("./Address");
-const SocialLink = require("./SocialLink");
+import User from './User';
+import SocialLink from './SocialLink';
+import BaseModel from './BaseModel';
 
 /**
  * @todo Redo structuration SkillGroup and Skill (actually not good)
  */
-class Skill{
+export default class Skill extends BaseModel {
     static MSG_NO_SKILL = "NO_SKILL";
     static MSG_ERROR_RETRIVE_SKILL = "ERROR_RETRIVE_SKILL";
 
+    public user: User;
+    public socialLink: SocialLink;
+
     constructor(
-        id,
-        id_user,
-        id_skills_group,
-        slug,
-        date_add,
-        date_update,
-        title,
-        description
+        public id: string,
+        public id_user: string,
+        public id_skills_group: string,
+        public slug: string,
+        // public date_add: string,
+        // public date_update: string,
+        public title: string,
+        public description: string
     ){
-        this.id = id;
-        this.id_user = id_user;
-        this.id_skills_group = id_skills_group;
-        this.slug = slug;
-        this.date_add = date_add;
-        this.date_update = date_update;
-
-        this.title = title;
-        this.description = description;
-
-        this.user = null;
+        super();
+        this.user = BaseModel.initalize(User);
+        this.socialLink = BaseModel.initalize(SocialLink);
     }
 
     /**
@@ -37,7 +33,7 @@ class Skill{
      * @returns {Skill}
      * @todo Filter User
      */
-    static createFromDbById(idSkill, idLang){
+    static createFromDbById(idSkill: number, idLang: number): Promise<Skill>{
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -52,12 +48,12 @@ class Skill{
                     AND part_skills_lang.id_lang = ${idLang}
                 LIMIT 1
             `;
-            connMysql.query(sql, (error, skillsResult, fields) => {
+            connMysql.query(sql, (error: any, skillsResult: any, fields: any) => {
                 if(error) throw error;
                 if(Array.isArray(skillsResult) && skillsResult.length > 0) {
                     const skillResultFirst = skillsResult[0];
                     const skill = new Skill(...Object.values(skillResultFirst));
-                    SocialLink.createFromDbById(skillResultFirst.id, (socialLink) => {
+                    SocialLink.createFromDbById(skillResultFirst.id).then((socialLink: SocialLink) => {
                         skill.socialLink = socialLink;
                         resolve(skill);
                     });
@@ -71,7 +67,7 @@ class Skill{
         });
     }
 
-    static getListSkillsFromDbByCv(idCv, idLang){
+    static getListSkillsFromDbByCv(idCv: number, idLang: number){
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -92,11 +88,11 @@ class Skill{
                 WHERE cv_skills.id_cv = ${idCv}
                     AND part_skills_lang.id_lang = ${idLang}
             `;
-            connMysql.query(sql, (error, listSkillsResult, fields) => {
+            connMysql.query(sql, (error: any, listSkillsResult: any, fields: any) => {
                 if(error) throw error;
                 if(Array.isArray(listSkillsResult)) {
                     if(listSkillsResult.length > 0){
-                        const listSkills = [];
+                        const listSkills: Skill[] = [];
                         listSkillsResult.forEach(element => {
                             listSkills.push(new Skill(...Object.values(element)));
                         });
@@ -116,5 +112,3 @@ class Skill{
     }
 
 }
-
-module.exports = Skill;

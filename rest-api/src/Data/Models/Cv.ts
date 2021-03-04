@@ -11,17 +11,6 @@ export default class Cv extends BaseModel {
     public skills: any;
     public skillsGroup: any;
 
-    /**
-     * 
-     * @param {number} id 
-     * @param {Template} template 
-     * @param {string} slug 
-     * @param {Address} address 
-     * @param {string} title 
-     * @param {string} auto_biography 
-     * @param {Date} date_add 
-     * @param {Date} date_update 
-     */
     constructor(
         public id: number,
         public id_template: number,
@@ -32,12 +21,5 @@ export default class Cv extends BaseModel {
         public auto_biography: string
     ){
         super();
-        // this.template = null;
-        // this.address = null;
-        // this.educations = null;
-        // this.experiences = null;
-        // this.projects = [];   // Works  
-        // this.skills = null;
-        // this.skillsGroup = null;
     }
 }
