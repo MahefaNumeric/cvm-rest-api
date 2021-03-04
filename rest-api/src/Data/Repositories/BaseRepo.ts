@@ -1,8 +1,12 @@
-import LanguageService from '../../Services/LanguageService';
 import BaseModel from '../Models/BaseModel';
 import SqlUtil from '../../Utils/Strings/SqlUtil';
+import LanguageRepo from './LanguageRepo';
+import LanguageTools from '../../Utils/LanguageTools';
 const connMysql = require("../../Configs/Databases/db.config");
 
+/**
+ * All Repositories class MUST NOT import any *Service level
+ */
 export default class BaseRepo<T> {
 
     public static insert(model: BaseModel): Promise<any>{
@@ -56,8 +60,7 @@ export default class BaseRepo<T> {
 
             // resolve([model._table, definitionsLang]); return;
 
-            const languageService = new LanguageService();
-            languageService.getAllLanguage().then((allLanguages) => {
+            LanguageRepo.getAllLanguage().then((allLanguages) => {
                 const columnsLang = SqlUtil.buildSqlColumn(definitionsLang);
                 const interogationsSqlPart = SqlUtil.buildSqlInterogation(allLanguages.length);
                 const valuesIntergationOnInsert = SqlUtil.buildValuesInterogationsOnInsert(model, interogationsSqlPart);
@@ -76,7 +79,7 @@ export default class BaseRepo<T> {
                 const sqlData = new Array<any>();
                 if(Array.isArray(model.title)){
                     for (let index = 0; index < model.title.length; index++) {
-                        const idLang = languageService.convertIsoToId(allLanguages, model.title[index].iso);
+                        const idLang = LanguageTools.convertIsoToId(allLanguages, model.title[index].iso);
                         const arrayValueData = SqlUtil.buildArrayValueData(model, definitionsLang, index);
                         sqlData.push(...[
                             model.id,

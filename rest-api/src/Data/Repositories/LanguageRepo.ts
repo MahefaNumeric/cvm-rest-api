@@ -8,7 +8,7 @@ export default class LanguageRepo extends BaseRepo<Language> {
 
     /**
      * 
-     * @ param {number} idLang 
+     * @param {number} idLang 
      * @param {CallableFunction} cbFinnished
      * @returns {Language}
      */

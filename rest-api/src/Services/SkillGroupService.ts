@@ -1,6 +1,7 @@
 import SkillGroupRepo from "../Data/Repositories/SkillGroupRepo";
 import LanguageService from './LanguageService';
 import SkillGroup from '../Data/Models/SkillGroup';
+import BaseRepo from '../Data/Repositories/BaseRepo';
 
 /**
  * @todo Injection dependance LanguageService
@@ -23,7 +24,7 @@ export default class SkillGroupService{
     }
 
     createSkillGroup(skillGroup: SkillGroup){
-        return SkillGroupRepo.insert(skillGroup);
+        return BaseRepo.insert(skillGroup);
     }
 
 }
