@@ -236,4 +236,5 @@ const vueOptions = (htmlPageTitle: string) => ({
 })
 
 
-export default getRoute();
+// export default getRoute();   //TypeError: Router.use() requires a middleware function but got a Object
+module.exports = getRoute();

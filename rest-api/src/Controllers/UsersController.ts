@@ -3,7 +3,8 @@ import * as express from 'express';
 
 const router = express.Router();
 
-export default router;
+// export default router;
+module.exports = router;
 
 // Recupere liste Users
 router.get("/", (request: any, response: any) => {

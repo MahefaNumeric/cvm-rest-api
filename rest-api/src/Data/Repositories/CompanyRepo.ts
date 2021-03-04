@@ -1,6 +1,7 @@
 import BaseRepo from './BaseRepo';
 import Company from '../Models/Company';
 import Position from '../Models/Position';
+import PositionRepo from './PositionRepo';
 
 export default class CompanyRepo extends BaseRepo<Company> {
 
@@ -64,7 +65,7 @@ export default class CompanyRepo extends BaseRepo<Company> {
                         const listCompanies: Company[] = [];
                         for (let element of listCompaniesResult) {
                             const company = Company.createFromObj(element);
-                            company.positions = await Position.getListPositionByCv(idCv, company.id, idLang);
+                            company.positions = await PositionRepo.getListPositionByCv(idCv, company.id, idLang);
                             listCompanies.push(company);
                         };
                         resolve(listCompanies);
