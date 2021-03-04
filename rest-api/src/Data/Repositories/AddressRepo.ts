@@ -1,7 +1,7 @@
 import BaseRepo from './BaseRepo';
 import Address from '../Models/Address';
 
-export default class AddressRepo extends BaseRepo {
+export default class AddressRepo extends BaseRepo<Address> {
     static MSG_NO_ADRESS = "NO_ADRESS";
     static MSG_UNKOW_ERROR = "UNKOW_ERROR";
     static MSG_UNKOW_DATA = "UNKOW_DATA";

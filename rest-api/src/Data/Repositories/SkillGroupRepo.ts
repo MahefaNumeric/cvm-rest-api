@@ -1,7 +1,7 @@
 import BaseRepo from './BaseRepo';
 import SkillGroup from '../Models/SkillGroup';
 
-export default class SkillGroupRepo extends BaseRepo {
+export default class SkillGroupRepo extends BaseRepo<SkillGroup> {
     static MSG_NO_SKILL_GROUP = "NO_SKILL_GROUP";
     static MSG_ERROR_RETRIVE_SKILLGROUP = "ERROR_RETRIVE_SKILLGROUP";
 

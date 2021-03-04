@@ -7,8 +7,9 @@ import Skill from "../Models/Skill";
 import SkillGroupRepo from './SkillGroupRepo';
 import SkillGroup from '../Models/SkillGroup';
 import AddressRepo from "./AddressRepo";
+import BaseRepo from './BaseRepo';
 
-export default class CvRepo {
+export default class CvRepo extends BaseRepo<Cv> {
     static MSG_NO_CV_GIVEN_ID = "NO_CV_GIVEN_ID";
     
     /**

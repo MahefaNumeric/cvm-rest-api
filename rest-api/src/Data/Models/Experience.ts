@@ -1,7 +1,8 @@
 import Company from './Company';
 import ErrorTools from '../../Utils/ErrorTools';
+import BaseModel from './BaseModel';
 
-export default class Experience {
+export default class Experience extends BaseModel {
     static _table = 'part_experiences';
 
     public companies: Array<Company>;
@@ -15,7 +16,7 @@ export default class Experience {
         // date_begin,
         // date_end
     ){
-
+        super();
         // List of companies
         this.companies = [];
     }

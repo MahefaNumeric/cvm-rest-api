@@ -2,7 +2,7 @@ import BaseRepo from './BaseRepo';
 import Company from '../Models/Company';
 import Position from '../Models/Position';
 
-export default class CompanyRepo extends BaseRepo {
+export default class CompanyRepo extends BaseRepo<Company> {
 
     static MSG_NO_COMPANY = "NO_COMPANY";
     static MSG_ERROR_RETRIVE_COMPANY = "ERROR_RETRIVE_COMPANY";

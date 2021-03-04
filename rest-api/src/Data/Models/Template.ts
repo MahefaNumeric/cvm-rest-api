@@ -1,11 +1,13 @@
+import BaseModel from './BaseModel';
 
-export default class Template {
+export default class Template extends BaseModel {
 
     constructor(
         public id: number,
         public slug: number,
         public title: number
     ){
+        super();
         throw Error("Template Not yet implemented");
     }
 

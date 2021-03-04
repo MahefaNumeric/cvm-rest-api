@@ -3,7 +3,7 @@ import Experience from '../Models/Experience';
 import Company from '../Models/Company';
 import CompanyRepo from './CompanyRepo';
 
-export default class ExperienceRepo extends BaseRepo {
+export default class ExperienceRepo extends BaseRepo<Experience> {
     static MSG_NO_EXPERIENCE = "NO_EXPERIENCE";
 
     public static buildExperienceByIdCv(idCv: number, idLang: number): Promise<Experience>{

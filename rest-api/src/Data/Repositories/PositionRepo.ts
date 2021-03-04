@@ -2,7 +2,7 @@ import BaseRepo from './BaseRepo';
 import Position from '../Models/Position';
 const connMysql = require("../../Configs/Databases/db.config");
 
-export default class PositionRepo extends BaseRepo {
+export default class PositionRepo extends BaseRepo<Position> {
     
     static getListPositionByCv(idCv: number, idCompany: number, idLang: number): Promise<Array<Position>>{
         return new Promise((resolve, reject) => {

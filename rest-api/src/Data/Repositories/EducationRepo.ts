@@ -1,8 +1,9 @@
 import BaseRepo from './BaseRepo';
 import Language from '../Models/Language';
 import Education from '../Models/Education';
+import LanguageRepo from './LanguageRepo';
 
-export default class EducationRepo extends BaseRepo {
+export default class EducationRepo extends BaseRepo<Education> {
     static ERROR_RETRIVE_EDUCATION = "ERROR_RETRIVE_EDUCATION";
 
     /**
@@ -26,7 +27,7 @@ export default class EducationRepo extends BaseRepo {
             connMysql.query(sql, (error: any, educationResult: any, fields: any) => {
                 if(error) throw error;
                 if(Array.isArray(educationResult) && educationResult.length > 0) {
-                    Language.createFromDbById(idLang).then((language: Language) => {
+                    LanguageRepo.createFromDbById(idLang).then((language: Language) => {
                         const education = Education.createFromObj(language.code_iso, educationResult[0]);
                         resolve(education);
                     }).catch((error: any) => {
@@ -71,7 +72,7 @@ export default class EducationRepo extends BaseRepo {
                 if(error) throw error;
                 if(Array.isArray(listEducationResult)) {
                     if(listEducationResult.length > 0){
-                        Language.createFromDbById(idLang).then((language: Language) => {
+                        LanguageRepo.createFromDbById(idLang).then((language: Language) => {
                             const listEducation: Education[] = [];
                             listEducationResult.forEach(element => {
                                 listEducation.push(Education.createFromObj(language.code_iso, element[0]));
@@ -80,7 +81,7 @@ export default class EducationRepo extends BaseRepo {
                         }).catch((error) => {
                             reject({
                                 message: "Education::getListEducationFromDbByIdCv::catch language empty",
-                                code: Language.MSG_NO_LANGUAGE,
+                                code: LanguageRepo.MSG_NO_LANGUAGE,
                                 data: [error]
                             });
                         });
