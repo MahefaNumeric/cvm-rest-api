@@ -7,8 +7,8 @@ export default class Company extends BaseModel{
 
     private positionsValue: Array<Position>;
 
-    public dateStart: any;
-    public dateEnd: any;
+    public dateStart: string;
+    public dateEnd: string;
     public hasManyPosition: boolean;
 
     public constructor(
@@ -22,8 +22,8 @@ export default class Company extends BaseModel{
         // // Position on a company
         this.positionsValue = [];
 
-        this.dateStart = null;  // Calculate from this.positions
-        this.dateEnd = null;  // Calculate from this.positions
+        this.dateStart = ``;  // Calculate from this.positions
+        this.dateEnd = ``;  // Calculate from this.positions
 
         /** Need for the template, to differentiate visual rendering for one or many position on signle company */
         this.hasManyPosition = false;
@@ -43,8 +43,8 @@ export default class Company extends BaseModel{
         if(Array.isArray(this.positions) == false) return false;
         if(this.positions.length == 0) return false;
 
-        let dateMin = this.positions[0].experienceDateBegin,
-            dateMax = this.positions[0].experienceDateEnd;
+        let dateMin: string = this.positions[0].experienceDateBegin,
+            dateMax: string = this.positions[0].experienceDateEnd;
         this.positions.forEach(element => {
             if(DateUtils.compareDateAB(element.experienceDateBegin, dateMin) == -1)
                 dateMin = element.experienceDateBegin;

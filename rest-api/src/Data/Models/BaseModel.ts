@@ -1,6 +1,4 @@
 import LooseObject from "../Types/LooseObject";
-import Company from './Company';
-import User from './User';
 
 export default abstract class BaseModel // extends Object 
 {
@@ -13,6 +11,11 @@ export default abstract class BaseModel // extends Object
         this._table = "";
     }
 
+    /**
+     * 
+     * @param objectType 
+     * @todo have a problem
+     */
     public static initalize(objectType: any): any{
         const arrayProperties: string[] = Object.getOwnPropertyNames(objectType);
         const className = objectType.constructor.name;
@@ -47,6 +50,4 @@ export default abstract class BaseModel // extends Object
 }
 
 const Models: { [key: string]: any } = {
-    User,
-    Company
 };

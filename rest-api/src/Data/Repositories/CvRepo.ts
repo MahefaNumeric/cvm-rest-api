@@ -2,12 +2,15 @@ import Address from "../Models/Address";
 import Cv from "../Models/Cv";
 import Education from "../Models/Education";
 import Experiences from "../Models/Experience";
-import Project from "../Models/Project";
 import Skill from "../Models/Skill";
 import SkillGroupRepo from './SkillGroupRepo';
 import SkillGroup from '../Models/SkillGroup';
 import AddressRepo from "./AddressRepo";
 import BaseRepo from './BaseRepo';
+import EducationRepo from './EducationRepo';
+import SkillRepo from "./SkillRepo";
+import ExperienceRepo from './ExperienceRepo';
+import ProjectRepo from "./ProjectRepo";
 
 export default class CvRepo extends BaseRepo<Cv> {
     static MSG_NO_CV_GIVEN_ID = "NO_CV_GIVEN_ID";
@@ -45,15 +48,15 @@ export default class CvRepo extends BaseRepo<Cv> {
                     const cv = Cv.createFromObj(cvResult[0]);
                     AddressRepo.createFromDbById(cv.id_address, idLang).then((address: Address) => {
                         cv.address = address;
-                        Education.getListEducationFromDbByIdCv(cv.id, idLang).then((listEducation: Array<Education>) => {
+                        EducationRepo.getListEducationFromDbByIdCv(cv.id, idLang).then((listEducation: Array<Education>) => {
                             cv.educations = listEducation;
-                            Skill.getListSkillsFromDbByCv(cv.id, idLang).then((listSkills: Skill[]) => {
+                            SkillRepo.getListSkillsFromDbByCv(cv.id, idLang).then((listSkills: Skill[]) => {
                                 cv.skills = listSkills;
                                 SkillGroupRepo.getListUsedSkillsGroupFromDbByCv(cv.id, idLang).then((listGroupSkills: SkillGroup[]) => {
                                     cv.skillsGroup = listGroupSkills;
-                                    Experiences.buildExperienceByIdCv(cv.id, idLang).then((experiences: Experiences) => {
+                                    ExperienceRepo.buildExperienceByIdCv(cv.id, idLang).then((experiences: Experiences) => {
                                         cv.experiences = experiences;
-                                        Project.getListProjectFromDbByCv(cv.id, idLang).then(projects => {
+                                        ProjectRepo.getListProjectFromDbByCv(cv.id, idLang).then(projects => {
                                             cv.projects = projects;
                                             resolve(cv);
                                         });

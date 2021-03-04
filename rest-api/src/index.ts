@@ -1,4 +1,5 @@
 import BasicAuth from './Utils/Auth/BasicAuth';
+import "reflect-metadata";
 import express from "express";
 const bodyParse = require("body-parser");
 const cors = require("cors");
