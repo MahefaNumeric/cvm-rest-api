@@ -18,8 +18,7 @@ export default abstract class BaseModel // extends Object
      */
     public static initalize(objectType: any): any{
         const arrayProperties: string[] = Object.getOwnPropertyNames(objectType);
-        const className = objectType.constructor.name;
-        const newObject: any = new Models[className];
+        const newObject: any = {};
         arrayProperties.forEach(property => {
             newObject[property] = null;
         });

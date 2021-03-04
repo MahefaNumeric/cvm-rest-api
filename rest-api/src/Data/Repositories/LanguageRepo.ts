@@ -1,4 +1,6 @@
 import Language from '../Models/Language';
+import ControllerTools from '../../Utils/ControllerTools';
+const connMysql = require("../../Configs/Databases/db.config");
 
 export default class LanguageRepo {
     static MSG_NO_LANGUAGE = "NO_LANGUAGE";
@@ -13,7 +15,6 @@ export default class LanguageRepo {
      */
     static createFromDbById(idLang: number): Promise<Language>{
         return new Promise((resolve, reject) => {
-            const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
                 SELECT 
                     languages.id,
@@ -47,7 +48,6 @@ export default class LanguageRepo {
      */
     static createFromDbByIso(isoLang: string): Promise<Language>{
         return new Promise((resolve, reject) => {
-            const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
                 SELECT 
                     languages.id,
@@ -59,8 +59,10 @@ export default class LanguageRepo {
                 WHERE code_iso = ? 
                 LIMIT 1
             `;
+
             const sqlParams = [isoLang];
             connMysql.query(sql, sqlParams, (error: any, languageResult: any, fields: any) => {
+                // ControllerTools.render(null, [ error, languageResult ]);
                 if(error) {
                     reject({
                         message: "Language::createFromDbById, error",
@@ -92,7 +94,6 @@ export default class LanguageRepo {
 
     public static getAllLanguage(): Promise<Array<Language>>{
         return new Promise((resolve, reject) => {
-            const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
                 SELECT 
                     languages.id,

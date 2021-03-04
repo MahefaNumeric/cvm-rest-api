@@ -1,5 +1,6 @@
 import BaseRepo from './BaseRepo';
 import Position from '../Models/Position';
+import ControllerTools from '../../Utils/ControllerTools';
 const connMysql = require("../../Configs/Databases/db.config");
 
 export default class PositionRepo extends BaseRepo<Position> {
@@ -37,6 +38,7 @@ export default class PositionRepo extends BaseRepo<Position> {
             `;
             // console.log("Position::getListPositionByCv::sql", sql);
             connMysql.query(sql, (error: any, listPositionsResult: any[], fields: any) => {
+                // ControllerTools.render(null, ["PositionRepo::getListPositionByCv", idCv, idLang, listPositionsResult, sql ]); return;
                 if(error) reject({
                     message: "Position::getListPositionByCv::error",
                     data: error

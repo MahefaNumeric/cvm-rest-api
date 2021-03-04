@@ -2,6 +2,8 @@ import BaseRepo from './BaseRepo';
 import Language from '../Models/Language';
 import Education from '../Models/Education';
 import LanguageRepo from './LanguageRepo';
+import ControllerTools from '../../Utils/ControllerTools';
+const connMysql = require("../../Configs/Databases/db.config");
 
 export default class EducationRepo extends BaseRepo<Education> {
     static ERROR_RETRIVE_EDUCATION = "ERROR_RETRIVE_EDUCATION";
@@ -13,7 +15,6 @@ export default class EducationRepo extends BaseRepo<Education> {
      */
     static createFromDbById(idEducation: number, idLang: number){
         return new Promise((resolve, reject) => {
-            const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
                 SELECT 
                     part_educations.*
@@ -50,7 +51,6 @@ export default class EducationRepo extends BaseRepo<Education> {
      */
     static getListEducationFromDbByIdCv(idCv: number, idLang: number): Promise<Array<Education>>{
         return new Promise((resolve, reject) => {
-            const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
                 SELECT 
                     part_educations.*,
@@ -66,7 +66,7 @@ export default class EducationRepo extends BaseRepo<Education> {
                 WHERE id_cv = ?
                     AND part_educations_lang.id_lang = ?
             `;
-            // console.log("Education::getListEducationFromDbByIdCv:sql", sql, idCv, idLang);
+
             const sqlParams = [idCv, idLang];
             connMysql.query(sql, sqlParams, (error: any, listEducationResult: any, fields: any) => {
                 if(error) throw error;
@@ -74,8 +74,8 @@ export default class EducationRepo extends BaseRepo<Education> {
                     if(listEducationResult.length > 0){
                         LanguageRepo.createFromDbById(idLang).then((language: Language) => {
                             const listEducation: Education[] = [];
-                            listEducationResult.forEach(element => {
-                                listEducation.push(Education.createFromObj(language.code_iso, element[0]));
+                            listEducationResult.forEach((element: any) => {
+                                listEducation.push(Education.createFromObj(language.code_iso, element));
                             });
                             resolve(listEducation);
                         }).catch((error) => {

@@ -1,12 +1,12 @@
 import Language from '../Data/Models/Language';
 import User from '../Data/Models/User';
 import CvService from '../Services/CvService';
-import Cv from '../Data/Models/Cv';
 import CvRepo from '../Data/Repositories/CvRepo';
-import * as express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import util from "util";
 import LanguageRepo from '../Data/Repositories/LanguageRepo';
 import UserRepo from '../Data/Repositories/UserRepo';
+import ControllerTools from '../Utils/ControllerTools';
 
 function getRoute(){
     const router = express.Router({ mergeParams: true });
@@ -47,6 +47,11 @@ class CvController {
 
     static getCvList = (request: any, response: any) => {
         console.log("CvController::getCvList");
+        response.type("application/json")
+            .status(200)
+            .json({"msg": "CvController::getCvList"})
+            .end();
+
         // const userService = new CvService();
         // userService.getListUser((results) => {
         //     console.log("Results: ", results);
@@ -132,9 +137,9 @@ class CvController {
         // console.log(pData, id, resultCheckIdUser);
     }
 
-    static previsualizeHtmlOutput = (request: any, response: any, next: any) => {
+    static previsualizeHtmlOutput = (request: any, response: any, next: NextFunction) => {
         const isoLangLowercase = String(request.params.isoLang).toLowerCase(); // From parent params
-        const idCv = request.params.idCv;
+        const idCv = parseInt(request.params.idCv);
         const idUser = 1; // Mahefa
 
         const cvService = new CvService();

@@ -139,11 +139,12 @@ export default class CvService{
      */
     public getTemplateVueFilePath(idCv: number, withTemplatesRoot: boolean = false): string{
         let rootView = '';
-        if(withTemplatesRoot) rootView = "Templates/";
+        // if(withTemplatesRoot) 
+            rootView = "Templates/";
 
         const filename = "cv/template-1/index.vue";
 
-        return "./" + rootView + filename;
+        return "../../" + rootView + filename;
     }
 
     /**

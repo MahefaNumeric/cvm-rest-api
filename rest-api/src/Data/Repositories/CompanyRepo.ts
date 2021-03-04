@@ -2,6 +2,7 @@ import BaseRepo from './BaseRepo';
 import Company from '../Models/Company';
 import Position from '../Models/Position';
 import PositionRepo from './PositionRepo';
+import ControllerTools from '../../Utils/ControllerTools';
 
 export default class CompanyRepo extends BaseRepo<Company> {
 
@@ -19,27 +20,10 @@ export default class CompanyRepo extends BaseRepo<Company> {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
                 SELECT 
-                    /* cv_experiences.id_cv,
-                    cv_experiences.id_experience, */
-
-                    /* part_experiences.id AS idExperience,
-                    part_experiences.id_user ,
-                    part_experiences.id_company,
-                    part_experiences.id_company_position ,
-                    part_experiences.slug AS slugExperience, 
-                    part_experiences.date_begin,
-                    part_experiences.date_end, */
-
-                    /* company_positions.id AS idPosition,
-                    company_positions.slug AS slugPosition,
-                    company_positions_lang.id_lang AS idLangPosition, 
-                    company_positions_lang.title AS titlePosition,
-                    company_positions_lang.description AS descriptionPosition, */
-
-                    companies_lang.id_company AS idCompany,
-                    companies.slug AS slugCompany,
-                    companies_lang.name AS nameCompany,
-                    companies_lang.description AS descriptionCompany
+                    companies_lang.id_company AS id,
+                    companies.slug AS slug,
+                    companies_lang.name AS name,
+                    companies_lang.description AS description
 
                 FROM companies
                 JOIN cv_experiences 
@@ -63,11 +47,13 @@ export default class CompanyRepo extends BaseRepo<Company> {
                 if(Array.isArray(listCompaniesResult)) {
                     if(listCompaniesResult.length > 0){
                         const listCompanies: Company[] = [];
+                        // ControllerTools.render(null, ["CompanyRepo::getListCompaniesFromDbByCv", idCv, idLang, listCompaniesResult, listCompanies ]); return;
                         for (let element of listCompaniesResult) {
                             const company = Company.createFromObj(element);
                             company.positions = await PositionRepo.getListPositionByCv(idCv, company.id, idLang);
                             listCompanies.push(company);
                         };
+                        // ControllerTools.render(null, ["CompanyRepo::getListCompaniesFromDbByCv", idCv, idLang, listCompaniesResult, listCompanies ]); return;
                         resolve(listCompanies);
                     }else{
                         resolve([]);

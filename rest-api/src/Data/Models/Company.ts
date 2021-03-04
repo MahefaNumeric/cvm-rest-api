@@ -65,12 +65,12 @@ export default class Company extends BaseModel{
         return true;
     }
 
-    public static createFromObj(jsObj: Company): Company{
+    public static createFromObj(obj: Company): Company{
         return new Company(
-            jsObj.id, 
-            jsObj.slug, 
-            jsObj.name,
-            jsObj.description
+            obj.id, 
+            obj.slug, 
+            obj.name,
+            obj.description
         );
     }
 

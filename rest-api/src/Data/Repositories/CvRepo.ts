@@ -1,7 +1,6 @@
 import Address from "../Models/Address";
 import Cv from "../Models/Cv";
 import Education from "../Models/Education";
-import Experiences from "../Models/Experience";
 import Skill from "../Models/Skill";
 import SkillGroupRepo from './SkillGroupRepo';
 import SkillGroup from '../Models/SkillGroup';
@@ -11,6 +10,8 @@ import EducationRepo from './EducationRepo';
 import SkillRepo from "./SkillRepo";
 import ExperienceRepo from './ExperienceRepo';
 import ProjectRepo from "./ProjectRepo";
+import ControllerTools from '../../Utils/ControllerTools';
+import Experience from '../Models/Experience';
 
 export default class CvRepo extends BaseRepo<Cv> {
     static MSG_NO_CV_GIVEN_ID = "NO_CV_GIVEN_ID";
@@ -54,8 +55,9 @@ export default class CvRepo extends BaseRepo<Cv> {
                                 cv.skills = listSkills;
                                 SkillGroupRepo.getListUsedSkillsGroupFromDbByCv(cv.id, idLang).then((listGroupSkills: SkillGroup[]) => {
                                     cv.skillsGroup = listGroupSkills;
-                                    ExperienceRepo.buildExperienceByIdCv(cv.id, idLang).then((experiences: Experiences) => {
+                                    ExperienceRepo.buildExperienceByIdCv(cv.id, idLang).then((experiences: Experience) => {
                                         cv.experiences = experiences;
+                                        // ControllerTools.render(null, [ idCv, idLang, experiences ]);
                                         ProjectRepo.getListProjectFromDbByCv(cv.id, idLang).then(projects => {
                                             cv.projects = projects;
                                             resolve(cv);
