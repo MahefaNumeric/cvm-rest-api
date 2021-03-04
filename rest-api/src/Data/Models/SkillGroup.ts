@@ -13,7 +13,7 @@ export default class SkillGroup extends BaseModel {
      * @param {string} description 
      */
     public constructor(
-        public id: number,
+        public id: number|null,
         public slug: string,
         public title: string,
         public description: string

@@ -1,14 +1,14 @@
 const express = require("express");
 
 import SkillGroup from "../Data/Models/SkillGroup";
-import SkillGroupService from "../Services/SkillGroupService";
+import SkillGroupService from '../Services/SkillGroupService';
 
 export const router = express.Router({ mergeParams: true });
 
 const skillGroupService = new SkillGroupService();
 
 // Recupere liste
-router.get("/all", (request, response) => {
+router.get("/all", (request: any, response: any) => {
     const isoLang = request.params.isoLang;
     skillGroupService.getListAllSkillGroup(isoLang)
         .then(list => {
@@ -24,7 +24,7 @@ router.get("/all", (request, response) => {
 });
 
 // Creation nouvel 
-router.post("/", (request, response)=>{
+router.post("/", (request: any, response: any)=>{
     const pData = request.body;
     const skillGroup = new SkillGroup(
         null, pData.slug, pData.title, pData.description

@@ -1,6 +1,6 @@
-const express = require("express");
+import BasicAuth from './Utils/Auth/BasicAuth';
+import * as express from "express";
 const bodyParse = require("body-parser");
-const basicAuth = require("./Utils/Auth/BasicAuth");
 const cors = require("cors");
 const expressVue = require("express-vue");
 const util = require('util');
@@ -20,7 +20,7 @@ const corsOption = {
 }
 
 // Setup BasicAuth
-// app.use(basicAuth);
+// app.use(BasicAuth.middleware);
 
 // Setup static assets
 app.use('/templates/1/', express.static(__dirname + '/../Templates/cv/template-1/'));

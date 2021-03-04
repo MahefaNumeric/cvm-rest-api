@@ -2,12 +2,15 @@ import SkillGroupRepo from "../Data/Repositories/SkillGroupRepo";
 import LanguageService from './LanguageService';
 import SkillGroup from '../Data/Models/SkillGroup';
 
+/**
+ * @todo Injection dependance LanguageService
+ */
 export default class SkillGroupService{
 
     constructor(
-        public languageService: LanguageService
+        public languageService: LanguageService = new LanguageService()
     ){
-        this.languageService = new LanguageService();
+        // this.languageService = new LanguageService();
     }
     
     /**

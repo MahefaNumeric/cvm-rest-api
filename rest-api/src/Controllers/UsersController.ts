@@ -1,13 +1,13 @@
-const mysql = require("mysql");
-const express = require("express");
-const UsersService = require("../Services/UserService");
+import UsersService from '../Services/UserService';
+// const mysql = require("mysql");
+// const express = require("express");
 
 const router = express.Router();
 
 module.exports = router;
 
 // Recupere liste Users
-router.get("/", (request, response) => {
+router.get("/", (request: any, response: any) => {
     // const userService = new UsersService();
     // userService.getListUser((results) => {
     //     console.log("Results: ", results);
@@ -17,13 +17,13 @@ router.get("/", (request, response) => {
 });
 
 // Creation nouvel utilisateur
-router.post("/", (request, response)=>{
+router.post("/", (request: any, response: any)=>{
     response.type("application/json");
     const userService = new UsersService();
     
     const pData = request.body;
     console.log(pData);
-    userService.createNewUser(pData, (results) => {
+    userService.createNewUser(pData).then((results) => {
         console.log("Results: ", results);
         response.type("application/json");
         response.json(results);
@@ -31,7 +31,7 @@ router.post("/", (request, response)=>{
 });
 
 // Creation nouvel utilisateur
-router.get("/:id", (request, response)=>{
+router.get("/:id", (request: any, response: any)=>{
     // response.type("application/json");
     // const connMysql = require("../Configs/db.config");
     // const id = request.params.id;
@@ -51,7 +51,7 @@ router.get("/:id", (request, response)=>{
 });
 
 // Mise a jours utilisateur
-router.put("/:id", (request, response) => {
+router.put("/:id", (request: any, response: any) => {
     // response.type("application/json");
     // const connMysql = require("../Configs/db.config");
     // const checkIdIfExist = require("../Validation/UserValidation").checkIdIfExist;

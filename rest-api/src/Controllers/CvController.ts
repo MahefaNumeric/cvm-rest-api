@@ -61,7 +61,7 @@ class CvController {
         let resultHTML = null;
         Language.createFromDbByIso(isoLang).then((language: Language) => {
             User.createFromDbById(idUser, language.id).then((user: User) => {
-                cvService.generateCv(isoLang, idCv, format, user, (result: any) => {
+                cvService.generateCv(isoLang, idCv, format, user).then((result: any) => {
                     if(format == "html"){
                         resultHTML = result;
                         response.type("application/json")
@@ -92,7 +92,7 @@ class CvController {
         const cvService = new CvService();
         
         const pData = request.body;
-        cvService.createNewCv(pData, (results: any) => {
+        cvService.createNewCv(pData).then((results: any) => {
             console.log("Results: ", results);
             response.type("application/json")
                 .json(results);
