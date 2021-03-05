@@ -61,7 +61,7 @@ export default class Company extends BaseModel{
     }
     set durationInDayOnTheCompany(value: number) {
         this.durationInDayOnTheCompanyValue = value;
-        this.durationInDayOnTheCompanyFriendly = DateUtils.convertDayNumberToFriendlyDuration(this.durationInDayOnTheCompanyValue);
+        this.durationInDayOnTheCompanyFriendly = DateUtils.convertDayNumberToFriendlyDuration(this.durationInDayOnTheCompanyValue, false);
     }
 
     private setupPositionsBeganEnd(): boolean{

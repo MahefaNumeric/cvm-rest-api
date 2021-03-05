@@ -179,30 +179,29 @@ export default class DateUtils{
     /**
      * Convert : "35" days -----> "1 month and 5 days"
      */
-    public static convertDayNumberToFriendlyDuration(daysNumber: number): string{
-        let result = ``;
+    public static convertDayNumberToFriendlyDuration(daysNumber: number, showDay: boolean = true): string{
         const numberDaysOnYear = 365;
         const numberDaysOnMonth = 30;
-        
+        let result = ``;
         // ------------------------------------------
-        
         let dayNumerLeft = daysNumber;
-        const yearPart = ``;
         const year = Math.floor(dayNumerLeft / numberDaysOnYear);
-        
+        const yearPart = year > 0 ? `${year} year,` : ``;
         // ------------------------------------------
-        
         dayNumerLeft = dayNumerLeft - (year*numberDaysOnYear)
         const month = Math.floor(dayNumerLeft / numberDaysOnMonth);
-        
+        const showComma = showDay;
+        const monthPart = month > 0 ? (
+            `${month} month${showComma ? `,` : ``}`
+        ) : ``;
         // ------------------------------------------
-        
-        dayNumerLeft = dayNumerLeft - (month*numberDaysOnMonth);
-        
+        let dayPart = ``;
+        if(showDay){
+            const day = dayNumerLeft - (month*numberDaysOnMonth);
+            dayPart = day > 0 ? `${day} days` : ``;
+        }
         // ------------------------------------------
-        
-        result = `${year} year, ${month} month, ${dayNumerLeft} days`;
-        
+        result = `${yearPart} ${monthPart} ${dayPart}`;
         return result;
     }
 }

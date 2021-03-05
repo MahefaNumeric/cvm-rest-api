@@ -45,7 +45,7 @@ export default class Position extends BaseModel {
     }
     set durationInDayOnThePosition(value: number) {
         this.durationInDayOnThePositionValue = value;
-        this.durationInDayOnThePositionFriendly = DateUtils.convertDayNumberToFriendlyDuration(this.durationInDayOnThePositionValue);
+        this.durationInDayOnThePositionFriendly = DateUtils.convertDayNumberToFriendlyDuration(this.durationInDayOnThePositionValue, false);
     }
 
     public static createFromObj(obj: Position): Position {
