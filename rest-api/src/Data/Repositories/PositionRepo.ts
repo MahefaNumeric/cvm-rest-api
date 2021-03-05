@@ -34,6 +34,8 @@ export default class PositionRepo extends BaseRepo<Position> {
                     AND company_positions_lang.id_lang = companies_lang.id_lang
                     AND part_experiences_lang.id_lang = companies_lang.id_lang
                     AND part_experiences.id_company = ${idCompany}
+                ORDER BY 
+                    part_experiences.date_begin DESC
             `;
             connMysql.query(sql, (error: any, listPositionsResult: any[], fields: any) => {
                 // ControllerTools.render(null, ["PositionRepo::getListPositionByCv", idCv, idLang, listPositionsResult, sql ]); return;

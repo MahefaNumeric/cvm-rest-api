@@ -7,6 +7,7 @@ import util from "util";
 import LanguageRepo from '../Data/Repositories/LanguageRepo';
 import UserRepo from '../Data/Repositories/UserRepo';
 import ControllerTools from '../Utils/ControllerTools';
+import { consoleReset } from '../Utils/ConsoleTools';
 
 function getRoute(){
     const router = express.Router({ mergeParams: true });
@@ -139,6 +140,8 @@ class CvController {
     }
 
     static previsualizeHtmlOutput = (request: any, response: any, next: NextFunction) => {
+        consoleReset();
+
         const isoLangLowercase = String(request.params.isoLang).toLowerCase(); // From parent params
         const idCv = parseInt(request.params.idCv);
         const slugTemplate = request.params.slugTemplate;   // Sensible a la casse
