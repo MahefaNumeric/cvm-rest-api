@@ -12,3 +12,6 @@
 
 ## Urls
 - http://localhost:3000/en/cv/1/template/template-1/generate/html/view 
+
+## Commands
+- mysqldump --verbose -u root -p "cvm" > cvm.sql
