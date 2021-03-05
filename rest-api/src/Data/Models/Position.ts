@@ -5,6 +5,9 @@ export default class Position extends BaseModel {
     public experienceDateBegin_Friendly: string = "";
     public experienceDateEnd_Friendly: string = "";
 
+    public durationInDayOnThePositionValue: number = 0;
+    public durationInDayOnThePositionFriendly: string = ``;
+
     constructor(
         public id: number,
         public slug: string,
@@ -25,6 +28,7 @@ export default class Position extends BaseModel {
     set experienceDateBegin(value: string){
         this.experienceDateBeginValue = value;
         this.experienceDateBegin_Friendly = DateUtils.formatDateToFriendly(this.experienceDateBeginValue, "fr", false);
+        this.setup_durationInDayOnThePosition();
     }
 
     get experienceDateEnd(){
@@ -33,6 +37,15 @@ export default class Position extends BaseModel {
     set experienceDateEnd(value: string){
         this.experienceDateEndValue = value;
         this.experienceDateEnd_Friendly = DateUtils.formatDateToFriendly(this.experienceDateEndValue, "fr", false);
+        this.setup_durationInDayOnThePosition();
+    }
+
+    get durationInDayOnThePosition(): number {
+        return this.durationInDayOnThePositionValue;
+    }
+    set durationInDayOnThePosition(value: number) {
+        this.durationInDayOnThePositionValue = value;
+        this.durationInDayOnThePositionFriendly = DateUtils.convertDayNumberToFriendlyDuration(this.durationInDayOnThePositionValue);
     }
 
     public static createFromObj(obj: Position): Position {
@@ -44,6 +57,14 @@ export default class Position extends BaseModel {
             obj.descriptionExperiencePosition,
             obj.experienceDateBegin,
             obj.experienceDateEnd
+        );
+    }
+
+    private setup_durationInDayOnThePosition(){
+        this.durationInDayOnThePosition = DateUtils.calculateTwoDateDurationInDay(
+            this.experienceDateBeginValue, 
+            this.experienceDateEndValue,
+            "YYYY-MM"
         );
     }
 
