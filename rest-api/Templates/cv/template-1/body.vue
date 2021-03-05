@@ -73,7 +73,7 @@
                         <div class="position-header">
                             <div class="position-title">{{ itemPosition.title }}</div>
                             <div class="position-duration" v-if="itemCompany.hasManyPosition == true">
-                                <span class="position-duration-1">{{ itemPosition.experienceDateBegin}} - {{itemPosition.experienceDateEnd }}</span>
+                                <span class="position-duration-1">{{ itemPosition.experienceDateBegin_Friendly}} - {{itemPosition.experienceDateEnd_Friendly }}</span>
                                 <span class="position-duration-2"> - 2 ans</span>
                             </div>
                         </div>

@@ -12,9 +12,8 @@ export default abstract class BaseModel // extends Object
     }
 
     /**
-     * 
-     * @param objectType 
-     * @todo have a problem
+     * Just to let a easy initialization
+     * @param objectType
      */
     public static initalize(objectType: any): any{
         const arrayProperties: string[] = Object.getOwnPropertyNames(objectType);
@@ -47,6 +46,3 @@ export default abstract class BaseModel // extends Object
         return defLang;
     }
 }
-
-const Models: { [key: string]: any } = {
-};

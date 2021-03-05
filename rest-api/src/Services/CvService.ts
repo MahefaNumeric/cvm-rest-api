@@ -82,7 +82,6 @@ export default class CvService{
      * @param {string} isoLang 
      * @param {number} idCv 
      * @param {User} user 
-     * @param {Function} mcbFinnished 
      * @returns {String}
      * @todo Create a new function : filename->htmlContent
      * @todo Create another bloc to handle generation html from database
@@ -136,6 +135,8 @@ export default class CvService{
      * @param {number} idCv 
      * @param {boolean} withTemplatesRoot 
      * @todo cvService.getTemplateVueFilePath : make the logic to manage by Template object
+     * @note Has this error after migration js to ts
+     * @note D:\works\mc\cv-manager-rn-expo-and-api\rest-api\node_modules\vue-pronto\cv\template-1\index.vue
      */
     public getTemplateVueFilePath(idCv: number, withTemplatesRoot: boolean = false): string{
         let rootView = '';

@@ -2,7 +2,7 @@
 export default class DateUtils{
     public monthName = [];
     
-    static getMonthName(monthNumber: number, isoLang: string = "fr", longMonthName: boolean = true): string{
+    public static getMonthName(monthNumber: number, isoLang: string = "fr", longMonthName: boolean = true): string{
         const monthName: {[key: string]: any} = [];
         monthName["fr"] = [];
         monthName["fr"][1] = longMonthName ? "Janvier" : "Jan";
@@ -47,7 +47,7 @@ export default class DateUtils{
      * @returns {+1} When dateA > dateB
      * @returns {null} When format is unkown
      */
-    static compareDateAB(dateA: string, dateB: string, format: string = "YYYY-MM"): number|false{
+    public static compareDateAB(dateA: string, dateB: string, format: string = "YYYY-MM"): number|false{
         switch(format){
             case "YYYY-MM":
                 return this.compareDateAB_YYYYMM(dateA, dateB);
@@ -65,7 +65,7 @@ export default class DateUtils{
      * @returns { 0} When dateA = dateB
      * @returns {+1} When dateA > dateB
      */
-    static compareDateAB_YYYYMM(dateA: string, dateB: string): number|false{
+    public static compareDateAB_YYYYMM(dateA: string, dateB: string): number|false{
         let result: any = false;
         
         // Collect data
@@ -87,6 +87,25 @@ export default class DateUtils{
             else if(iDateA_month > iDateB_month) result = 1;
         }
 
+        return result;
+    }
+    
+    public static formatDateToFriendly(date: string, isoLang: string, longMonthName: boolean): string{
+        const date_array = date.split("-");
+        const year = parseInt(date_array[0]);
+        const month = parseInt(date_array[1]);
+        const monthName = DateUtils.getMonthName(month, isoLang, longMonthName);
+        
+        let enFriendlyDate = `${year} ${monthName}`; // Default : EN 
+        let result: string = ``;
+        switch(String(isoLang).toLowerCase()){
+            case "fr":
+                result = `${monthName} ${year}`;
+                break;
+            default:
+                result = enFriendlyDate;
+                break;
+        }
         return result;
     }
 }

@@ -30,39 +30,18 @@ export default class Education extends BaseModel{
 
     set date_begin(dateBegin) {
         this.date_begin_value = dateBegin;
-        this.date_begin_friendly = this.formatDateToFriendly(dateBegin, "fr", false);
+        this.date_begin_friendly = DateUtils.formatDateToFriendly(dateBegin, "fr", false);
     }
-
     get date_begin() {
         return this.date_begin_value;
     }    
 
     set date_end(dateEnd) {
         this.date_end_value = dateEnd;
-        this.date_end_friendly = this.formatDateToFriendly(dateEnd, "fr", false);
+        this.date_end_friendly = DateUtils.formatDateToFriendly(dateEnd, "fr", false);
     }
-
     get date_end() {
         return this.date_end_value;
-    }
-
-    formatDateToFriendly(date: string, isoLang: string, longMonthName: boolean): string{
-        const date_array = date.split("-");
-        const year = parseInt(date_array[0]);
-        const month = parseInt(date_array[1]);
-        const monthName = DateUtils.getMonthName(month, isoLang, longMonthName);
-        
-        let enFriendlyDate = `${year} ${monthName}`; // Default : EN 
-        let result: string = ``;
-        switch(String(isoLang).toLowerCase()){
-            case "fr":
-                result = `${monthName} ${year}`;
-                break;
-            default:
-                result = enFriendlyDate;
-                break;
-        }
-        return result;
     }
 
     public static createFromObj(isoLang: string, obj: Education): Education{

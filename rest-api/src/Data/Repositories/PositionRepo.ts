@@ -9,14 +9,13 @@ export default class PositionRepo extends BaseRepo<Position> {
         return new Promise((resolve, reject) => {
             const sql = /* sql */`
                 SELECT 
-                    company_positions.id AS idPosition,
-                    company_positions.slug AS slugPosition,
-                    company_positions_lang.title AS titlePosition,
-                    company_positions_lang.description AS descriptionPosition, 
-                    part_experiences_lang.description as descriptionExperiencePosition,
-                    DATE_FORMAT(part_experiences.date_begin, '%Y-%m') as date_begin,
-                    DATE_FORMAT(part_experiences.date_end, '%Y-%m') as date_end
-
+                    company_positions.id                    AS id,
+                    company_positions.slug                  AS slug,
+                    company_positions_lang.title            AS title,
+                    company_positions_lang.description      AS description, 
+                    part_experiences_lang.description       AS descriptionExperiencePosition,
+                    DATE_FORMAT(part_experiences.date_begin, '%Y-%m')   AS experienceDateBegin,
+                    DATE_FORMAT(part_experiences.date_end, '%Y-%m')     AS experienceDateEnd
                 FROM cv_experiences 
                 JOIN part_experiences 
                     ON part_experiences.id = cv_experiences.id_experience
@@ -36,7 +35,6 @@ export default class PositionRepo extends BaseRepo<Position> {
                     AND part_experiences_lang.id_lang = companies_lang.id_lang
                     AND part_experiences.id_company = ${idCompany}
             `;
-            // console.log("Position::getListPositionByCv::sql", sql);
             connMysql.query(sql, (error: any, listPositionsResult: any[], fields: any) => {
                 // ControllerTools.render(null, ["PositionRepo::getListPositionByCv", idCv, idLang, listPositionsResult, sql ]); return;
                 if(error) reject({
