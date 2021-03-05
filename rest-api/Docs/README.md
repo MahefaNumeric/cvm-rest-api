@@ -9,3 +9,6 @@
 
 ## Controllers routing
 - https://github.com/typestack/routing-controllers
+
+## Urls
+- http://localhost:3000/en/cv/1/template/template-1/generate/html/view 

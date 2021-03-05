@@ -143,7 +143,7 @@ export default class CvService{
         // if(withTemplatesRoot) 
             rootView = "Templates/";
 
-        const filename = "cv/template-1/index.vue";
+        const filename = `cv/${slugTemplate}/index.vue`;
 
         return "../../" + rootView + filename;
     }
