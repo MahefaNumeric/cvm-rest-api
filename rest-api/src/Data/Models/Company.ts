@@ -23,7 +23,8 @@ export default class Company extends BaseModel{
         public id: number,
         public slug: string,
         public name: string,
-        public description: string
+        public description: string,
+        public isoLang: string = "fr"   // Special, optionnal, at the end
     ){
         super();
 
@@ -45,7 +46,8 @@ export default class Company extends BaseModel{
     }
     set dateStart(value: string) {
         this.dateStartValue = value;
-        this.dateStartFriendly = DateUtils.formatDateToFriendly(this.dateStartValue, "fr", false);
+        console.log("Company::set dateStart, isoLang: ", this.isoLang);
+        this.dateStartFriendly = DateUtils.formatDateToFriendly(this.dateStartValue, this.isoLang, false);
     }
 
     get dateEnd(): string {
@@ -53,7 +55,7 @@ export default class Company extends BaseModel{
     }
     set dateEnd(value: string) {
         this.dateEndValue = value;
-        this.dateEndFriendly = DateUtils.formatDateToFriendly(this.dateEndValue, "fr", false);
+        this.dateEndFriendly = DateUtils.formatDateToFriendly(this.dateEndValue, this.isoLang, false);
     }
 
     get durationInDayOnTheCompany(): number {
@@ -61,7 +63,7 @@ export default class Company extends BaseModel{
     }
     set durationInDayOnTheCompany(value: number) {
         this.durationInDayOnTheCompanyValue = value;
-        this.durationInDayOnTheCompanyFriendly = DateUtils.convertDayNumberToFriendlyDuration(this.durationInDayOnTheCompanyValue, "fr", false);
+        this.durationInDayOnTheCompanyFriendly = DateUtils.convertDayNumberToFriendlyDuration(this.durationInDayOnTheCompanyValue, this.isoLang, false);
     }
 
     private setupPositionsBeganEnd(): boolean{
@@ -95,12 +97,13 @@ export default class Company extends BaseModel{
         return true;
     }
 
-    public static createFromObj(obj: Company): Company{
+    public static createFromObj(obj: Company, isoLang: string = "fr"): Company{
         return new Company(
             obj.id, 
             obj.slug, 
             obj.name,
-            obj.description
+            obj.description,
+            isoLang
         );
     }
 

@@ -10,6 +10,8 @@ export default class DateUtils{
      * @returns 
      */
     public static getMonthName(monthNumber: number, isoLang: string = "fr", longMonthName: boolean = true): string{
+        isoLang = isoLang.toLowerCase();
+
         const monthName: {[key: string]: any} = [];
         monthName["fr"] = [];
         monthName["fr"][1] = longMonthName ? "Janvier" : "Jan";
@@ -136,6 +138,7 @@ export default class DateUtils{
      * @returns 
      */
     public static formatDateToFriendly(dateStr: string, isoLang: string, longMonthName: boolean): string{
+        isoLang = isoLang.toLowerCase();
         const date_array = dateStr.split("-");
         const year = parseInt(date_array[0]);
         const month = parseInt(date_array[1]);
@@ -143,7 +146,7 @@ export default class DateUtils{
         
         let enFriendlyDate = `${year} ${monthName}`; // Default : EN 
         let result: string = ``;
-        switch(String(isoLang).toLowerCase()){
+        switch(isoLang){
             case "fr":
                 result = `${monthName} ${year}`;
                 break;
@@ -211,18 +214,18 @@ export default class DateUtils{
      * Convert : "35" days -----> "1 month and 5 days"
      */
     public static convertDayNumberToFriendlyDuration(daysNumber: number, isoLang: string, showDay: boolean = true): string{
+        isoLang = isoLang.toLowerCase();
         const numberDaysOnYear = 365;
         const numberDaysOnMonth = 30;
-        let result = ``;
         // ------------------------------------------
         let dayNumerLeft = daysNumber;
         const year = Math.floor(dayNumerLeft / numberDaysOnYear);
-        const yearLang = DateUtils.getDateWord("fr", year>1 ? DateWordType.Years : DateWordType.Year);
+        const yearLang = DateUtils.getDateWord(isoLang, year>1 ? DateWordType.Years : DateWordType.Year);
         const yearPart = year > 0 ? `${year} ${yearLang},` : ``;
         // ------------------------------------------
         dayNumerLeft = dayNumerLeft - (year*numberDaysOnYear)
         const month = Math.floor(dayNumerLeft / numberDaysOnMonth);
-        const monthLang = DateUtils.getDateWord("fr", month>1 ? DateWordType.Months : DateWordType.Month);
+        const monthLang = DateUtils.getDateWord(isoLang, month>1 ? DateWordType.Months : DateWordType.Month);
         const showComma = showDay;
         const monthPart = month > 0 ? (
             `${month} ${monthLang}${showComma ? `,` : ``}`
@@ -231,7 +234,7 @@ export default class DateUtils{
         let dayPart = ``;
         if(showDay){
             const day = dayNumerLeft - (month*numberDaysOnMonth);
-            const dayLang = DateUtils.getDateWord("fr", day>1 ? DateWordType.Days : DateWordType.Day);
+            const dayLang = DateUtils.getDateWord(isoLang, day>1 ? DateWordType.Days : DateWordType.Day);
             dayPart = day > 0 ? `${day} ${dayLang}` : ``;
         }
         // ------------------------------------------

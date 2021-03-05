@@ -1,6 +1,6 @@
 import BaseRepo from './BaseRepo';
 import Position from '../Models/Position';
-import ControllerTools from '../../Utils/ControllerTools';
+import LanguageRepo from './LanguageRepo';
 const connMysql = require("../../Configs/Databases/db.config");
 
 export default class PositionRepo extends BaseRepo<Position> {
@@ -42,11 +42,18 @@ export default class PositionRepo extends BaseRepo<Position> {
                     data: error
                 });
                 if(Array.isArray(listPositionsResult) && listPositionsResult.length > 0) {
-                    const listPositions: Position[] = [];
-                    listPositionsResult.forEach(element => {
-                        listPositions.push(Position.createFromObj(element));
+                    LanguageRepo.createFromDbById(idLang).then(async language => {
+                        const listPositions: Position[] = [];
+                        listPositionsResult.forEach(element => {
+                            listPositions.push(Position.createFromObj(element, language.code_iso));
+                        });
+                        resolve(listPositions);
+                    }).catch(errorLanguageCreateFromDbById => {
+                        reject({
+                            message: "Position::getListPositionByCv::LanguageRepo.createFromDbById::catch",
+                            data: {errorLanguageCreateFromDbById}
+                        });
                     });
-                    resolve(listPositions);
                 }else{
                     reject({
                         message: "Position::getListPositionByCv::listPositionsResult null",

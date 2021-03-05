@@ -15,7 +15,8 @@ export default class Position extends BaseModel {
         public description: string,
         public descriptionExperiencePosition: string,
         public experienceDateBeginValue: string,
-        public experienceDateEndValue: string
+        public experienceDateEndValue: string,
+        public isoLang: string = "fr"   // Special, optionnal, at the end
     ){
         super();
         this.experienceDateBegin = experienceDateBeginValue;
@@ -27,7 +28,7 @@ export default class Position extends BaseModel {
     }
     set experienceDateBegin(value: string){
         this.experienceDateBeginValue = value;
-        this.experienceDateBegin_Friendly = DateUtils.formatDateToFriendly(this.experienceDateBeginValue, "fr", false);
+        this.experienceDateBegin_Friendly = DateUtils.formatDateToFriendly(this.experienceDateBeginValue, this.isoLang, false);
         this.setup_durationInDayOnThePosition();
     }
 
@@ -36,7 +37,7 @@ export default class Position extends BaseModel {
     }
     set experienceDateEnd(value: string){
         this.experienceDateEndValue = value;
-        this.experienceDateEnd_Friendly = DateUtils.formatDateToFriendly(this.experienceDateEndValue, "fr", false);
+        this.experienceDateEnd_Friendly = DateUtils.formatDateToFriendly(this.experienceDateEndValue, this.isoLang, false);
         this.setup_durationInDayOnThePosition();
     }
 
@@ -45,10 +46,10 @@ export default class Position extends BaseModel {
     }
     set durationInDayOnThePosition(value: number) {
         this.durationInDayOnThePositionValue = value;
-        this.durationInDayOnThePositionFriendly = DateUtils.convertDayNumberToFriendlyDuration(this.durationInDayOnThePositionValue, "fr", false);
+        this.durationInDayOnThePositionFriendly = DateUtils.convertDayNumberToFriendlyDuration(this.durationInDayOnThePositionValue, this.isoLang, false);
     }
 
-    public static createFromObj(obj: Position): Position {
+    public static createFromObj(obj: Position, isoLang: string = "fr"): Position {
         return new Position(
             obj.id, 
             obj.slug, 
@@ -56,7 +57,8 @@ export default class Position extends BaseModel {
             obj.description, 
             obj.descriptionExperiencePosition,
             obj.experienceDateBegin,
-            obj.experienceDateEnd
+            obj.experienceDateEnd,
+            isoLang
         );
     }
 

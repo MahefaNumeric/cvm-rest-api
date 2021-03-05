@@ -152,7 +152,7 @@ class CvController {
                         cv: cv,
                         language: language
                     };
-                    console.log("/:idCv/generate/html/view", util.inspect(data, {showHidden: false, depth: null, colors: true}));
+                    // console.log("/:idCv/generate/html/view", util.inspect(data, {showHidden: false, depth: null, colors: true}));
                     const htmlPageTitle = `${isoLangLowercase=="en" ? 'Resume':'CV'} ${data.user.lastname}`;
                     request.vueOptions = vueOptions(htmlPageTitle);
                     

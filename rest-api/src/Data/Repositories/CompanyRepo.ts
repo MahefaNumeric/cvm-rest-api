@@ -3,6 +3,8 @@ import Company from '../Models/Company';
 import Position from '../Models/Position';
 import PositionRepo from './PositionRepo';
 import ControllerTools from '../../Utils/ControllerTools';
+import LanguageRepo from './LanguageRepo';
+import Language from '../Models/Language';
 
 export default class CompanyRepo extends BaseRepo<Company> {
 
@@ -41,20 +43,22 @@ export default class CompanyRepo extends BaseRepo<Company> {
                     AND companies.id = companies_lang.id_company
                 GROUP BY part_experiences.id_company
             `;
-            // console.log("CompanyPosition::getListCompaniesFromDbByCv::sql", sql);
+            // console.log("CompanyRepo::getListCompaniesFromDbByCv::sql", sql);
             connMysql.query(sql, async (error: any, listCompaniesResult: any[], fields: any) => {
                 if(error) throw error;
                 if(Array.isArray(listCompaniesResult)) {
                     if(listCompaniesResult.length > 0){
-                        const listCompanies: Company[] = [];
                         // ControllerTools.render(null, ["CompanyRepo::getListCompaniesFromDbByCv", idCv, idLang, listCompaniesResult, listCompanies ]); return;
-                        for (let element of listCompaniesResult) {
-                            const company = Company.createFromObj(element);
-                            company.positions = await PositionRepo.getListPositionByCv(idCv, company.id, idLang);
-                            listCompanies.push(company);
-                        };
-                        // ControllerTools.render(null, ["CompanyRepo::getListCompaniesFromDbByCv", idCv, idLang, listCompaniesResult, listCompanies ]); return;
-                        resolve(listCompanies);
+                        LanguageRepo.createFromDbById(idLang).then(async language => {
+                            console.log("CompanyRepo::getListCompaniesFromDbByCv::setupCompanyCompanyAndPosition::language", idLang, language);
+                            const listCompanies: Company[] = [];
+                            for (let element of listCompaniesResult) {
+                                const company = Company.createFromObj(element, language?.code_iso);
+                                company.positions = await PositionRepo.getListPositionByCv(idCv, company.id, idLang);
+                                listCompanies.push(company);
+                            };
+                            resolve(listCompanies);
+                        });
                     }else{
                         resolve([]);
                     }
