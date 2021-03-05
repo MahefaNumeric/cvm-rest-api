@@ -56,16 +56,16 @@ export default class CvService{
      * @async
      * @todo add catch for then
      */
-    public generateCv(isoLang: string, idCv: number, format: string, user: User): Promise<Cv>{
+    public generateCv(isoLang: string, idCv: number, slugTemplate: string, format: string, user: User): Promise<Cv>{
         return new Promise((resolve, reject) => {
             const formatLC = String(format).toLowerCase();
             if(formatLC == "html"){
-                this.generateCvHtml(isoLang, idCv, user)
+                this.generateCvHtml(isoLang, idCv, slugTemplate, user)
                     .then((result: any) => {
                         resolve(result);
                     });
             }else if(formatLC == "pdf"){
-                this.generateCvPdf(isoLang, idCv, user)
+                this.generateCvPdf(isoLang, idCv, slugTemplate, user)
                     .then((result: any) => {
                         resolve(result);
                     });
@@ -89,9 +89,9 @@ export default class CvService{
      * @todo remove user argument if not used
      * @async
      */
-    public generateCvHtml(isoLang: string, idCv: number, user: User): Promise<string>{
+    public generateCvHtml(isoLang: string, idCv: number, slugTemplate: string, user: User): Promise<string>{
         return new Promise(async (resolve, reject) => {
-            const filename = this.getTemplateVueFilePath(idCv, true);
+            const filename = this.getTemplateVueFilePath(slugTemplate, idCv, true);
             const htmlFilename = path.resolve(filename);
             await fs.readFile(htmlFilename, 'utf8', (err: any, htmlContent: any) => {
                 resolve(htmlContent);
@@ -109,13 +109,13 @@ export default class CvService{
      * @async
      * @todo Check if urlCv exist
      */
-    public generateCvPdf(isoLang: string, idCv: number, user: User): Promise<Object>{
+    public generateCvPdf(isoLang: string, idCv: number, slugTemplate: string, user: User): Promise<Object>{
         return new Promise(async (resolve, reject) => {
             const pdfFilename = this.makePdfFilename(idCv, isoLang, user);
             const filenameOutput = `./Public/CvOutput/${pdfFilename}.pdf`;
     
             const host = this.getHostUrl();
-            const urlCv = `${host}/${isoLang}/cv/${idCv}/generate/html/view`;
+            const urlCv = `${host}/${isoLang}/cv/${idCv}/template/${slugTemplate}/generate/html/view`;
     
             const puppeteer = require("puppeteer");
             const browser = await puppeteer.launch();
@@ -138,7 +138,7 @@ export default class CvService{
      * @note Has this error after migration js to ts
      * @note D:\works\mc\cv-manager-rn-expo-and-api\rest-api\node_modules\vue-pronto\cv\template-1\index.vue
      */
-    public getTemplateVueFilePath(idCv: number, withTemplatesRoot: boolean = false): string{
+    public getTemplateVueFilePath(slugTemplate: string, idCv: number, withTemplatesRoot: boolean = false): string{
         let rootView = '';
         // if(withTemplatesRoot) 
             rootView = "Templates/";

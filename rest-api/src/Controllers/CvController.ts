@@ -29,7 +29,7 @@ function getRoute(){
      * @param {String} format
      * @returns 
      */
-    router.get("/:idCv/generate/:format", CvController.generateGivenCv);
+    router.get("/:idCv/template/:slugTemplate/generate/:format", CvController.generateGivenCv);
 
     /**
      * Previsualize the html output (Type: text/html)
@@ -38,7 +38,7 @@ function getRoute(){
      * @todo cvService.getTemplateVueFilePath : make the logic to manage by Template object
      * @todo Add template to url
      */
-    router.get("/:idCv/generate/html/view", CvController.previsualizeHtmlOutput);
+    router.get("/:idCv/template/:slugTemplate/generate/html/view", CvController.previsualizeHtmlOutput);
 
     return router;
 }
@@ -64,13 +64,14 @@ class CvController {
         const isoLang = request.params.isoLang; // From parent params
         const idCv = request.params.idCv;
         const format = request.params.format;
+        const slugTemplate = request.params.slugTemplate;
         const idUser = 1; // Mahefa
 
         const cvService = new CvService();
         let resultHTML = null;
         LanguageRepo.createFromDbByIso(isoLang).then((language: Language) => {
             UserRepo.createFromDbById(idUser, language.id).then((user: User) => {
-                cvService.generateCv(isoLang, idCv, format, user).then((result: any) => {
+                cvService.generateCv(isoLang, idCv, slugTemplate, format, user).then((result: any) => {
                     if(format == "html"){
                         resultHTML = result;
                         response.type("application/json")
@@ -140,6 +141,7 @@ class CvController {
     static previsualizeHtmlOutput = (request: any, response: any, next: NextFunction) => {
         const isoLangLowercase = String(request.params.isoLang).toLowerCase(); // From parent params
         const idCv = parseInt(request.params.idCv);
+        const slugTemplate = request.params.slugTemplate;   // Sensible a la casse
         const idUser = 1; // Mahefa
 
         const cvService = new CvService();
@@ -152,11 +154,11 @@ class CvController {
                         cv: cv,
                         language: language
                     };
-                    // console.log("/:idCv/generate/html/view", util.inspect(data, {showHidden: false, depth: null, colors: true}));
+                    console.log("/:idCv/generate/html/view", util.inspect(data, {showHidden: false, depth: null, colors: true}));
                     const htmlPageTitle = `${isoLangLowercase=="en" ? 'Resume':'CV'} ${data.user.lastname}`;
                     request.vueOptions = vueOptions(htmlPageTitle);
                     
-                    const templateVueFilePath = cvService.getTemplateVueFilePath(idCv, false);
+                    const templateVueFilePath = cvService.getTemplateVueFilePath(slugTemplate, idCv, false);
                     response.type("text/html")
                         .status(200)
                         .renderVue(templateVueFilePath, data, request.vueOptions);
