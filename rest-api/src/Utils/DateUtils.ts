@@ -1,6 +1,6 @@
 
 export default class DateUtils{
-    public monthName = [];
+    public static monthName = [];
     
     /**
      * Convert : "3" ----> "Mars"
@@ -41,6 +41,37 @@ export default class DateUtils{
 
         // console.log('DateUtils::getMonthName', [isoLang, monthNumber], monthName[isoLang][monthNumber]);
         return monthName[isoLang][monthNumber];
+    }
+
+    public static getDateWord(isoLang: string, type: DateWordType): string {
+        const name: {[key: string]: any} = {
+            "en": {
+                "year": "Year",
+                "years": "Years",
+                "month": "Month",
+                "months": "Months",
+                "day": "Day",
+                "days": "Days"
+            },
+            "fr": {
+                "year": "Année",
+                "years": "Années",
+                "month": "Mois",
+                "months": "Mois",
+                "day": "Jour",
+                "days": "Jours"
+            }
+        };
+
+        isoLang = isoLang.toLowerCase().trim();
+
+        switch(isoLang){
+            case "fr":
+            case "en":
+                return name[isoLang][type];
+            default:
+                return name["en"][type];
+        }
     }
 
     /**
@@ -179,29 +210,40 @@ export default class DateUtils{
     /**
      * Convert : "35" days -----> "1 month and 5 days"
      */
-    public static convertDayNumberToFriendlyDuration(daysNumber: number, showDay: boolean = true): string{
+    public static convertDayNumberToFriendlyDuration(daysNumber: number, isoLang: string, showDay: boolean = true): string{
         const numberDaysOnYear = 365;
         const numberDaysOnMonth = 30;
         let result = ``;
         // ------------------------------------------
         let dayNumerLeft = daysNumber;
         const year = Math.floor(dayNumerLeft / numberDaysOnYear);
-        const yearPart = year > 0 ? `${year} year,` : ``;
+        const yearLang = DateUtils.getDateWord("fr", year>1 ? DateWordType.Years : DateWordType.Year);
+        const yearPart = year > 0 ? `${year} ${yearLang},` : ``;
         // ------------------------------------------
         dayNumerLeft = dayNumerLeft - (year*numberDaysOnYear)
         const month = Math.floor(dayNumerLeft / numberDaysOnMonth);
+        const monthLang = DateUtils.getDateWord("fr", month>1 ? DateWordType.Months : DateWordType.Month);
         const showComma = showDay;
         const monthPart = month > 0 ? (
-            `${month} month${showComma ? `,` : ``}`
+            `${month} ${monthLang}${showComma ? `,` : ``}`
         ) : ``;
         // ------------------------------------------
         let dayPart = ``;
         if(showDay){
             const day = dayNumerLeft - (month*numberDaysOnMonth);
-            dayPart = day > 0 ? `${day} days` : ``;
+            const dayLang = DateUtils.getDateWord("fr", day>1 ? DateWordType.Days : DateWordType.Day);
+            dayPart = day > 0 ? `${day} ${dayLang}` : ``;
         }
         // ------------------------------------------
-        result = `${yearPart} ${monthPart} ${dayPart}`;
-        return result;
+        return `${yearPart} ${monthPart} ${dayPart}`;
     }
+}
+
+enum DateWordType {
+    Day     = "day", 
+    Days    = "days", 
+    Month   = 'month', 
+    Months  = 'months', 
+    Year    = "year",
+    Years   = "years"
 }
