@@ -2,6 +2,13 @@
 export default class DateUtils{
     public monthName = [];
     
+    /**
+     * Convert : "3" ----> "Mars"
+     * @param monthNumber 
+     * @param isoLang 
+     * @param longMonthName 
+     * @returns 
+     */
     public static getMonthName(monthNumber: number, isoLang: string = "fr", longMonthName: boolean = true): string{
         const monthName: {[key: string]: any} = [];
         monthName["fr"] = [];
@@ -90,8 +97,15 @@ export default class DateUtils{
         return result;
     }
     
-    public static formatDateToFriendly(date: string, isoLang: string, longMonthName: boolean): string{
-        const date_array = date.split("-");
+    /**
+     * Convert "2021-03" ----> "March 2021"
+     * @param date 
+     * @param isoLang 
+     * @param longMonthName 
+     * @returns 
+     */
+    public static formatDateToFriendly(dateStr: string, isoLang: string, longMonthName: boolean): string{
+        const date_array = dateStr.split("-");
         const year = parseInt(date_array[0]);
         const month = parseInt(date_array[1]);
         const monthName = DateUtils.getMonthName(month, isoLang, longMonthName);
@@ -106,6 +120,89 @@ export default class DateUtils{
                 result = enFriendlyDate;
                 break;
         }
+        return result;
+    }
+
+    /**
+     * "2021-02-01" and "2021-02-03" ----> "2" days of differences
+     * @param dateAstr 
+     * @param dateBstr 
+     * @param format YYYY-MM-DD or YYYY-MM or YYYY
+     * @returns The day number between the two date
+     */
+    public static calculateTwoDateDurationInDay(dateAstr: string, dateBstr: string, format: string = "YYYY-MM-DD", separator: string = "-"): number {
+        const dateA: Date = DateUtils.parseDate(dateAstr, format, separator);
+        const dateB: Date = DateUtils.parseDate(dateBstr, format, separator);
+        const numDayDiff: number = DateUtils.dateDiff(dateA, dateB);
+        return Math.abs(numDayDiff);
+    }
+
+    /**
+     * Convert "2021-02-01" ----> new Date() object
+     * @param dateStr 
+     * @param format 
+     * @param separator 
+     * @returns 
+     */
+    public static parseDate(dateStr: string, format: string, separator: string = "-"): Date {
+        let splitedStr: string[];
+        let splitedInt: number[];
+        switch(format){
+            case "YYYY-MM-DD":
+                splitedStr = dateStr.split(separator);
+                splitedInt = splitedStr.map(i => parseInt(i));
+                return new Date(splitedInt[0], splitedInt[1]-1, splitedInt[2]);
+            case "YYYY-MM":
+                splitedStr = dateStr.split(separator);
+                splitedInt = splitedStr.map(i => parseInt(i));
+                return new Date(splitedInt[0], splitedInt[1]-1, 1);
+            case "YYYY":
+                const year: number = parseInt(dateStr);
+                return new Date(year, 0, 1);
+            default:
+                throw new Error(`DateUtils::parseDate, Format '${format}' unknow`);
+        }
+    }
+
+    /**
+     * Two Date object -----> Number of day (difference)
+     * @param dateFirst 
+     * @param dateSecond 
+     * @returns Number of day (difference)
+     */
+    public static dateDiff(dateFirst: Date, dateSecond: Date): number {
+        // Take the difference between the dates and divide by milliseconds per day.
+        // Round to nearest whole number to deal with DST.
+        return Math.round((dateFirst.getTime() - dateSecond.getTime())/(1000*60*60*24));
+    }
+
+    /**
+     * Convert : "35" days -----> "1 month and 5 days"
+     */
+    public static convertDayNumberToFriendlyDuration(daysNumber: number): string{
+        let result = ``;
+        const numberDaysOnYear = 365;
+        const numberDaysOnMonth = 30;
+        
+        // ------------------------------------------
+        
+        let dayNumerLeft = daysNumber;
+        const yearPart = ``;
+        const year = Math.floor(dayNumerLeft / numberDaysOnYear);
+        
+        // ------------------------------------------
+        
+        dayNumerLeft = dayNumerLeft - (year*numberDaysOnYear)
+        const month = Math.floor(dayNumerLeft / numberDaysOnMonth);
+        
+        // ------------------------------------------
+        
+        dayNumerLeft = dayNumerLeft - (month*numberDaysOnMonth);
+        
+        // ------------------------------------------
+        
+        result = `${year} year, ${month} month, ${dayNumerLeft} days`;
+        
         return result;
     }
 }

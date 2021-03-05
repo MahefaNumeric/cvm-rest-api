@@ -14,6 +14,9 @@ export default class Company extends BaseModel{
     public dateEndValue: string = ``;
     public dateEndFriendly: string = ``;
 
+    public durationInDayOnTheCompanyValue: number = 0;
+    public durationInDayOnTheCompanyFriendly: string = ``;
+
     public hasManyPosition: boolean;
 
     public constructor(
@@ -53,6 +56,14 @@ export default class Company extends BaseModel{
         this.dateEndFriendly = DateUtils.formatDateToFriendly(this.dateEndValue, "fr", false);
     }
 
+    get durationInDayOnTheCompany(): number {
+        return this.durationInDayOnTheCompanyValue;
+    }
+    set durationInDayOnTheCompany(value: number) {
+        this.durationInDayOnTheCompanyValue = value;
+        this.durationInDayOnTheCompanyFriendly = DateUtils.convertDayNumberToFriendlyDuration(this.durationInDayOnTheCompanyValue);
+    }
+
     private setupPositionsBeganEnd(): boolean{
         if(Array.isArray(this.positions) == false) return false;
         if(this.positions.length == 0) return false;
@@ -67,6 +78,11 @@ export default class Company extends BaseModel{
         });
         this.dateStart = dateMin;
         this.dateEnd = dateMax;
+        this.durationInDayOnTheCompany = DateUtils.calculateTwoDateDurationInDay(
+            this.dateStart, 
+            this.dateEnd,
+            "YYYY-MM"
+        );
 
         return true;
     }

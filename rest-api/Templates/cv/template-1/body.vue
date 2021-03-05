@@ -61,7 +61,7 @@
                 <!-- :class="itemCompany.hasManyPosition ? 'many-position-on-company' : 'single-position-on-company' " -->
                 <div class="column-timeline company">
                     <h3>{{ itemCompany.dateStartFriendly }} - {{itemCompany.dateEndFriendly }}</h3>
-                    <div class="company-duration">7 ans et 3 mois</div>
+                    <div class="company-duration">{{ itemCompany.durationInDayOnTheCompanyFriendly }}</div>
                 </div>
                 <div class="column-detail">
                     <div class="company-name">{{ itemCompany.name }}</div>
