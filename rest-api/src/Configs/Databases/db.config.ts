@@ -1,4 +1,3 @@
-// const mysql = require("mysql");
 import mysql from "mysql";
 
 const connection = mysql.createConnection({
@@ -18,3 +17,27 @@ connection.connect((error: any) => {
 });
 
 module.exports = connection;
+
+
+
+// -----------------
+
+// import "reflect-metadata";
+// import {createConnection} from "typeorm";
+// import Skill from "../../Data/Models/Skill";
+
+// createConnection({
+//     type: "mysql",
+//     host: "localhost",
+//     port: 3306,
+//     username: "root",
+//     password: "admin",
+//     database: "test",
+//     entities: [
+//         Skill
+//     ],
+//     synchronize: true,
+//     logging: false
+// }).then(connection => {
+//     // here you can start to work with your entities
+// }).catch(error => console.log(error));

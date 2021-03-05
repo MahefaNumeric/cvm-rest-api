@@ -13,7 +13,7 @@ export default class SkillGroupRepo extends BaseRepo<SkillGroup> {
      * @returns {Promise<SkillGroup>}
      * @todo Filter User
      */
-    static getFromDbById(idGroupSkill: number, idLang: number){
+    static getFromDbById(idGroupSkill: number, idLang: number): Promise<SkillGroup>{
         return new Promise((resolve, reject) => {
             const connMysql = require("../../Configs/Databases/db.config");
             const sql = /* sql */`
@@ -42,7 +42,9 @@ export default class SkillGroupRepo extends BaseRepo<SkillGroup> {
                         const skillGroup = SkillGroup.createFromObj(skillsGroupResult[0]);
                         resolve(skillGroup);
                     }else{
-                        resolve([]);
+                        reject({
+                            message: "SkillGroup::createFromDbById::skillsGroupResult empty array"
+                        });
                     }
                 }else{
                     reject({

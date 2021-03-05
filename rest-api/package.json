@@ -40,7 +40,6 @@
     "mysql": "^2.18.1",
     "puppeteer": "^7.1.0",
     "reflect-metadata": "^0.1.13",
-    "sequelize": "^6.5.0",
     "typeorm": "^0.2.31",
     "xml": "^1.0.1"
   },

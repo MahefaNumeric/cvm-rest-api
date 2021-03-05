@@ -2,6 +2,7 @@ import BaseRepo from './BaseRepo';
 import Skill from '../Models/Skill';
 import SocialLink from '../Models/SocialLink';
 import SocialLinkRepo from './SocialLinkRepo';
+import SkillGroupRepo from './SkillGroupRepo';
 const connMysql = require("../../Configs/Databases/db.config");
 
 export default class SkillRepo extends BaseRepo<Skill> {
@@ -34,8 +35,8 @@ export default class SkillRepo extends BaseRepo<Skill> {
                 if(Array.isArray(skillsResult) && skillsResult.length > 0) {
                     const skillResultFirst = skillsResult[0];
                     const skill = Skill.createFromObj(skillResultFirst);
-                    SocialLinkRepo.createFromDbById(skillResultFirst.id).then((socialLink: SocialLink) => {
-                        skill.socialLink = socialLink;
+                    SkillGroupRepo.getFromDbById(skillResultFirst.id, idLang).then((skillGroup) => {
+                        skill.group = skillGroup;
                         resolve(skill);
                     });
                 }else{
