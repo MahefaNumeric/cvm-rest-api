@@ -5,10 +5,15 @@ import BaseModel from './BaseModel';
 export default class Company extends BaseModel{
     public _table = 'companies';
 
-    private positionsValue: Array<Position>;
+    // Position on a company
+    private positionsValue: Array<Position> = [];
 
-    public dateStart: string;
-    public dateEnd: string;
+    public dateStartValue: string = ``;
+    public dateStartFriendly: string = ``;
+
+    public dateEndValue: string = ``;
+    public dateEndFriendly: string = ``;
+
     public hasManyPosition: boolean;
 
     public constructor(
@@ -19,24 +24,33 @@ export default class Company extends BaseModel{
     ){
         super();
 
-        // // Position on a company
-        this.positionsValue = [];
-
-        this.dateStart = ``;  // Calculate from this.positions
-        this.dateEnd = ``;  // Calculate from this.positions
-
         /** Need for the template, to differentiate visual rendering for one or many position on signle company */
         this.hasManyPosition = false;
     }
-    
+
+    get positions(): Array<Position> {
+        return this.positionsValue;
+    }
     set positions(value: Array<Position>) {
         this.positionsValue = value;
         this.setupPositionsBeganEnd();
         this.setupProperty_hasManyPosition();
     }
 
-    get positions(): Array<Position> {
-        return this.positionsValue;
+    get dateStart(): string {
+        return this.dateStartValue;
+    }
+    set dateStart(value: string) {
+        this.dateStartValue = value;
+        this.dateStartFriendly = DateUtils.formatDateToFriendly(this.dateStartValue, "fr", false);
+    }
+
+    get dateEnd(): string {
+        return this.dateEndValue;
+    }
+    set dateEnd(value: string) {
+        this.dateEndValue = value;
+        this.dateEndFriendly = DateUtils.formatDateToFriendly(this.dateEndValue, "fr", false);
     }
 
     private setupPositionsBeganEnd(): boolean{
