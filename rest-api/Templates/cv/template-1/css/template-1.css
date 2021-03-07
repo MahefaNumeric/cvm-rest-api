@@ -16,11 +16,11 @@ div.content-no-item{
 
 div.objective-column-detail{
     margin-left: 220px;
-    background-color: #f2f2fe;
+    /* background-color: #f2f2fe; */
 }
 
 .entry h2{
-	background-color: #f2f2fe;
+	/* background-color: #f2f2fe; */
     width: 180px;
     text-align: right;
 }
@@ -46,13 +46,13 @@ li.project-content{
 div.column-timeline,
 div.column-skill-group{
     flex: 1;
-    background-color: #f2f2fe;
+    /* background-color: #f2f2fe; */
     max-width: 180px;
     min-width: 180px;
 }
 div.column-detail{
     flex: 1;
-    background-color: #f2f2fe;
+    /* background-color: #f2f2fe; */
     margin-left: 40px;
 }
 div.column-detail ul,

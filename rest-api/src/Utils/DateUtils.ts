@@ -217,25 +217,27 @@ export default class DateUtils{
         isoLang = isoLang.toLowerCase();
         const numberDaysOnYear = 365;
         const numberDaysOnMonth = 30;
+        let comma = ``;
         // ------------------------------------------
         let dayNumerLeft = daysNumber;
         const year = Math.floor(dayNumerLeft / numberDaysOnYear);
         const yearLang = DateUtils.getDateWord(isoLang, year>1 ? DateWordType.Years : DateWordType.Year);
-        const yearPart = year > 0 ? `${year} ${yearLang},` : ``;
+        const yearPart = year > 0 ? `${year} ${yearLang}` : ``;
         // ------------------------------------------
         dayNumerLeft = dayNumerLeft - (year*numberDaysOnYear)
         const month = Math.floor(dayNumerLeft / numberDaysOnMonth);
         const monthLang = DateUtils.getDateWord(isoLang, month>1 ? DateWordType.Months : DateWordType.Month);
-        const showComma = showDay;
+        comma = yearPart.length > 0 ? `, ` : ``;
         const monthPart = month > 0 ? (
-            `${month} ${monthLang}${showComma ? `,` : ``}`
+            `${comma}${month} ${monthLang}`
         ) : ``;
         // ------------------------------------------
         let dayPart = ``;
         if(showDay){
             const day = dayNumerLeft - (month*numberDaysOnMonth);
             const dayLang = DateUtils.getDateWord(isoLang, day>1 ? DateWordType.Days : DateWordType.Day);
-            dayPart = day > 0 ? `${day} ${dayLang}` : ``;
+            comma = monthPart.length > 0 ? `, ` : ``;
+            dayPart = day > 0 ? `${comma}${day} ${dayLang}` : ``;
         }
         // ------------------------------------------
         return `${yearPart} ${monthPart} ${dayPart}`;

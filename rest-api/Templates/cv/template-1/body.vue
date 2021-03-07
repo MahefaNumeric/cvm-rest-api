@@ -78,7 +78,7 @@
                             </div>
                         </div>
                         <div class="position-body">
-                            <p>{{ itemPosition.description }}</p>
+                            <!-- <p>{{ itemPosition.description }}</p> -->
                             <div 
                                 class="description-experience-position" 
                                 v-html="itemPosition.descriptionExperiencePosition">

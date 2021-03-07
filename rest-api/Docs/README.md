@@ -15,3 +15,6 @@
 
 ## Commands
 - mysqldump --verbose -u root -p "cvm" > D:\works\mc\cv-manager-rn-expo-and-api\rest-api\src\Utils\Sql\cvm.sql
+
+## CV examples
+- https://longpdo.github.io/neumorphism/
