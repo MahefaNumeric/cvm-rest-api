@@ -34,7 +34,8 @@ export default class CvRepo extends BaseRepo<Cv> {
                     cv.id_address,
                     cv_lang.title_backend,
                     cv_lang.title_frontend,
-                    cv_lang.auto_biography
+                    cv_lang.auto_biography,
+                    cv_lang.skill_description
                 FROM cv 
                 JOIN cv_lang 
                     ON cv.id=cv_lang.id_cv 

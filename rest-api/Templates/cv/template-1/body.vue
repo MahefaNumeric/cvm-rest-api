@@ -107,6 +107,11 @@
         <div class="entry">
             <h2>SKILLS</h2>
 
+            <div>
+                <div class="cv-skill_description"
+                    v-html="cv.skill_description"></div>
+            </div>
+
             <div class="content skills-content" v-for="itemSkillGroup in cv.skillsGroup" :key="itemSkillGroup.id">
                 <div class="column-skill-group">
                     <h3>{{ itemSkillGroup.title }}</h3>

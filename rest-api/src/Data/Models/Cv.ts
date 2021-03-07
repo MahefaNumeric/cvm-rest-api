@@ -16,7 +16,8 @@ export default class Cv extends BaseModel {
         public id_address: number,
         public title_backend: string,
         public title_frontend: string,
-        public auto_biography: string
+        public auto_biography: string,
+        public skill_description: string
     ){
         super();
     }
@@ -29,7 +30,8 @@ export default class Cv extends BaseModel {
             obj.id_address, 
             obj.title_backend,
             obj.title_frontend,
-            obj.auto_biography
+            obj.auto_biography,
+            obj.skill_description
         );
     }
 }

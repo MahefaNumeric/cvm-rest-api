@@ -101,3 +101,9 @@ ul.works{
     text-align: right;
     display: block;
 }
+
+.cv-skill_description{
+    margin-left: 220px;
+    /* background-color: #f2f2fe; */
+    padding-left: 52px;
+}
