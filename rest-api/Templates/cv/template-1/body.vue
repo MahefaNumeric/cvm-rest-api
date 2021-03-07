@@ -23,7 +23,7 @@
         <!-- Begin 1st Row -->
         <div class="entry">
             <div>
-                <h2>OBJECTIVE</h2>
+                <h2>PROFESSIONAL SUMMARY</h2>
             </div>
             <div class="objective-column-detail">
                 <div>

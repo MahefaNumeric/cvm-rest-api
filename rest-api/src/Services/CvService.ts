@@ -108,6 +108,7 @@ export default class CvService{
      * @returns {String}
      * @async
      * @todo Check if urlCv exist
+     * @todo Error handler (https://github.com/puppeteer/puppeteer/issues/393)
      */
     public generateCvPdf(isoLang: string, idCv: number, slugTemplate: string, user: User): Promise<Object>{
         return new Promise(async (resolve, reject) => {
