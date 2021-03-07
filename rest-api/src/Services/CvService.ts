@@ -121,7 +121,17 @@ export default class CvService{
             const browser = await puppeteer.launch();
             const page = await browser.newPage();
             await page.goto(urlCv);
-            await page.pdf({ path: filenameOutput, format: "Letter" });
+            await page.pdf({ 
+                path: filenameOutput, 
+                // format: "Letter",
+                format: 'A4', 
+                // landscape: true, 
+                // printBackground: true, 
+                margin: {
+                    top: 60, bottom: 60,
+                    // left: 0, right: 0
+                }
+            });
             await browser.close();
     
             resolve({

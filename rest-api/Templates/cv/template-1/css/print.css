@@ -47,6 +47,9 @@ a, a:hover, a:visited, a:active {
 	padding-top:55px;
 	clear: both;
 }
+.entry:first-child {
+	padding-top:0px;
+}
 
 h1 {
 	width:500px;

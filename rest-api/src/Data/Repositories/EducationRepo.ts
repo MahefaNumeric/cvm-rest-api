@@ -56,8 +56,8 @@ export default class EducationRepo extends BaseRepo<Education> {
                     part_educations.*,
                     part_educations_lang.title,
                     part_educations_lang.description,
-                    DATE_FORMAT(date_begin, '%Y-%m') as date_begin,
-                    DATE_FORMAT(date_end, '%Y-%m') as date_end
+                    DATE_FORMAT(part_educations.date_begin, '%Y-%m') as date_begin,
+                    DATE_FORMAT(part_educations.date_end, '%Y-%m') as date_end
                 FROM cv_educations
                 JOIN part_educations
                     ON part_educations.id = cv_educations.id_education
@@ -65,6 +65,8 @@ export default class EducationRepo extends BaseRepo<Education> {
                     ON part_educations.id = part_educations_lang.id_part_educations 
                 WHERE id_cv = ?
                     AND part_educations_lang.id_lang = ?
+                ORDER BY 
+                    part_educations.date_begin DESC
             `;
 
             const sqlParams = [idCv, idLang];
