@@ -1,10 +1,7 @@
 import BaseRepo from './BaseRepo';
 import Company from '../Models/Company';
-import Position from '../Models/Position';
 import PositionRepo from './PositionRepo';
-import ControllerTools from '../../Utils/ControllerTools';
 import LanguageRepo from './LanguageRepo';
-import Language from '../Models/Language';
 
 export default class CompanyRepo extends BaseRepo<Company> {
 
@@ -25,8 +22,10 @@ export default class CompanyRepo extends BaseRepo<Company> {
                     companies_lang.id_company AS id,
                     companies.slug AS slug,
                     companies_lang.name AS name,
-                    companies_lang.description AS description
-
+                    companies_lang.description AS description,
+                    -- getPositionLatestInfo("experience_id", cv_experiences.id_cv, companies.id, companies_lang.id_lang) AS experience_id,  -- Need just for visualisation
+                    -- getPositionLatestInfo("experience_slug", cv_experiences.id_cv, companies.id, companies_lang.id_lang) AS experience_slug,  -- Need just for visualisation
+                    getPositionLatestInfo("experience_dateBegin", cv_experiences.id_cv, companies.id, companies_lang.id_lang) AS experience_dateBegin  -- What is really need
                 FROM companies
                 JOIN cv_experiences 
                     ON cv_experiences.id_cv = ${idCv} 
@@ -42,6 +41,7 @@ export default class CompanyRepo extends BaseRepo<Company> {
                     AND company_positions_lang.id_lang = companies_lang.id_lang
                     AND companies.id = companies_lang.id_company
                 GROUP BY part_experiences.id_company
+                ORDER BY experience_dateBegin DESC   -- What is really need (For change order of company)
             `;
             // console.log("CompanyRepo::getListCompaniesFromDbByCv::sql", sql);
             connMysql.query(sql, async (error: any, listCompaniesResult: any[], fields: any) => {
