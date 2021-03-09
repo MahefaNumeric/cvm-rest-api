@@ -10,6 +10,9 @@ const connection = mysql.createConnection({
 connection.connect((error: any) => {
     if (error) {
       console.error('DB Error connecting: ', error);
+      if(error.code == "ECONNREFUSED"){
+        console.error('Your database (MYSQL) is not running or you are refuse to access to it. Please, verify it! Message from Mahefa.');
+      }
       return;
     }
   

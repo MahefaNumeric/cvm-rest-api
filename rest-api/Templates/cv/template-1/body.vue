@@ -154,8 +154,8 @@
                         </a>
                     </div>
                     <div class="column-detail">
-                        <div v-html="itemProject.title"></div>
-                        <div v-html="itemProject.description"></div>
+                        <div v-html="itemProject.title" class="project-title"></div>
+                        <div v-html="itemProject.description" class="project-content"></div>
                     </div>
                 </li>
             </ul>

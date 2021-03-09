@@ -101,3 +101,10 @@ ul.works{
     text-align: right;
     display: block;
 }
+li.project-content{
+    margin-top: 30px;
+}
+li.project-content .project-title{
+    font-weight: 700;
+    margin-bottom: 10px;
+}
