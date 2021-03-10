@@ -19,10 +19,12 @@ export default class PositionRepo extends BaseRepo<Position> {
                 FROM cv_experiences 
                 JOIN part_experiences 
                     ON part_experiences.id = cv_experiences.id_experience
+                    AND part_experiences.id_company = ${idCompany}
                 JOIN company_positions
                     ON company_positions.id = part_experiences.id_company_position
                 JOIN company_positions_lang
                     ON company_positions_lang.id_company_positions = company_positions.id
+                    AND company_positions_lang.id_lang = ${idLang} 
                 JOIN companies_lang
                     ON companies_lang.id_company = part_experiences.id_company 
                 JOIN companies
@@ -30,10 +32,9 @@ export default class PositionRepo extends BaseRepo<Position> {
                 JOIN part_experiences_lang
                     ON part_experiences_lang.id_part_experiences = part_experiences.id
                 WHERE cv_experiences.id_cv = ${idCv} 
-                    AND company_positions_lang.id_lang = ${idLang} 
                     AND company_positions_lang.id_lang = companies_lang.id_lang
                     AND part_experiences_lang.id_lang = companies_lang.id_lang
-                    AND part_experiences.id_company = ${idCompany}
+                    AND cv_experiences.enable = 1
                 ORDER BY 
                     part_experiences.date_begin DESC
             `;

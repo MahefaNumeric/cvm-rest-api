@@ -29,7 +29,7 @@ export default class CompanyRepo extends BaseRepo<Company> {
                 FROM companies
                 JOIN cv_experiences 
                     ON cv_experiences.id_cv = ${idCv} 
-                    AND cv_experiences.enable = 1
+                    -- AND cv_experiences.enable = 1   -- Not needed for this request
                 JOIN part_experiences 
                     ON part_experiences.id = cv_experiences.id_experience 
                 JOIN company_positions
