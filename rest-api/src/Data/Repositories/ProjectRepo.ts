@@ -70,6 +70,7 @@ export default class ProjectRepo extends BaseRepo<Project> {
                     ON cv_projects.id_project = part_projects.id 
                     AND cv_projects.id_cv = ${idCv}
                 WHERE part_projects.show_in_portfolio = 1
+                ORDER BY part_projects.dateBegin DESC
             `;
             connMysql.query(sql, (error: any, listProjectsResult: any, fields: any) => {
                 if(error) throw error;
