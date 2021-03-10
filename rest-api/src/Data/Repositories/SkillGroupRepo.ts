@@ -74,13 +74,14 @@ export default class SkillGroupRepo extends BaseRepo<SkillGroup> {
                     ON cv_skills.id_skills = part_skills.id 
                 JOIN part_skills_lang 
                     ON part_skills.id = part_skills_lang.id_part_skills
+                    AND part_skills_lang.id_lang = ${idLang}
                 JOIN skills_group
                     ON skills_group.id = part_skills.id_skills_group
                 JOIN skills_group_lang 
                     ON skills_group.id = skills_group_lang.id_skills_group 
-                WHERE cv_skills.id_cv = ${idCv}
-                    AND part_skills_lang.id_lang = ${idLang}
                     AND skills_group_lang.id_lang = part_skills_lang.id_lang
+                WHERE cv_skills.id_cv = ${idCv}
+                    AND cv_skills.enable = 1
             `;
             connMysql.query(sql, (error: any, listSkillsResult: Array<SkillGroup>, fields: any) => {
                 if(error) throw error;
