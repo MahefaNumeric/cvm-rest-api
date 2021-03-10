@@ -29,17 +29,19 @@ export default class CompanyRepo extends BaseRepo<Company> {
                 FROM companies
                 JOIN cv_experiences 
                     ON cv_experiences.id_cv = ${idCv} 
+                    AND cv_experiences.enable = 1
                 JOIN part_experiences 
                     ON part_experiences.id = cv_experiences.id_experience 
                 JOIN company_positions
                     ON company_positions.id = part_experiences.id_company_position
                 JOIN company_positions_lang
                     ON company_positions_lang.id_company_positions = company_positions.id
+                    AND company_positions_lang.id_lang = ${idLang} 
                 JOIN companies_lang
                     ON companies_lang.id_company = part_experiences.id_company
-                WHERE company_positions_lang.id_lang = ${idLang} 
-                    AND company_positions_lang.id_lang = companies_lang.id_lang
-                    AND companies.id = companies_lang.id_company
+                    AND companies_lang.id_lang = company_positions_lang.id_lang
+                    AND companies_lang.id_company = companies.id
+                -- WHERE
                 GROUP BY part_experiences.id_company
                 ORDER BY experience_dateBegin DESC   -- What is really need (For change order of company)
             `;
