@@ -28,7 +28,7 @@ export default class Position extends BaseModel {
     }
     set experienceDateBegin(value: string){
         this.experienceDateBeginValue = value;
-        this.experienceDateBegin_Friendly = DateUtils.formatDateToFriendly(this.experienceDateBeginValue, this.isoLang, false);
+        this.experienceDateBegin_Friendly = DateUtils.formatDateToFriendly(value, this.isoLang, false);
         this.setup_durationInDayOnThePosition();
     }
 
@@ -37,7 +37,7 @@ export default class Position extends BaseModel {
     }
     set experienceDateEnd(value: string){
         this.experienceDateEndValue = value;
-        this.experienceDateEnd_Friendly = DateUtils.formatDateToFriendly(this.experienceDateEndValue, this.isoLang, false);
+        this.experienceDateEnd_Friendly = DateUtils.formatDateToFriendly(value, this.isoLang, false);
         this.setup_durationInDayOnThePosition();
     }
 

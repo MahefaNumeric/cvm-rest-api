@@ -14,6 +14,7 @@
                     <li class="ad">{{ cv.address.value }}</li>
                     <li class="mail">{{ user.email }}</li>
                     <li class="tel">{{ user.phone }}</li>
+                    <li class="tel">Skype : {{ user.socialLink.skype_id }}</li>
                     <li class="web">Web : <a target="_blank" :href="user.socialLink.website_url">{{ user.socialLink.website_url }}</a></li>
                     <li class="web">Github : <a target="_blank" :href="user.socialLink.github_url">{{ user.socialLink.github_url }}</a></li>
                 </ul>
@@ -154,7 +155,12 @@
                         </a>
                     </div>
                     <div class="column-detail">
-                        <div v-html="itemProject.title" class="project-title"></div>
+                        <div class="project-head">
+                            <div v-html="itemProject.title" class="project-title"></div>
+                            <!-- <div class="project-title-date">
+                                {{ itemProject.dateBegin_Friendly }} - {{ itemProject.dateEnd_Friendly }}
+                            </div> -->
+                        </div>
                         <div v-html="itemProject.description" class="project-content"></div>
                     </div>
                 </li>

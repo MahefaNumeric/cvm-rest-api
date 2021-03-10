@@ -1,5 +1,6 @@
 import BaseRepo from './BaseRepo';
 import Project from '../Models/Project';
+import LanguageRepo from './LanguageRepo';
 
 export default class ProjectRepo extends BaseRepo<Project> {
     static MSG_NO_PROJECT = "NO_PROJECT";
@@ -58,28 +59,32 @@ export default class ProjectRepo extends BaseRepo<Project> {
                     part_projects_lang.description,
                     part_projects.show_in_portfolio,
                     part_projects.url_access,
-                    part_projects.url_preview
+                    part_projects.url_preview,
+                    DATE_FORMAT(part_projects.dateBegin, '%Y-%m') AS dateBegin,
+                    DATE_FORMAT(part_projects.dateEnd, '%Y-%m') AS dateEnd
                 FROM part_projects 
                 JOIN part_projects_lang
                     ON part_projects_lang.id_part_projects  = part_projects.id 
+                    AND part_projects_lang.id_lang = ${idLang}
                 JOIN cv_projects
                     ON cv_projects.id_project = part_projects.id 
-                WHERE part_projects_lang.id_lang = ${idLang}
                     AND cv_projects.id_cv = ${idCv}
-                    AND part_projects.show_in_portfolio = 1
+                WHERE part_projects.show_in_portfolio = 1
             `;
             connMysql.query(sql, (error: any, listProjectsResult: any, fields: any) => {
                 if(error) throw error;
                 if(Array.isArray(listProjectsResult)) {
-                    if(listProjectsResult.length > 0){
-                        const listProjects: Project[] = [];
-                        listProjectsResult.forEach(element => {
-                            listProjects.push(Project.createFromObj(element));
-                        });
-                        resolve(listProjects);
-                    }else{
-                        resolve([]);
-                    }
+                    LanguageRepo.createFromDbById(idLang).then(async language => {
+                        if(listProjectsResult.length > 0){
+                            const listProjects: Project[] = [];
+                            listProjectsResult.forEach(element => {
+                                listProjects.push(Project.createFromObj(element, language.code_iso));
+                            });
+                            resolve(listProjects);
+                        }else{
+                            resolve([]);
+                        }
+                    });
                 }else{
                     reject({
                         message: "Project::getListProjectFromDbByCv::listProjectsResult not array",
