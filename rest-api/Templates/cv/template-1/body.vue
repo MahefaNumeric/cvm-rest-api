@@ -157,9 +157,9 @@
                     <div class="column-detail">
                         <div class="project-head">
                             <div v-html="itemProject.title" class="project-title"></div>
-                            <div class="project-title-date">
+                            <!-- <div class="project-title-date">
                                 {{ itemProject.dateBegin_Friendly }} - {{ itemProject.dateEnd_Friendly }}
-                            </div>
+                            </div> -->
                         </div>
                         <div v-html="itemProject.description" class="project-content"></div>
                     </div>
