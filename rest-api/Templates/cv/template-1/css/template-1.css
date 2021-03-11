@@ -101,6 +101,9 @@ ul.works{
     text-align: right;
     display: block;
 }
+.column-timeline.project .link-image img{
+    opacity: 0.2;
+}
 li.project-content{
     margin-top: 30px;
 }

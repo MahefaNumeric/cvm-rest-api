@@ -150,7 +150,10 @@
                     :key="itemProject.id"
                 >
                     <div class="column-timeline project">
-                        <a class="link-image" href="/templates/1/images/1.jpg" rel="gallery" title="Lorem ipsum dolor sit amet.">
+                        <!-- href="/templates/1/images/1.jpg"  -->
+                        <a class="link-image" 
+                            rel="gallery" 
+                            title="Lorem ipsum dolor sit amet.">
                             <img src="/templates/1/images/image.jpg" alt="" />
                         </a>
                     </div>
