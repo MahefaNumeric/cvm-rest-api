@@ -38,7 +38,6 @@ export default class Company extends BaseModel{
     }
     set positions(value: Array<Position>) {
         this.positionsValue = value;
-        this.setupProperty_hasActualPosition();
         this.setupPositionsBeganEnd();
         this.setupProperty_hasManyPosition();
     }
@@ -71,7 +70,8 @@ export default class Company extends BaseModel{
         this.durationInDayOnTheCompanyFriendly = DateUtils.convertDayNumberToFriendlyDuration(this.durationInDayOnTheCompanyValue, this.isoLang, false);
     }
 
-    private setupPositionsBeganEnd(): boolean{
+    private setupPositionsBeganEnd(): boolean {
+        this.setupProperty_hasActualPosition();
         if(Array.isArray(this.positions) == false) return false;
         if(this.positions.length == 0) return false;
 
