@@ -85,7 +85,7 @@ export default class ProjectRepo extends BaseRepo<Project> {
                         }else{
                             resolve([]);
                         }
-                    });
+                    }).catch(error => reject(error));
                 }else{
                     reject({
                         message: "Project::getListProjectFromDbByCv::listProjectsResult not array",

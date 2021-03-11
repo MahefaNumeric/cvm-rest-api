@@ -18,6 +18,7 @@ export default class Company extends BaseModel{
     public durationInDayOnTheCompanyFriendly: string = ``;
 
     public hasManyPosition: boolean;
+    public hasActualPosition: boolean = false;
 
     public constructor(
         public id: number,
@@ -39,6 +40,7 @@ export default class Company extends BaseModel{
         this.positionsValue = value;
         this.setupPositionsBeganEnd();
         this.setupProperty_hasManyPosition();
+        this.setupProperty_hasActualPosition();
     }
 
     get dateStart(): string {
@@ -55,7 +57,8 @@ export default class Company extends BaseModel{
     }
     set dateEnd(value: string) {
         this.dateEndValue = value;
-        this.dateEndFriendly = DateUtils.formatDateToFriendly(this.dateEndValue, this.isoLang, false);
+        this.dateEndFriendly = 
+            DateUtils.formatDateToFriendly(this.dateEndValue, this.isoLang, false);
     }
 
     get durationInDayOnTheCompany(): number {
@@ -94,6 +97,20 @@ export default class Company extends BaseModel{
         if(this.positions.length == 0) return false;
 
         this.hasManyPosition = this.positions.length > 1;
+        return true;
+    }
+    
+    private setupProperty_hasActualPosition(): boolean{
+        if(Array.isArray(this.positions) == false) return false;
+        if(this.positions.length == 0) return false;
+
+        for (const element of this.positions) {
+            if(element.actual == true){
+                this.hasActualPosition = true;
+                return true;
+            }
+        }
+        this.hasActualPosition = false;
         return true;
     }
 

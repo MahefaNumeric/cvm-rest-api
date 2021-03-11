@@ -1,5 +1,6 @@
 import BaseRepo from './BaseRepo';
 import Position from '../Models/Position';
+import ControllerTools from '../../Utils/ControllerTools';
 import LanguageRepo from './LanguageRepo';
 const connMysql = require("../../Configs/Databases/db.config");
 
@@ -16,6 +17,12 @@ export default class PositionRepo extends BaseRepo<Position> {
                     part_experiences_lang.description       AS descriptionExperiencePosition,
                     DATE_FORMAT(part_experiences.date_begin, '%Y-%m')   AS experienceDateBegin,
                     DATE_FORMAT(part_experiences.date_end, '%Y-%m')     AS experienceDateEnd
+                    -- part_experiences.actual
+                    -- CASE
+                    --     WHEN part_experiences.actual = 1
+                    --     THEN true
+                    --     ELSE false
+                    -- END AS actual
                 FROM cv_experiences 
                 JOIN part_experiences 
                     ON part_experiences.id = cv_experiences.id_experience
@@ -36,10 +43,10 @@ export default class PositionRepo extends BaseRepo<Position> {
                     AND part_experiences_lang.id_lang = companies_lang.id_lang
                     AND cv_experiences.enable = 1
                 ORDER BY 
-                    part_experiences.date_begin DESC
+                    part_experiences.date_begin DESC;
             `;
-            connMysql.query(sql, (error: any, listPositionsResult: any[], fields: any) => {
-                // ControllerTools.render(null, ["PositionRepo::getListPositionByCv", idCv, idLang, listPositionsResult, sql ]); return;
+            const sqlData: any[] = [];
+            connMysql.query(sql, sqlData, (error: any, listPositionsResult: any, fields: any) => {
                 if(error) reject({
                     message: "Position::getListPositionByCv::error",
                     data: error

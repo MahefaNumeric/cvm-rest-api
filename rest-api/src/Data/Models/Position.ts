@@ -16,26 +16,27 @@ export default class Position extends BaseModel {
         public descriptionExperiencePosition: string,
         public experienceDateBeginValue: string,
         public experienceDateEndValue: string,
+        public actual: boolean,
         public isoLang: string = "fr"   // Special, optionnal, at the end
-    ){
+    ) {
         super();
         this.experienceDateBegin = experienceDateBeginValue;
         this.experienceDateEnd = experienceDateEndValue;
     }
 
-    get experienceDateBegin(){
+    get experienceDateBegin() {
         return this.experienceDateBeginValue;
     }
-    set experienceDateBegin(value: string){
+    set experienceDateBegin(value: string) {
         this.experienceDateBeginValue = value;
         this.experienceDateBegin_Friendly = DateUtils.formatDateToFriendly(value, this.isoLang, false);
         this.setup_durationInDayOnThePosition();
     }
 
-    get experienceDateEnd(){
+    get experienceDateEnd() {
         return this.experienceDateEndValue;
     }
-    set experienceDateEnd(value: string){
+    set experienceDateEnd(value: string) {
         this.experienceDateEndValue = value;
         this.experienceDateEnd_Friendly = DateUtils.formatDateToFriendly(value, this.isoLang, false);
         this.setup_durationInDayOnThePosition();
@@ -51,20 +52,21 @@ export default class Position extends BaseModel {
 
     public static createFromObj(obj: Position, isoLang: string = "fr"): Position {
         return new Position(
-            obj.id, 
-            obj.slug, 
-            obj.title, 
-            obj.description, 
+            obj.id,
+            obj.slug,
+            obj.title,
+            obj.description,
             obj.descriptionExperiencePosition,
             obj.experienceDateBegin,
             obj.experienceDateEnd,
+            obj.actual,
             isoLang
         );
     }
 
-    private setup_durationInDayOnThePosition(){
+    private setup_durationInDayOnThePosition() {
         this.durationInDayOnThePosition = DateUtils.calculateTwoDateDurationInDay(
-            this.experienceDateBeginValue, 
+            this.experienceDateBeginValue,
             this.experienceDateEndValue,
             "YYYY-MM"
         );

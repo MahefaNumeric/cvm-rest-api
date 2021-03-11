@@ -2,6 +2,7 @@ import BaseRepo from './BaseRepo';
 import Company from '../Models/Company';
 import PositionRepo from './PositionRepo';
 import LanguageRepo from './LanguageRepo';
+import ControllerTools from '../../Utils/ControllerTools';
 
 export default class CompanyRepo extends BaseRepo<Company> {
 
@@ -45,22 +46,26 @@ export default class CompanyRepo extends BaseRepo<Company> {
                 GROUP BY part_experiences.id_company
                 ORDER BY experience_dateBegin DESC   -- What is really need (For change order of company)
             `;
-            // console.log("CompanyRepo::getListCompaniesFromDbByCv::sql", sql);
-            connMysql.query(sql, async (error: any, listCompaniesResult: any[], fields: any) => {
+            connMysql.query(sql, (error: any, listCompaniesResult: any[], fields: any) => {
                 if(error) throw error;
                 if(Array.isArray(listCompaniesResult)) {
                     if(listCompaniesResult.length > 0){
-                        // ControllerTools.render(null, ["CompanyRepo::getListCompaniesFromDbByCv", idCv, idLang, listCompaniesResult, listCompanies ]); return;
                         LanguageRepo.createFromDbById(idLang).then(async language => {
-                            console.log("CompanyRepo::getListCompaniesFromDbByCv::setupCompanyCompanyAndPosition::language", idLang, language);
                             const listCompanies: Company[] = [];
                             for (let element of listCompaniesResult) {
                                 const company = Company.createFromObj(element, language?.code_iso);
+                                // PositionRepo.getListPositionByCv(idCv, company.id, idLang).then(positions => {
+                                //     company.positions = positions;
+                                //     listCompanies.push(company);
+                                // }).catch(error => {
+                                //     ControllerTools.render(null, [error]);
+                                //     reject(error)
+                                // });
                                 company.positions = await PositionRepo.getListPositionByCv(idCv, company.id, idLang);
                                 listCompanies.push(company);
-                            };
+                            }
                             resolve(listCompanies);
-                        });
+                        }).catch(error => reject(error));
                     }else{
                         resolve([]);
                     }

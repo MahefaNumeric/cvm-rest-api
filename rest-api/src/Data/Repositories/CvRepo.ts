@@ -58,11 +58,10 @@ export default class CvRepo extends BaseRepo<Cv> {
                                     cv.skillsGroup = listGroupSkills;
                                     ExperienceRepo.buildExperienceByIdCv(cv.id, idLang).then((experiences: Experience) => {
                                         cv.experiences = experiences;
-                                        // ControllerTools.render(null, [ idCv, idLang, experiences ]);
                                         ProjectRepo.getListProjectFromDbByCv(cv.id, idLang).then(projects => {
                                             cv.projects = projects;
                                             resolve(cv);
-                                        });
+                                        }).catch(error => reject(error));
                                     }).catch(error => reject(error));
                                 }).catch(error => reject(error));
                             }).catch(error => reject(error));

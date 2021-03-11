@@ -165,7 +165,7 @@ class CvController {
                     response.type("text/html")
                         .status(200)
                         .renderVue(templateVueFilePath, data, request.vueOptions);
-                }).catch((error: any) => cvGetById_ErrorHandling(error, idCv, response));
+                }).catch(error => cvGetById_ErrorHandling(error, idCv, response));
             }).catch(error => userGetById_ErrorHandling(error, response, isoLangLowercase));
         }).catch(error => languageGetByIso_ErrorHandling(error, isoLangLowercase, response));
     }
