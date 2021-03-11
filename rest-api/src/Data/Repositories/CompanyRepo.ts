@@ -54,6 +54,8 @@ export default class CompanyRepo extends BaseRepo<Company> {
                             const listCompanies: Company[] = [];
                             for (let element of listCompaniesResult) {
                                 const company = Company.createFromObj(element, language?.code_iso);
+
+                                // Don't work, it's took me many time (Not knwo why it's not working)
                                 // PositionRepo.getListPositionByCv(idCv, company.id, idLang).then(positions => {
                                 //     company.positions = positions;
                                 //     listCompanies.push(company);
@@ -61,6 +63,8 @@ export default class CompanyRepo extends BaseRepo<Company> {
                                 //     ControllerTools.render(null, [error]);
                                 //     reject(error)
                                 // });
+
+                                // Work
                                 company.positions = await PositionRepo.getListPositionByCv(idCv, company.id, idLang);
                                 listCompanies.push(company);
                             }

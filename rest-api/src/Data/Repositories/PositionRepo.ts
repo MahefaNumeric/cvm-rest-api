@@ -16,8 +16,8 @@ export default class PositionRepo extends BaseRepo<Position> {
                     company_positions_lang.description      AS description, 
                     part_experiences_lang.description       AS descriptionExperiencePosition,
                     DATE_FORMAT(part_experiences.date_begin, '%Y-%m')   AS experienceDateBegin,
-                    DATE_FORMAT(part_experiences.date_end, '%Y-%m')     AS experienceDateEnd
-                    -- part_experiences.actual
+                    DATE_FORMAT(part_experiences.date_end, '%Y-%m')     AS experienceDateEnd,
+                    part_experiences.actual
                     -- CASE
                     --     WHEN part_experiences.actual = 1
                     --     THEN true

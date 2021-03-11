@@ -38,9 +38,9 @@ export default class Company extends BaseModel{
     }
     set positions(value: Array<Position>) {
         this.positionsValue = value;
+        this.setupProperty_hasActualPosition();
         this.setupPositionsBeganEnd();
         this.setupProperty_hasManyPosition();
-        this.setupProperty_hasActualPosition();
     }
 
     get dateStart(): string {
@@ -57,7 +57,9 @@ export default class Company extends BaseModel{
     }
     set dateEnd(value: string) {
         this.dateEndValue = value;
-        this.dateEndFriendly = 
+        this.dateEndFriendly = this.hasActualPosition ?
+            "À présent"
+            :
             DateUtils.formatDateToFriendly(this.dateEndValue, this.isoLang, false);
     }
 
