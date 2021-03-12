@@ -126,19 +126,25 @@ li.project-content .project-title-date{
     position: absolute;
     left: -63px;
 }
+.position-content .timeline-container .timeline-container-child{
+    position: relative;
+    height: 100%;
+    text-align: center; /* Works because the vertical bar (child) element is "display: inline-block;" */
+}
 .position-content .timeline-container .timeline-point {
     margin-top: 6px;
     height: 10px;
     width: 10px;
     border-radius: 10px;
-    background-color: green;
+    background-color: #d6cec3;
 }
 .position-content .timeline-container .timeline-content{
     height: calc( 100% - 12px );
     margin-top: 12px;
-    width: 4px;
+    width: 2px;
     border-radius: 4px;
-    background-color: blue;
-    display: inline-block;
+    background-color: #d6cec3;
+    display: inline-block;      /* Need for "text-align: center;" parents */
+    opacity: 0.6;
 }
 /** Timeline - Fin */

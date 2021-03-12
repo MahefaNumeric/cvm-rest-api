@@ -72,8 +72,10 @@
                         :key="itemPosition.id"
                     >
                         <div class="timeline-container">
-                            <div class="timeline-point"></div>
-                            <div class="timeline-content"></div>
+                            <div class="timeline-container-child">
+                                <div class="timeline-point"></div>
+                                <div class="timeline-content"></div>
+                            </div>
                         </div>
                         <div class="position-header">
                             <div class="position-title">{{ itemPosition.title }}</div>
