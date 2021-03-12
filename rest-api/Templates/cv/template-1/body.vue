@@ -24,7 +24,7 @@
         <!-- Begin 1st Row -->
         <div class="entry">
             <div>
-                <h2> {{ wordList.professsional_summary }} </h2>
+                <h2> {{ wordList.professsional_summary.toUpperCase() }} </h2>
             </div>
             <div class="objective-column-detail">
                 <div>
@@ -35,7 +35,7 @@
         <!-- End 1st Row -->
         <!-- Begin 2nd Row -->
         <div class="entry">
-            <h2> {{ wordList.education }} </h2>
+            <h2> {{ wordList.education.toUpperCase() }} </h2>
             <div class="content education-content" v-for="education in cv.educations" :key="education.id">
                 <div class="column-timeline">
                     <h3>{{ education.date_begin_friendly }} - {{ education.date_end_friendly }}</h3>
@@ -52,7 +52,7 @@
         <!-- End 2nd Row -->
         <!-- Begin 3rd Row -->
         <div class="entry">
-            <h2>{{ wordList.experience }}</h2>
+            <h2>{{ wordList.experience.toUpperCase() }}</h2>
             
             <div 
                 class="content experience-content" 
@@ -106,7 +106,7 @@
 
         <!-- Begin 4th Row -->
         <div class="entry">
-            <h2>{{ wordList.skills }}</h2>
+            <h2>{{ wordList.skills.toUpperCase() }}</h2>
 
             <div class="content skills-content cv-skill_description">
                 <div class="column-skill-group">
@@ -142,7 +142,7 @@
         <!-- End 4th Row -->
         <!-- Begin 5th Row -->
         <div class="entry">
-            <h2>{{ wordList.works }}</h2>
+            <h2>{{ wordList.works.toUpperCase() }}</h2>
 
             <ul class="works">
                 <li class="content project-content" 
