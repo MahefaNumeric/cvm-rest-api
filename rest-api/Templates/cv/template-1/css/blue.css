@@ -1,4 +1,5 @@
 @charset "UTF-8";
+
 /* RESET */
 /* ----------------------------------------- */
 html, body, div, span, applet, object, iframe,
@@ -16,11 +17,16 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	font-weight: inherit;
 	font-style: inherit;
 	font-size: 100%;
-	font-family: inherit;
+	font-family: "Aileron", "Trebuchet MS", Arial, Helvetica, sans-serif;
 	vertical-align: baseline;
+	line-height: 1.3;
 }
 :focus {
 	outline: 0;
+}
+ul > li {
+	margin-bottom: 4px;
+    margin-top: 4px;
 }
 /* tables still need 'cellspacing="0"' in the markup */
 table {
@@ -48,7 +54,7 @@ blockquote, q {
 /* ----------------------------------------- */
 
 body {
-	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-family: "Aileron", "Trebuchet MS", Arial, Helvetica, sans-serif;
 	background-color: #e1e0db;
 	background-image: url(../images/bg.jpg);
 	background-repeat: repeat;
@@ -229,7 +235,7 @@ h6 {
 }
 
 em {
-	font-family: Georgia, "Times New Roman", serif;
+	font-family: "Aileron", Georgia, "Times New Roman", serif;
 	font-style: italic;
 	color:#777777;
 	font-size:12px;
@@ -610,7 +616,7 @@ input {
 	border-right:1px solid #dadada;
 	border-bottom:1px solid #f2f2f2;
 	background-color: #e4e4e4;
-	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-family: "Aileron", "Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-size: 13px;
 	padding:5px;
 	outline: none;
@@ -633,7 +639,7 @@ textarea {
 	width:228px;
 	float:right;
 	margin-bottom:10px;
-	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+	font-family: "Aileron", "Trebuchet MS", Arial, Helvetica, sans-serif;
 	font-size: 13px;
 	padding:5px;
 	outline: none;

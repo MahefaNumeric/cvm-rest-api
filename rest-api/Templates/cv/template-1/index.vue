@@ -4,6 +4,7 @@
 		<head>
 			<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 			<title>Resume</title>
+			<link type="text/css" rel="stylesheet" href="/templates/1/css/fonts.css" />
 			<link type="text/css" rel="stylesheet" href="/templates/1/css/blue.css" />
             <link type="text/css" rel="stylesheet" href="/templates/1/css/template-1.css" />
             <link type="text/css" rel="stylesheet" href="/templates/1/css/print.css" media="print"/>

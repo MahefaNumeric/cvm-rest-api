@@ -1,0 +1,36 @@
+@font-face {
+	font-family: "Aileron";
+	src: url("../../../../Public/Fonts/aileron/Aileron-LightItalic.otf") format("opentype");
+	font-weight: 100;
+   	font-style: italic;
+}
+@font-face {
+	font-family: "Aileron";
+	src: url("../../../../Public/Fonts/aileron/Aileron-Light.otf") format("opentype");
+	font-weight: 100;
+   	font-style: normal;
+}
+@font-face {
+	font-family: "Aileron";
+	src: url("../../../../Public/Fonts/aileron/Aileron-Regular.otf") format("opentype");
+	font-weight: normal;
+   	font-style: normal;
+}
+@font-face {
+	font-family: "Aileron";
+	src: url("../../../../Public/Fonts/aileron/Aileron-Italic.otf") format("opentype");
+	font-weight: normal;
+   	font-style: italic;
+}
+@font-face {
+	font-family: "Aileron";
+	src: url("../../../../Public/Fonts/aileron/Aileron-Bold.otf") format("opentype");
+	font-weight: bold;
+   	font-style: normal;
+}
+@font-face {
+	font-family: "Aileron";
+	src: url("../../../../Public/Fonts/aileron/Aileron-BoldItalic.otf") format("opentype");
+	font-weight: bold;
+   	font-style: italic;
+}
