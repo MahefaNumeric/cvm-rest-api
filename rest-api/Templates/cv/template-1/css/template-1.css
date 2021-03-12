@@ -116,3 +116,29 @@ li.project-content .project-title-date{
     font-style: italic;
     color: #999;
 }
+
+/** Timeline - Debut */
+.position-content{
+    position: relative;
+}
+.position-content .timeline-container{
+    height: 100%;
+    position: absolute;
+    left: -63px;
+}
+.position-content .timeline-container .timeline-point {
+    margin-top: 6px;
+    height: 10px;
+    width: 10px;
+    border-radius: 10px;
+    background-color: green;
+}
+.position-content .timeline-container .timeline-content{
+    height: calc( 100% - 12px );
+    margin-top: 12px;
+    width: 4px;
+    border-radius: 4px;
+    background-color: blue;
+    display: inline-block;
+}
+/** Timeline - Fin */
