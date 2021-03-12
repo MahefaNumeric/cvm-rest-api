@@ -34,3 +34,6 @@ Becoming CV Manager REST API
 ## Examples Contents
 - https://www.velvetjobs.com/resume/senior-technical-lead-resume-sample
 - https://www.qwikresume.com/resume-samples/tech-lead/
+
+## Todo
+- Add "Full time", "Part time", etc
