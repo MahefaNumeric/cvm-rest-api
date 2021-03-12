@@ -8,6 +8,7 @@ import LanguageRepo from '../Data/Repositories/LanguageRepo';
 import UserRepo from '../Data/Repositories/UserRepo';
 import ControllerTools from '../Utils/ControllerTools';
 import { consoleReset } from '../Utils/ConsoleTools';
+import WordsRepo from '../Data/Repositories/WordsRepo';
 
 function getRoute(){
     const router = express.Router({ mergeParams: true });
@@ -152,19 +153,22 @@ class CvController {
         LanguageRepo.createFromDbByIso(isoLangLowercase).then(language => {
             UserRepo.createFromDbById(idUser, language.id).then(user => {
                 CvRepo.createFromDbById(idCv, language.id).then(cv => {
-                    const data = {
-                        user: user,
-                        cv: cv,
-                        language: language
-                    };
-                    console.log("/:idCv/generate/html/view", util.inspect(data, {showHidden: false, depth: null, colors: true}));
-                    const htmlPageTitle = `${isoLangLowercase=="en" ? 'Resume':'CV'} ${data.user.lastname}`;
-                    request.vueOptions = vueOptions(htmlPageTitle);
-                    
-                    const templateVueFilePath = cvService.getTemplateVueFilePath(slugTemplate, idCv, false);
-                    response.type("text/html")
-                        .status(200)
-                        .renderVue(templateVueFilePath, data, request.vueOptions);
+                    WordsRepo.getWordsNeedInCV_asObject(language.id).then(wordList => {
+                        const data = {
+                            user: user,
+                            cv: cv,
+                            language: language,
+                            wordList: wordList
+                        };
+                        console.log("/:idCv/generate/html/view", util.inspect(data, {showHidden: false, depth: null, colors: true}));
+                        const htmlPageTitle = `${isoLangLowercase=="en" ? 'Resume':'CV'} ${data.user.lastname}`;
+                        request.vueOptions = vueOptions(htmlPageTitle);
+                        
+                        const templateVueFilePath = cvService.getTemplateVueFilePath(slugTemplate, idCv, false);
+                        response.type("text/html")
+                            .status(200)
+                            .renderVue(templateVueFilePath, data, request.vueOptions);
+                    });
                 }).catch(error => cvGetById_ErrorHandling(error, idCv, response));
             }).catch(error => userGetById_ErrorHandling(error, response, isoLangLowercase));
         }).catch(error => languageGetByIso_ErrorHandling(error, isoLangLowercase, response));

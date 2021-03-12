@@ -28,6 +28,7 @@
 							<bodyVue 
                                 :cv="cv"
                                 :user="user"
+								:wordList="wordList"
                             />
 
 						</div>
