@@ -59,22 +59,25 @@
                 v-for="itemCompany in cv.experiences.companies" 
                 :key="itemCompany.id"
             >
-                <!-- :class="itemCompany.hasManyPosition ? 'many-position-on-company' : 'single-position-on-company' " -->
-                <div class="column-timeline company">
+                <div class="column-timeline company"
+                    :class="itemCompany.hasManyPosition ? 'company-with-many-position' : '' "
+                >
                     <h3>{{ itemCompany.dateStartFriendly }} - {{itemCompany.dateEndFriendly }}</h3>
                     <div class="company-duration">{{ itemCompany.durationInDayOnTheCompanyFriendly }}</div>
                 </div>
                 <div class="column-detail">
                     <div class="company-name">{{ itemCompany.name }}</div>
                     <div 
-                        class="position-content" 
+                        class="position-content"
                         v-for="itemPosition in itemCompany.positionsValue" 
                         :key="itemPosition.id"
                     >
-                        <div class="timeline-container">
+                        <div class="timeline-container" v-if="itemCompany.hasManyPosition == true">
                             <div class="timeline-container-child">
                                 <div class="timeline-point"></div>
-                                <div class="timeline-content"></div>
+                                <div class="timeline-content"
+                                    v-if="itemCompany.positionsValue[itemCompany.positionsValue.length-1].id != itemPosition.id"
+                                ></div>
                             </div>
                         </div>
                         <div class="position-header">

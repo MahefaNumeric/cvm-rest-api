@@ -32,6 +32,7 @@
   },
   "homepage": "https://github.com/MahefaAbel/nodejs-rest-api#readme",
   "dependencies": {
+    "@types/puppeteer": "^5.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",

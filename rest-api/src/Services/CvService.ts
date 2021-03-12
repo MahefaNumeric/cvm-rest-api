@@ -4,6 +4,7 @@ const fs = require('fs');
 import Cv from "../Data/Models/Cv";
 import User from '../Data/Models/User';
 import NumberTools from '../Utils/NumbersTools';
+import puppeteer from 'puppeteer';
 
 export default class CvService{
     
@@ -118,16 +119,20 @@ export default class CvService{
             const host = this.getHostUrl();
             const urlCv = `${host}/${isoLang}/cv/${idCv}/template/${slugTemplate}/generate/html/view`;
     
-            const puppeteer = require("puppeteer");
             const browser = await puppeteer.launch();
             const page = await browser.newPage();
-            await page.goto(urlCv);
+            await page.goto(urlCv, {
+                // waitUntil: 'networkidle2'
+              });
             await page.pdf({ 
                 path: filenameOutput, 
+
+                // @ts-ignore 
                 // format: "Letter",
-                format: 'A4', 
+                format: "A4",
+                
                 // landscape: true, 
-                // printBackground: true, 
+                printBackground: true, 
                 margin: {
                     top: 60, bottom: 60,
                     // left: 0, right: 0
