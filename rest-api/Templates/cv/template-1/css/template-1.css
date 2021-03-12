@@ -67,6 +67,7 @@ div.column-skill-group h3{
 }
 div.column-timeline.company .company-duration{
     text-align: right;
+    font-style: italic;
 }
 div.column-detail .company-name{
     font-weight: 700;
