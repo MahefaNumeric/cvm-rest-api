@@ -1,0 +1,9 @@
+#paper-mid {
+	background-image:url(../images/pmid.jpg);
+	background-repeat:repeat-y;
+}
+
+.paper-top {
+	/* height:126px; */
+    border-top: 5px solid black;
+}

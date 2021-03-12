@@ -8,6 +8,7 @@
 			<link type="text/css" rel="stylesheet" href="/templates/1/css/blue.css" />
             <link type="text/css" rel="stylesheet" href="/templates/1/css/template-1.css" />
             <link type="text/css" rel="stylesheet" href="/templates/1/css/print.css" media="print"/>
+			<link type="text/css" rel="stylesheet" href="/templates/1/css/screen.css" media="screen"/>
 			<!--[if IE 7]>
 			<link href="/templates/1/css/ie7.css" rel="stylesheet" type="text/css" />
 			<![endif]-->

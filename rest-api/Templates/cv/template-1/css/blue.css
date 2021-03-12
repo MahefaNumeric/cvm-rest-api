@@ -87,8 +87,6 @@ a:hover {
 	width:969px;
 	height:19px;
 	margin:0 auto;
-	background-image:url(../images/btop.jpg);
-	background-repeat:no-repeat;
 }
 
 .wrapper-mid {
@@ -104,8 +102,6 @@ a:hover {
 	height:22px;
 	padding:0;
 	margin:0 auto;
-	background-image:url(../images/bbottom.jpg);
-	background-repeat:no-repeat;
 }
 
 /* PAPER BACKGROUND */
@@ -119,16 +115,12 @@ a:hover {
 .paper-top {
 	width:828px;
 	margin:0 auto;
-	background-image:url(../images/ptop.jpg);
-	background-repeat:no-repeat;
-	height:126px;
+	/* height:126px; */
 }
 
 #paper-mid {
 	width:828px;
 	margin:0 auto;
-	background-image:url(../images/pmid.jpg);
-	background-repeat:repeat-y;
 	display:block;
 	padding:0;
 	overflow: hidden;
@@ -393,7 +385,8 @@ img.portrait {
 }
 
 .self ul li.ad {
-	background-image:url(../images/icn-ad.gif);
+	background-image:url(../../../../Public/Images/icons/icn-address.png);
+	background-size: 16px;
 }
 .self ul li.mail {
 	background-image:url(../images/icn-mail.png);
@@ -409,6 +402,10 @@ img.portrait {
 }
 .self ul li.skype {
 	background-image:url(../images/icn-skype.png);
+	background-size: 17px;
+}
+.self ul li.linkedin {
+	background-image:url(../../../../Public/Images/icons/icn-linkedin.png);
 	background-size: 17px;
 }
 .self ul li.github {
