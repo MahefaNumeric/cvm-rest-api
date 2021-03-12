@@ -59,40 +59,41 @@
                 class="content experience-content" 
                 v-for="itemCompany in cv.experiences.companies" 
                 :key="itemCompany.id"
+                :class="itemCompany.hasManyPosition ? 'company-with-many-position' : '' "
             >
-                <div class="column-timeline company"
-                    :class="itemCompany.hasManyPosition ? 'company-with-many-position' : '' "
-                >
+                <div class="column-timeline company">
                     <h3>{{ itemCompany.dateStartFriendly }} - {{itemCompany.dateEndFriendly }}</h3>
                     <div class="company-duration">{{ itemCompany.durationInDayOnTheCompanyFriendly }}</div>
                 </div>
                 <div class="column-detail">
                     <div class="company-name">{{ itemCompany.name }}</div>
-                    <div 
-                        class="position-content"
-                        v-for="itemPosition in itemCompany.positionsValue" 
-                        :key="itemPosition.id"
-                    >
-                        <div class="timeline-container" v-if="itemCompany.hasManyPosition == true">
-                            <div class="timeline-container-child">
-                                <div class="timeline-point"></div>
-                                <div class="timeline-content"
-                                    v-if="itemCompany.positionsValue[itemCompany.positionsValue.length-1].id != itemPosition.id"
-                                ></div>
+                    <div>
+                        <div 
+                            class="position-content"
+                            v-for="itemPosition in itemCompany.positionsValue" 
+                            :key="itemPosition.id"
+                        >
+                            <div class="timeline-container" v-if="itemCompany.hasManyPosition == true">
+                                <div class="timeline-container-child">
+                                    <div class="timeline-point"></div>
+                                    <div class="timeline-content"
+                                        v-if="itemCompany.positionsValue[itemCompany.positionsValue.length-1].id != itemPosition.id"
+                                    ></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="position-header">
-                            <div class="position-title">{{ itemPosition.title }}</div>
-                            <div class="position-duration" v-if="itemCompany.hasManyPosition == true">
-                                <span class="position-duration-1">{{ itemPosition.experienceDateBegin_Friendly}} - {{itemPosition.experienceDateEnd_Friendly }}</span>
-                                <span class="position-duration-2"> - {{ itemPosition.durationInDayOnThePositionFriendly }}</span>
+                            <div class="position-header">
+                                <div class="position-title">{{ itemPosition.title }}</div>
+                                <div class="position-duration" v-if="itemCompany.hasManyPosition == true">
+                                    <span class="position-duration-1">{{ itemPosition.experienceDateBegin_Friendly}} - {{itemPosition.experienceDateEnd_Friendly }}</span>
+                                    <span class="position-duration-2"> - {{ itemPosition.durationInDayOnThePositionFriendly }}</span>
+                                </div>
                             </div>
-                        </div>
-                        <div class="position-body">
-                            <!-- <p>{{ itemPosition.description }}</p> -->
-                            <div 
-                                class="description-experience-position" 
-                                v-html="itemPosition.descriptionExperiencePosition">
+                            <div class="position-body">
+                                <!-- <p>{{ itemPosition.description }}</p> -->
+                                <div 
+                                    class="description-experience-position" 
+                                    v-html="itemPosition.descriptionExperiencePosition">
+                                </div>
                             </div>
                         </div>
                     </div>
