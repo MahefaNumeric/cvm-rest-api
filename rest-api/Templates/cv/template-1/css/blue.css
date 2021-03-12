@@ -55,9 +55,6 @@ blockquote, q {
 
 body {
 	font-family: "Aileron", "Trebuchet MS", Arial, Helvetica, sans-serif;
-	background-color: #e1e0db;
-	background-image: url(../images/bg.jpg);
-	background-repeat: repeat;
 	color:#000;
 }
 
@@ -97,7 +94,7 @@ a:hover {
 .wrapper-mid {
 	width:969px;
 	margin:0 auto;
-	background-image:url(../images/bmid.jpg);
+	/* background-image:url(../images/bmid.jpg); */
 	background-repeat: repeat-y;
 	padding-bottom:40px;
 }
@@ -391,21 +388,32 @@ img.portrait {
 .self ul {
 	padding-top: 10px;
 }
+.self > ul.detail-top > li{
+	padding-left: 30px;
+}
 
 .self ul li.ad {
 	background-image:url(../images/icn-ad.gif);
 }
-
 .self ul li.mail {
-	background-image:url(../images/icn-mail.gif);
+	background-image:url(../images/icn-mail.png);
+	background-size: 17px;
 }
-
 .self ul li.tel {
-	background-image:url(../images/icn-tel.gif);
+	background-image:url(../images/icn-phone.png);
+	background-size: 17px;
 }
-
-.self ul li.web {
-	background-image:url(../images/icn-web.gif);
+.self ul li.website {
+	background-image:url(../images/icn-website.png);
+	background-size: 17px;
+}
+.self ul li.skype {
+	background-image:url(../images/icn-skype.png);
+	background-size: 17px;
+}
+.self ul li.github {
+	background-image:url(../images/icn-github.png);
+	background-size: 17px;
 }
 
 .self ul li {
