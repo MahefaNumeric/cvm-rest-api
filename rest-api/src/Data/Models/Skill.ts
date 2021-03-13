@@ -1,22 +1,21 @@
 import User from './User';
-import SocialLink from './SocialLink';
-// import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import BaseModel from './BaseModel';
 import SkillGroup from './SkillGroup';
 
 /**
  * @todo Redo structuration SkillGroup and Skill (actually not good)
  */
-// @Entity()
+@Entity()
 export default class Skill // extends BaseEntity 
 {
-    // @PrimaryGeneratedColumn() 
+    @PrimaryGeneratedColumn() 
     public id: string;
-    // @Column()
+    @Column()
     public slug: string;
-    // @Column()
+    @Column()
     public title: string;
-    // @Column()
+    @Column()
     public description: string;
 
     public user: User;
